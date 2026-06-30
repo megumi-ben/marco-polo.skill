@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>南京·味觉路线 | 三日美食页</title>
+  <style>
+    :root {
+      --ink: #17110d;
+      --paper: #fff7e8;
+      --rice: #f5ead5;
+      --line: rgba(23, 17, 13, .14);
+      --red: #b6422c;
+      --orange: #dc7a2f;
+      --green: #236d5c;
+      --blue: #244e68;
+      --gold: #c3913e;
+      --shadow: 0 22px 70px rgba(23, 17, 13, .2);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--ink); }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      font-family: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "STSong", serif;
+      background:
+        linear-gradient(90deg, rgba(23, 17, 13, .035) 1px, transparent 1px) 0 0 / 64px 64px,
+        linear-gradient(180deg, #fff4df, #ead2a8 62%, #dcb87b);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      pointer-events: none;
+      background: repeating-linear-gradient(90deg, rgba(23,17,13,.025) 0 1px, transparent 1px 4px);
+      mix-blend-mode: multiply;
+    }
+
+    a { color: inherit; }
+    button { font: inherit; }
+
+    .hero {
+      position: relative;
+      min-height: 82svh;
+      display: grid;
+      align-items: end;
+      color: var(--paper);
+      overflow: hidden;
+      isolation: isolate;
+      background: var(--ink);
+    }
+
+    .hero img {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.08) contrast(1.04);
+      transform: scale(1.08);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(23,17,13,.84), rgba(23,17,13,.36) 50%, rgba(23,17,13,.72)),
+        linear-gradient(180deg, rgba(23,17,13,.08), rgba(23,17,13,.86));
+    }
+
+    .masthead,
+    .hero-inner,
+    .section,
+    .footer-inner {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .masthead {
+      position: absolute;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      z-index: 2;
+      color: rgba(255,247,232,.82);
+      font-size: 13px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .nav-link {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 13px;
+      border: 1px solid rgba(255,247,232,.34);
+      border-radius: 999px;
+      background: rgba(23,17,13,.2);
+      text-decoration: none;
+      letter-spacing: 0;
+      text-transform: none;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-inner {
+      padding: 120px 0 58px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      color: rgba(255,247,232,.82);
+      letter-spacing: .22em;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 54px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 930px;
+      font-size: clamp(54px, 10vw, 136px);
+      line-height: .9;
+      letter-spacing: 0;
+      text-shadow: 0 16px 42px rgba(0,0,0,.36);
+    }
+
+    h1 span {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .hero p {
+      max-width: 690px;
+      margin: 30px 0 0;
+      font-size: clamp(18px, 2vw, 26px);
+      line-height: 1.75;
+      color: rgba(255,247,232,.86);
+    }
+
+    .section {
+      padding: clamp(56px, 8vw, 104px) 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::after {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(32px, 5.5vw, 66px);
+      line-height: 1.03;
+      letter-spacing: 0;
+    }
+
+    .section-head p,
+    .note {
+      margin: 0;
+      color: rgba(23,17,13,.66);
+      font-size: 16px;
+      line-height: 1.9;
+    }
+
+    .filters {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px 18px;
+      border-block: 1px solid rgba(23,17,13,.08);
+      background: rgba(255,244,223,.84);
+      backdrop-filter: blur(16px);
+      scrollbar-width: none;
+    }
+
+    .filters::-webkit-scrollbar { display: none; }
+
+    .filter {
+      flex: 0 0 auto;
+      border: 1px solid rgba(23,17,13,.16);
+      border-radius: 999px;
+      background: rgba(255,247,232,.66);
+      color: rgba(23,17,13,.68);
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .filter.active,
+    .filter:hover {
+      color: var(--paper);
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .route-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .route-card {
+      min-height: 196px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,247,232,.54);
+      padding: 22px;
+      box-shadow: 0 16px 42px rgba(23,17,13,.08);
+    }
+
+    .route-card b {
+      color: var(--red);
+      font-size: 13px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .route-card h3 {
+      margin: 14px 0 10px;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .route-card p {
+      margin: 0;
+      color: rgba(23,17,13,.66);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+
+    .food-card {
+      --accent: var(--orange);
+      --mx: 50%;
+      --my: 50%;
+      position: relative;
+      grid-column: span 4;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border: 0;
+      border-radius: var(--radius);
+      padding: 0;
+      text-align: left;
+      color: var(--paper);
+      background: var(--ink);
+      cursor: pointer;
+      box-shadow: 0 18px 48px rgba(23,17,13,.15);
+      transform: translateY(18px);
+      opacity: 0;
+      transition: transform .55s cubic-bezier(.2,.8,.2,1), opacity .55s ease, box-shadow .25s ease;
+    }
+
+    .food-card.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .food-card.hide { display: none; }
+
+    .food-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.08) contrast(1.04);
+      transition: transform .55s ease, filter .55s ease;
+    }
+
+    .food-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(circle at var(--mx) var(--my), rgba(255,247,232,.18), transparent 24%),
+        linear-gradient(180deg, rgba(23,17,13,.04), rgba(23,17,13,.9) 82%);
+    }
+
+    .food-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .food-card:hover img {
+      transform: scale(1.06);
+      filter: saturate(1.18) contrast(1.08);
+    }
+
+    .food-body {
+      position: absolute;
+      inset: auto 0 0;
+      z-index: 2;
+      padding: 24px;
+    }
+
+    .tag-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: rgba(255,247,232,.74);
+      font-size: 12px;
+    }
+
+    .tag-row span:first-child {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .tag-row span:first-child::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 16px var(--accent);
+    }
+
+    .food-card h3 {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .food-card p {
+      margin: 14px 0 0;
+      color: rgba(255,247,232,.8);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    .drawer {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: grid;
+      place-items: end;
+      pointer-events: none;
+    }
+
+    .drawer.open { pointer-events: auto; }
+    .backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(23,17,13,.58);
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+    .drawer.open .backdrop { opacity: 1; }
+
+    .panel {
+      position: relative;
+      width: min(720px, calc(100% - 18px));
+      max-height: calc(100svh - 18px);
+      margin: 9px;
+      overflow: auto;
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      transform: translateX(24px);
+      opacity: 0;
+      transition: transform .28s ease, opacity .28s ease;
+    }
+
+    .drawer.open .panel {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .panel-media {
+      position: relative;
+      height: 360px;
+      background: var(--ink);
+    }
+
+    .panel-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 2;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255,247,232,.58);
+      border-radius: 50%;
+      background: rgba(23,17,13,.54);
+      color: var(--paper);
+      cursor: pointer;
+    }
+
+    .panel-body {
+      padding: clamp(24px, 5vw, 42px);
+    }
+
+    .panel-body h3 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1;
+    }
+
+    .panel-body p {
+      margin: 18px 0 0;
+      color: rgba(23,17,13,.72);
+      font-size: 17px;
+      line-height: 1.95;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .chips span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(23,17,13,.12);
+      background: rgba(220,184,123,.28);
+      color: rgba(23,17,13,.66);
+      font-size: 13px;
+    }
+
+    .source {
+      display: inline-block;
+      margin-top: 22px;
+      color: var(--green);
+      text-underline-offset: 4px;
+    }
+
+    footer {
+      background: var(--ink);
+      color: rgba(255,247,232,.68);
+      padding: 42px 18px 52px;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 520px);
+      gap: 24px;
+      align-items: start;
+    }
+
+    footer h2 {
+      color: var(--paper);
+      font-size: clamp(30px, 5vw, 56px);
+    }
+
+    footer p {
+      margin: 0;
+      line-height: 1.85;
+      font-size: 14px;
+    }
+
+    .fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      text-align: center;
+      background:
+        linear-gradient(135deg, rgba(182,66,44,.78), rgba(35,109,92,.78)),
+        repeating-linear-gradient(45deg, rgba(255,247,232,.15) 0 1px, transparent 1px 14px);
+      color: var(--paper);
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 900px) {
+      .section-head,
+      .route-grid,
+      .footer-inner { grid-template-columns: 1fr; }
+      .food-card { grid-column: span 6; }
+    }
+
+    @media (max-width: 640px) {
+      .masthead { top: 16px; align-items: flex-start; }
+      .masthead span { display: none; }
+      .hero { min-height: 78svh; }
+      .food-grid { display: block; }
+      .food-card { width: 100%; margin-bottom: 14px; }
+      .route-grid { gap: 10px; }
+      .panel-media { height: 290px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero" id="top">
+    <img src="https://aos-comment.amap.com/B0JK1RECMZ/comment/content_media_external_file_1000081395_ss__1757758476494_81613523.jpg" alt="叶新鸭血粉丝汤">
+    <div class="masthead">
+      <span>Nanjing Taste Route</span>
+      <a class="nav-link" href="./index.html">返回旅行手册</a>
+    </div>
+    <div class="hero-inner">
+      <div class="kicker">按路线吃，不为排队绕路</div>
+      <h1><span>南京</span><span>味觉路线</span></h1>
+      <p>三天的美食目标很简单：热汤补体力，小吃补情绪，正餐不硬排。每张图都来自高德南京门店或食物 POI，优先用“南京 + 食物/店名”检索。</p>
+    </div>
+  </header>
+
+  <nav class="filters" id="filters" aria-label="美食筛选"></nav>
+
+  <main>
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Eating Rhythm</div>
+          <h2>先定吃法，再选店。</h2>
+        </div>
+        <p>这个页面不做网红店竞赛，只服务你的三日动线。超过 20 分钟排队就换同片区替代；钟山线中午不出景区，Day 3 午餐控制在 45 分钟左右。</p>
+      </div>
+
+      <div class="route-grid">
+        <article class="route-card">
+          <b>Day 1 / 科巷</b>
+          <h3>热汤 + 锅贴 + 糕团</h3>
+          <p>钟山线消耗大，晚餐落在科巷最顺。鸭血粉丝汤、牛肉锅贴和糕团组合，效率高也有南京味。</p>
+        </article>
+        <article class="route-card">
+          <b>Day 2 / 老门东</b>
+          <h3>汤包 + 甜糯 + 秦淮夜走</h3>
+          <p>老门东承担晚餐和夜游前补给。饭后再接糖粥藕、豆花或小甜品，不把夫子庙主街当正餐主场。</p>
+        </article>
+        <article class="route-card">
+          <b>Day 3 / 总统府周边</b>
+          <h3>短正餐 + 车前轻食</h3>
+          <p>南博、总统府和城北收尾都紧，午餐要稳，不要慢排。傍晚回新街口取行李，车前只做简单补给。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="foods">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Food Cards</div>
+          <h2>顺路美食卡</h2>
+        </div>
+        <p class="note">点击卡片看建议吃法、排队策略和图片对应 POI。图片是远程实时加载，不保存到本地。</p>
+      </div>
+      <div class="food-grid" id="foodGrid"></div>
+    </section>
+  </main>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="backdrop" data-close></div>
+    <section class="panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <button class="close" type="button" data-close aria-label="关闭">×</button>
+      <div class="panel-media" id="drawerMedia"></div>
+      <div class="panel-body">
+        <div class="eyebrow" id="drawerKicker"></div>
+        <h3 id="drawerTitle"></h3>
+        <p id="drawerText"></p>
+        <div class="chips" id="drawerChips"></div>
+        <a class="source" id="drawerSource" href="#" target="_blank" rel="noopener noreferrer">查看高德图片来源</a>
+      </div>
+    </section>
+  </aside>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="eyebrow">Image Check</div>
+        <h2>图源跟着南京关键词走。</h2>
+      </div>
+      <p>鸭血粉丝汤、锅贴、汤包、糖粥藕、梅花糕等容易重名的食物，检索时使用“南京 + 店名/食物名 + 片区”。最终图源优先使用命中门店 POI 的照片；少数泛食物项使用南京本地相关 POI，并在详情中标注。</p>
+    </div>
+  </footer>
+
+  <script>
+    const foods = [
+      {
+        name: "叶新鸭血粉丝汤",
+        area: "科巷",
+        day: "Day 1 晚餐",
+        type: "鸭类",
+        accent: "#b6422c",
+        image: "https://aos-comment.amap.com/B0JK1RECMZ/comment/content_media_external_file_1000081395_ss__1757758476494_81613523.jpg",
+        poi: "叶新鸭血粉丝汤(科巷店)",
+        source: "https://www.amap.com/search?query=%E5%8F%B6%E6%96%B0%E9%B8%AD%E8%A1%80%E7%B2%89%E4%B8%9D%E6%B1%A4(%E7%A7%91%E5%B7%B7%E5%BA%97)",
+        match: "南京科巷门店图",
+        text: "钟山线后的热汤首选，鸭血粉丝汤配烧饼，快、热、南京味明确。",
+        detail: "适合 Day 1 晚餐或回酒店前补给。排队超过 20 分钟就换科巷附近其他鸭血粉丝汤，不要为了单店拖慢收尾。"
+      },
+      {
+        name: "老新隆牛肉锅贴",
+        area: "科巷",
+        day: "Day 1 晚餐",
+        type: "碳水小吃",
+        accent: "#dc7a2f",
+        image: "https://aos-comment.amap.com/B0KD3UZD67/comment/8A408BEF_C9D2_4F98_926C_FE704217326A_L0_001_1179_136_1768260634611_03613165.jpg",
+        poi: "老新隆牛肉锅贴(科巷)",
+        source: "https://www.amap.com/search?query=%E8%80%81%E6%96%B0%E9%9A%86%E7%89%9B%E8%82%89%E9%94%85%E8%B4%B4(%E7%A7%91%E5%B7%B7)",
+        match: "南京科巷门店图",
+        text: "锅贴是高强度行程里的有效碳水，适合和热汤拆开小份多尝。",
+        detail: "建议两个人点一份锅贴，再配汤或馄饨。它的价值是顺路和补能，不需要为了它单独绕路。"
+      },
+      {
+        name: "桂花鸭轻厨",
+        area: "科巷",
+        day: "Day 1 晚餐",
+        type: "鸭类",
+        accent: "#b6422c",
+        image: "https://aos-comment.amap.com/B0JKT79OTR/comment/A0E2AEEA_0F00_4987_9862_E1BBDBFEF628_L0_001_2016_113_1761206082141_97064115.jpg",
+        poi: "桂花鸭轻厨(大行宫科巷店)",
+        source: "https://www.amap.com/search?query=%E6%A1%82%E8%8A%B1%E9%B8%AD%E8%BD%BB%E5%8E%A8(%E5%A4%A7%E8%A1%8C%E5%AE%AB%E7%A7%91%E5%B7%B7%E5%BA%97)",
+        match: "南京科巷门店图",
+        text: "想尝盐水鸭但不想买整只时，用轻简餐方式解决更适合游客。",
+        detail: "适合作为科巷鸭类补充。若当天已经吃鸭血粉丝汤，可以少量尝鸭类冷盘，不要重复吃太重。"
+      },
+      {
+        name: "金陵徐阿姨糕团",
+        area: "科巷",
+        day: "Day 1 饭后",
+        type: "甜糯",
+        accent: "#c3913e",
+        image: "https://store.is.autonavi.com/showpic/5a0f75b33131ecf20000002254490443?type=pic",
+        poi: "金陵徐阿姨糕团(科巷店)",
+        source: "https://www.amap.com/search?query=%E9%87%91%E9%99%B5%E5%BE%90%E9%98%BF%E5%A7%A8%E7%B3%95%E5%9B%A2(%E7%A7%91%E5%B7%B7%E5%BA%97)",
+        match: "南京科巷门店图",
+        text: "饭后少量尝甜糯，给第一天一个轻一点的南京收尾。",
+        detail: "糕团适合少量尝或第二天早上带走。不要买太多，6 月天气热，行程也不适合一直拎着。"
+      },
+      {
+        name: "回味鸭血粉丝汤",
+        area: "中山陵商业街",
+        day: "Day 1 午餐",
+        type: "景区补给",
+        accent: "#236d5c",
+        image: "https://store.is.autonavi.com/showpic/8053ba3c19411eba2d1b218a0fbd93a5",
+        poi: "回味鸭血粉丝汤(中山陵步行街店)",
+        source: "https://www.amap.com/search?query=%E5%9B%9E%E5%91%B3%E9%B8%AD%E8%A1%80%E7%B2%89%E4%B8%9D%E6%B1%A4(%E4%B8%AD%E5%B1%B1%E9%99%B5%E6%AD%A5%E8%A1%8C%E8%A1%97%E5%BA%97)",
+        match: "南京中山陵门店图",
+        text: "钟山线中午不出景区，热汤快餐比找名店更重要。",
+        detail: "这一天午餐服务动线，不服务打卡。能坐下、能快速吃完、离景点近，就是它的意义。"
+      },
+      {
+        name: "鸡鸣汤包",
+        area: "老门东",
+        day: "Day 2 晚餐",
+        type: "碳水小吃",
+        accent: "#dc7a2f",
+        image: "https://store.is.autonavi.com/showpic/8d7d842fa8a48e4391d3fbb714eb2b9f",
+        poi: "鸡鸣汤包(南京总店)南京菜",
+        source: "https://www.amap.com/search?query=%E9%B8%A1%E9%B8%A3%E6%B1%A4%E5%8C%85(%E5%8D%97%E4%BA%AC%E6%80%BB%E5%BA%97)%E5%8D%97%E4%BA%AC%E8%8F%9C",
+        match: "南京门店图",
+        text: "汤包适合当晚餐主食，接老门东夜走和秦淮河都顺。",
+        detail: "如果老门东人多，选择汤包类主食比慢排正餐更稳。注意烫口，别为了拍照拖太久。"
+      },
+      {
+        name: "蓝老大糖粥藕",
+        area: "箍桶巷",
+        day: "Day 2 饭后",
+        type: "甜糯",
+        accent: "#c3913e",
+        image: "https://aos-comment.amap.com/B0FFFDRA6O/comment/988E65FE_9064_4B61_A60A_FD8AB41418E3_L0_001_2000_150_1747306312830_96291546.jpg",
+        poi: "蓝老大糖粥藕(箍桶巷)",
+        source: "https://www.amap.com/search?query=%E8%93%9D%E8%80%81%E5%A4%A7%E7%B3%96%E7%B2%A5%E8%97%95(%E7%AE%8D%E6%A1%B6%E5%B7%B7)",
+        match: "南京箍桶巷门店图",
+        text: "糖粥藕和赤豆元宵类适合饭后，不适合当正餐。",
+        detail: "甜糯小吃建议两人分一份，留胃口给夜游。排队长就换同片区其他甜品。"
+      },
+      {
+        name: "豆花莊",
+        area: "老门东",
+        day: "Day 2 晚餐",
+        type: "轻食",
+        accent: "#236d5c",
+        image: "https://aos-comment.amap.com/B0019185FB/comment/content_media_external_images_media_1000060666_ss__1738565151558_46762989.jpg",
+        poi: "豆花莊(老门东店)",
+        source: "https://www.amap.com/search?query=%E8%B1%86%E8%8A%B1%E8%8E%8A(%E8%80%81%E9%97%A8%E4%B8%9C%E5%BA%97)",
+        match: "南京老门东门店图",
+        text: "不想吃太油时，用豆花和轻食把晚餐变轻。",
+        detail: "适合 Day 2 纪念馆之后的低负担饮食。若后面还想走夫子庙和秦淮河，别吃太撑。"
+      },
+      {
+        name: "问柳菜馆",
+        area: "老门东",
+        day: "Day 2 正餐",
+        type: "南京菜",
+        accent: "#244e68",
+        image: "https://aos-comment.amap.com/B0FFF5P4QZ/comment/%5B2026-01-25-19-34-05%5DB50EEB2C-FABA-47C8-9D88-6D85DE0D544_1769340847862_35042123.jpg",
+        poi: "问柳菜馆(老门东店)",
+        source: "https://www.amap.com/search?query=%E9%97%AE%E6%9F%B3%E8%8F%9C%E9%A6%86(%E8%80%81%E9%97%A8%E4%B8%9C%E5%BA%97)",
+        match: "南京老门东门店图",
+        text: "想坐下来吃南京菜时选它，前提是排队可控。",
+        detail: "这类正餐适合把 Day 2 晚餐做得完整，但不要硬排。超过 20 分钟就回到汤包、豆花或小吃策略。"
+      },
+      {
+        name: "南京大牌档",
+        area: "夫子庙/1912",
+        day: "Day 2 或 Day 3",
+        type: "南京菜",
+        accent: "#244e68",
+        image: "https://store.is.autonavi.com/showpic/ea24e4d951f263632b54752507014d0c",
+        poi: "南京大牌档(夫子庙平江府店)",
+        source: "https://www.amap.com/search?query=%E5%8D%97%E4%BA%AC%E5%A4%A7%E7%89%8C%E6%A1%A3(%E5%A4%AB%E5%AD%90%E5%BA%99%E5%B9%B3%E6%B1%9F%E5%BA%9C%E5%BA%97)",
+        match: "南京夫子庙门店图",
+        text: "美龄粥、狮子头、鸭类和南京小吃都能集中体验，但热门时不硬排。",
+        detail: "它适合第一次来南京做综合体验。夫子庙店、1912 店都可作为备选，哪个排队短选哪个。"
+      },
+      {
+        name: "芳婆糕团店",
+        area: "新街口/王府大街",
+        day: "到达日或早餐",
+        type: "甜糯",
+        accent: "#c3913e",
+        image: "https://img.alicdn.com/imgextra/i2/3695320962/O1CN011Iydfrb7yaPpbUL_!!3695320962-0-kbcontentapng.jpg",
+        poi: "芳婆糕团店(王府大街店)",
+        source: "https://www.amap.com/search?query=%E8%8A%B3%E5%A9%86%E7%B3%95%E5%9B%A2%E5%BA%97(%E7%8E%8B%E5%BA%9C%E5%A4%A7%E8%A1%97%E5%BA%97)",
+        match: "南京王府大街门店图",
+        text: "适合到达日轻食，或第二天早上打包一点。",
+        detail: "到南京当天不建议跑远。住新街口时，王府大街这一类糕团店更适合作为低成本、低负担补给。"
+      },
+      {
+        name: "南京盐水鸭",
+        area: "全程可插入",
+        day: "全程",
+        type: "鸭类",
+        accent: "#b6422c",
+        image: "https://store.is.autonavi.com/showpic/43dce64af521387f0000000946584173?type=pic",
+        poi: "聚宝南京盐水鸭(南京总店)",
+        source: "https://www.amap.com/search?query=%E8%81%9A%E5%AE%9D%E5%8D%97%E4%BA%AC%E7%9B%90%E6%B0%B4%E9%B8%AD(%E5%8D%97%E4%BA%AC%E6%80%BB%E5%BA%97)",
+        match: "南京盐水鸭门店图",
+        text: "南京代表性最强的鸭类之一，适合小份尝，不建议旅行中买太多。",
+        detail: "盐水鸭适合正餐加一道或离开前打包。六月天气热，注意保存时间。"
+      },
+      {
+        name: "陆氏梅花糕",
+        area: "老门东",
+        day: "Day 2 饭后",
+        type: "甜糯",
+        accent: "#c3913e",
+        image: "https://store.is.autonavi.com/showpic/a1efd5fccc47c3860000002702184540?type=pic",
+        poi: "陆氏梅花糕",
+        source: "https://www.amap.com/search?query=%E9%99%86%E6%B0%8F%E6%A2%85%E8%8A%B1%E7%B3%95",
+        match: "南京梅花糕门店图",
+        text: "梅花糕适合夜游时少量尝，热的时候最好吃。",
+        detail: "它是氛围型小吃，不要为了它长时间排队。趁热分食即可。"
+      }
+    ];
+
+    const filters = ["全部", "Day 1", "Day 2", "Day 3", "鸭类", "碳水小吃", "甜糯", "南京菜"];
+    const grid = document.getElementById("foodGrid");
+    const filterBox = document.getElementById("filters");
+    const drawer = document.getElementById("drawer");
+    const drawerMedia = document.getElementById("drawerMedia");
+    const drawerKicker = document.getElementById("drawerKicker");
+    const drawerTitle = document.getElementById("drawerTitle");
+    const drawerText = document.getElementById("drawerText");
+    const drawerChips = document.getElementById("drawerChips");
+    const drawerSource = document.getElementById("drawerSource");
+
+    function makeImage(src, alt) {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = alt;
+      img.loading = "lazy";
+      img.referrerPolicy = "no-referrer";
+      img.addEventListener("error", () => {
+        const fallback = document.createElement("div");
+        fallback.className = "fallback";
+        fallback.textContent = alt;
+        img.replaceWith(fallback);
+      });
+      return img;
+    }
+
+    function renderFilters() {
+      filterBox.innerHTML = filters.map((item) => (
+        `<button class="filter${item === "全部" ? " active" : ""}" type="button" data-filter="${item}">${item}</button>`
+      )).join("");
+    }
+
+    function matchFilter(food, active) {
+      if (active === "全部") return true;
+      return food.day.includes(active) || food.type === active;
+    }
+
+    function renderCards(active = "全部") {
+      grid.innerHTML = "";
+      foods.forEach((food, index) => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = `food-card${matchFilter(food, active) ? "" : " hide"}`;
+        card.style.setProperty("--accent", food.accent);
+        card.style.transitionDelay = `${Math.min(index * 26, 260)}ms`;
+        card.appendChild(makeImage(food.image, food.name));
+        card.insertAdjacentHTML("beforeend", `
+          <div class="food-body">
+            <div class="tag-row"><span>${food.type}</span><span>${food.day}</span></div>
+            <h3>${food.name}</h3>
+            <p>${food.text}</p>
+          </div>
+        `);
+        card.addEventListener("pointermove", (event) => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty("--mx", `${((event.clientX - rect.left) / rect.width) * 100}%`);
+          card.style.setProperty("--my", `${((event.clientY - rect.top) / rect.height) * 100}%`);
+        });
+        card.addEventListener("click", () => openDrawer(food));
+        grid.appendChild(card);
+      });
+      revealCards();
+    }
+
+    function revealCards() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .12 });
+      document.querySelectorAll(".food-card:not(.hide)").forEach((card) => observer.observe(card));
+    }
+
+    function openDrawer(food) {
+      drawerMedia.innerHTML = "";
+      drawerMedia.appendChild(makeImage(food.image, food.name));
+      drawerKicker.textContent = `${food.area} / ${food.type}`;
+      drawerTitle.textContent = food.name;
+      drawerText.textContent = food.detail;
+      drawerChips.innerHTML = `
+        <span>${food.day}</span>
+        <span>${food.area}</span>
+        <span>${food.match}</span>
+        <span>高德POI：${food.poi}</span>
+      `;
+      drawerSource.href = food.source;
+      drawer.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove("open");
+      drawer.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    renderFilters();
+    renderCards();
+
+    filterBox.addEventListener("click", (event) => {
+      const button = event.target.closest(".filter");
+      if (!button) return;
+      document.querySelectorAll(".filter").forEach((item) => item.classList.remove("active"));
+      button.classList.add("active");
+      renderCards(button.dataset.filter);
+    });
+
+    drawer.addEventListener("click", (event) => {
+      if (event.target.matches("[data-close]")) closeDrawer();
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeDrawer();
+    });
+  </script>
+</body>
+</html>

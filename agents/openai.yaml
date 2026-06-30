@@ -1,0 +1,4 @@
+interface:
+  display_name: "马可波罗"
+  short_description: "分阶段规划旅行、预算、地图和手册"
+  default_prompt: "使用马可波罗帮我分阶段规划一次旅行。"

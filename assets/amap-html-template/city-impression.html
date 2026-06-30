@@ -1,0 +1,1564 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>南京·城市印象 | 三日旅行图像志</title>
+  <style>
+    :root {
+      --ink: #14110f;
+      --ink-2: #2b2520;
+      --rice: #f6efe2;
+      --paper: #fff8ec;
+      --paper-2: #eadcc4;
+      --cinnabar: #b63a24;
+      --cinnabar-2: #e05d33;
+      --jade: #1f776d;
+      --lake: #1b4f72;
+      --gold: #c69237;
+      --mist: rgba(255, 248, 236, .72);
+      --line: rgba(20, 17, 15, .16);
+      --shadow: 0 24px 80px rgba(20, 17, 15, .25);
+      --radius: 8px;
+      color-scheme: light;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--ink);
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      font-family: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "STSong", serif;
+      background:
+        linear-gradient(90deg, rgba(20, 17, 15, .045) 1px, transparent 1px) 0 0 / 72px 72px,
+        linear-gradient(180deg, var(--rice), #f2e3c8 54%, #e9d5b0);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 30;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255, 255, 255, .16), transparent 22%),
+        linear-gradient(rgba(255, 255, 255, .025), rgba(0, 0, 0, .025)),
+        repeating-linear-gradient(90deg, rgba(20, 17, 15, .025) 0 1px, transparent 1px 4px);
+      mix-blend-mode: multiply;
+      opacity: .54;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 80;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+    }
+
+    .progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--cinnabar), var(--gold), var(--jade));
+      box-shadow: 0 0 18px rgba(224, 93, 51, .42);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 92svh;
+      display: grid;
+      align-items: end;
+      overflow: hidden;
+      isolation: isolate;
+      color: var(--paper);
+      background: var(--ink);
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      background: linear-gradient(140deg, #2c2019, #0c1d21 52%, #111);
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.08);
+      filter: saturate(1.05) contrast(1.04);
+      animation: slow-drift 18s ease-in-out infinite alternate;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(20, 17, 15, .82), rgba(20, 17, 15, .36) 48%, rgba(20, 17, 15, .7)),
+        linear-gradient(180deg, rgba(20, 17, 15, .06), rgba(20, 17, 15, .58) 74%, rgba(20, 17, 15, .96));
+    }
+
+    .masthead {
+      position: absolute;
+      top: 24px;
+      left: clamp(18px, 5vw, 76px);
+      right: clamp(18px, 5vw, 76px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      z-index: 2;
+    }
+
+    .mark {
+      display: inline-grid;
+      grid-template-columns: 32px auto;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: .18em;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: rgba(255, 248, 236, .82);
+    }
+
+    .mark::before {
+      content: "";
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255, 248, 236, .7);
+      background:
+        linear-gradient(135deg, transparent 47%, rgba(255, 248, 236, .8) 48% 52%, transparent 53%),
+        linear-gradient(45deg, transparent 47%, rgba(198, 146, 55, .9) 48% 52%, transparent 53%);
+      transform: rotate(45deg);
+    }
+
+    .day-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 36px;
+      padding: 0 14px;
+      border: 1px solid rgba(255, 248, 236, .42);
+      border-radius: 999px;
+      background: rgba(20, 17, 15, .22);
+      backdrop-filter: blur(12px);
+      font-size: 13px;
+      color: rgba(255, 248, 236, .88);
+      white-space: nowrap;
+    }
+
+    .hero-inner {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 120px 0 64px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 20px;
+      color: rgba(255, 248, 236, .82);
+      font-size: clamp(13px, 1.4vw, 16px);
+      letter-spacing: .22em;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 54px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 1080px;
+      font-size: clamp(58px, 11vw, 148px);
+      line-height: .9;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-wrap: balance;
+      text-shadow: 0 16px 42px rgba(0, 0, 0, .42);
+    }
+
+    h1 span {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .hero-copy {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: end;
+      margin-top: 36px;
+    }
+
+    .hero-copy p {
+      max-width: 680px;
+      margin: 0;
+      color: rgba(255, 248, 236, .84);
+      font-size: clamp(18px, 2vw, 28px);
+      line-height: 1.75;
+      text-wrap: balance;
+    }
+
+    .enter {
+      display: inline-grid;
+      place-items: center;
+      width: 108px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 248, 236, .5);
+      border-radius: 50%;
+      background: rgba(255, 248, 236, .08);
+      color: var(--paper);
+      text-decoration: none;
+      transition: transform .35s ease, background .35s ease, border-color .35s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .enter:hover {
+      transform: rotate(8deg) scale(1.04);
+      background: rgba(182, 58, 36, .38);
+      border-color: rgba(255, 248, 236, .92);
+    }
+
+    .section {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: clamp(66px, 9vw, 128px) 0;
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: .72fr 1.28fr;
+      gap: clamp(28px, 6vw, 72px);
+      align-items: start;
+    }
+
+    .intro-title {
+      position: sticky;
+      top: 36px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--cinnabar);
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .eyebrow::after {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(34px, 6vw, 72px);
+      line-height: 1.03;
+      letter-spacing: 0;
+      font-weight: 900;
+      text-wrap: balance;
+    }
+
+    .intro-text {
+      border-left: 1px solid var(--line);
+      padding-left: clamp(20px, 4vw, 44px);
+    }
+
+    .intro-text p {
+      margin: 0 0 22px;
+      font-size: clamp(17px, 1.8vw, 22px);
+      line-height: 2;
+      color: rgba(20, 17, 15, .78);
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .metric {
+      min-height: 112px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 248, 236, .46);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 10px;
+      color: rgba(20, 17, 15, .58);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .chapter-strip {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(230px, 1fr));
+      gap: 14px;
+      margin-top: 42px;
+    }
+
+    .chapter {
+      position: relative;
+      min-height: 360px;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: var(--ink);
+      color: var(--paper);
+      box-shadow: 0 18px 46px rgba(20, 17, 15, .16);
+    }
+
+    .chapter img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .84;
+      transition: transform .7s ease, opacity .7s ease;
+    }
+
+    .chapter::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 20%, rgba(20, 17, 15, .84));
+    }
+
+    .chapter:hover img {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+
+    .chapter b {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 58px;
+      z-index: 1;
+      font-size: 28px;
+      line-height: 1.05;
+    }
+
+    .chapter span {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      z-index: 1;
+      color: rgba(255, 248, 236, .76);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .filters {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: 12px 18px;
+      background: rgba(246, 239, 226, .8);
+      border-block: 1px solid rgba(20, 17, 15, .08);
+      backdrop-filter: blur(18px);
+    }
+
+    .filter-track {
+      display: flex;
+      gap: 8px;
+      max-width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .filter-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-btn {
+      flex: 0 0 auto;
+      border: 1px solid rgba(20, 17, 15, .17);
+      border-radius: 999px;
+      background: rgba(255, 248, 236, .62);
+      color: rgba(20, 17, 15, .68);
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: color .25s ease, background .25s ease, border-color .25s ease, transform .25s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      color: var(--paper);
+      background: var(--ink);
+      border-color: var(--ink);
+      transform: translateY(-1px);
+    }
+
+    .gallery-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+      gap: 26px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .gallery-head p {
+      margin: 0;
+      color: rgba(20, 17, 15, .64);
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+
+    .spot-card {
+      --mx: 50%;
+      --my: 50%;
+      position: relative;
+      grid-column: span 4;
+      aspect-ratio: 4 / 5;
+      min-height: 0;
+      border: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      padding: 0;
+      text-align: left;
+      color: var(--paper);
+      background: var(--ink);
+      box-shadow: 0 18px 48px rgba(20, 17, 15, .14);
+      cursor: pointer;
+      transform: translateY(22px);
+      opacity: 0;
+      transition: transform .65s cubic-bezier(.2, .8, .2, 1), opacity .65s ease, box-shadow .35s ease;
+    }
+
+    .spot-card.revealed {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .spot-card.feature {
+      grid-column: span 4;
+      min-height: 0;
+    }
+
+    .spot-card.hide {
+      display: none;
+    }
+
+    .spot-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.02) contrast(1.02);
+      transition: transform .7s ease, filter .7s ease;
+    }
+
+    .spot-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(circle at var(--mx) var(--my), rgba(255, 248, 236, .2), transparent 24%),
+        linear-gradient(180deg, rgba(20, 17, 15, .08), rgba(20, 17, 15, .88) 82%);
+      opacity: .96;
+    }
+
+    .spot-card::after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      z-index: 2;
+      border: 1px solid rgba(255, 248, 236, .26);
+      border-radius: 4px;
+      pointer-events: none;
+      transform: scale(.985);
+      opacity: .5;
+      transition: transform .35s ease, opacity .35s ease;
+    }
+
+    .spot-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .spot-card:hover img {
+      transform: scale(1.06);
+      filter: saturate(1.14) contrast(1.08);
+    }
+
+    .spot-card:hover::after {
+      transform: scale(1);
+      opacity: .92;
+    }
+
+    .card-content {
+      position: absolute;
+      inset: auto 0 0;
+      z-index: 3;
+      padding: 28px;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .zone {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255, 248, 236, .72);
+      font-size: 12px;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .zone::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent, var(--gold));
+      box-shadow: 0 0 18px var(--accent, var(--gold));
+    }
+
+    .time {
+      color: rgba(255, 248, 236, .72);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .spot-card h3 {
+      margin: 0;
+      font-size: clamp(28px, 3.2vw, 44px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .spot-card p {
+      margin: 16px 0 0;
+      max-width: 42em;
+      color: rgba(255, 248, 236, .8);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      background:
+        linear-gradient(135deg, rgba(182, 58, 36, .74), rgba(31, 119, 109, .74)),
+        repeating-linear-gradient(45deg, rgba(255, 248, 236, .12) 0 1px, transparent 1px 14px);
+      color: var(--paper);
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .timeline {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .day-card {
+      min-height: 210px;
+      padding: 22px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(20, 17, 15, .12);
+      background: rgba(255, 248, 236, .52);
+      box-shadow: 0 18px 44px rgba(20, 17, 15, .08);
+    }
+
+    .day-card b {
+      display: block;
+      color: var(--cinnabar);
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .day-card h3 {
+      margin: 16px 0 12px;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .day-card p {
+      margin: 0;
+      color: rgba(20, 17, 15, .68);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .drawer {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: end;
+      pointer-events: none;
+    }
+
+    .drawer.open {
+      pointer-events: auto;
+    }
+
+    .drawer-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 17, 15, .58);
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
+
+    .drawer.open .drawer-backdrop {
+      opacity: 1;
+    }
+
+    .drawer-panel {
+      position: relative;
+      width: min(760px, calc(100% - 18px));
+      max-height: calc(100svh - 18px);
+      margin: 9px;
+      overflow: auto;
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      transform: translateX(28px);
+      opacity: 0;
+      transition: transform .35s cubic-bezier(.2, .8, .2, 1), opacity .35s ease;
+    }
+
+    .drawer.open .drawer-panel {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .drawer-media {
+      position: relative;
+      min-height: 330px;
+      background: var(--ink);
+      overflow: hidden;
+    }
+
+    .drawer-media img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .drawer-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255, 248, 236, .56);
+      border-radius: 50%;
+      background: rgba(20, 17, 15, .5);
+      color: var(--paper);
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+
+    .drawer-body {
+      padding: clamp(24px, 5vw, 44px);
+    }
+
+    .drawer-body h3 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1;
+    }
+
+    .drawer-body p {
+      margin: 20px 0 0;
+      color: rgba(20, 17, 15, .72);
+      font-size: 17px;
+      line-height: 2;
+    }
+
+    .drawer-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 26px;
+    }
+
+    .drawer-meta span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(20, 17, 15, .12);
+      background: rgba(234, 220, 196, .48);
+      color: rgba(20, 17, 15, .66);
+      font-size: 13px;
+    }
+
+    .source-link {
+      display: inline-block;
+      margin-top: 24px;
+      color: var(--jade);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    footer {
+      padding: 44px 18px 54px;
+      background: var(--ink);
+      color: rgba(255, 248, 236, .68);
+    }
+
+    .footer-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 520px);
+      gap: 24px;
+      align-items: start;
+    }
+
+    footer h2 {
+      color: var(--paper);
+      font-size: clamp(30px, 5vw, 58px);
+    }
+
+    footer p,
+    footer li {
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    footer ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .to-top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 70;
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(20, 17, 15, .16);
+      border-radius: 50%;
+      background: rgba(255, 248, 236, .86);
+      color: var(--ink);
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(20, 17, 15, .16);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .to-top.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes slow-drift {
+      from { transform: scale(1.08) translate3d(-1.4%, -1%, 0); }
+      to { transform: scale(1.14) translate3d(1.2%, 1%, 0); }
+    }
+
+    @media (max-width: 920px) {
+      .hero-copy,
+      .intro,
+      .gallery-head,
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .intro-title {
+        position: static;
+      }
+
+      .intro-text {
+        border-left: 0;
+        padding-left: 0;
+      }
+
+      .chapter-strip,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .spot-card,
+      .spot-card.feature {
+        grid-column: span 6;
+      }
+
+      .enter {
+        width: 88px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .masthead {
+        top: 16px;
+        align-items: flex-start;
+      }
+
+      .day-pill {
+        display: none;
+      }
+
+      .hero {
+        min-height: 88svh;
+      }
+
+      .hero-inner {
+        padding-bottom: 42px;
+      }
+
+      .hero-copy {
+        gap: 18px;
+      }
+
+      .metrics,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .cards {
+        display: block;
+      }
+
+      .spot-card,
+      .spot-card.feature {
+        width: 100%;
+        min-height: 0;
+        margin-bottom: 14px;
+      }
+
+      .card-content {
+        padding: 22px;
+      }
+
+      .drawer-panel {
+        width: calc(100% - 12px);
+        max-height: calc(100svh - 12px);
+        margin: 6px;
+      }
+
+      .drawer-media img {
+        height: 300px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <header class="hero" id="top">
+    <div class="hero-media">
+      <img src="https://store.is.autonavi.com/showpic/2b5070db544281e34500647f99447487" alt="秦淮河">
+    </div>
+    <div class="masthead">
+      <div class="mark">Nanjing Impression</div>
+      <div class="day-pill">2026.06.25 - 06.27 / 新街口出发</div>
+    </div>
+    <div class="hero-inner">
+      <div class="kicker">三日旅行图像志</div>
+      <h1><span>南京</span><span>城市印象</span></h1>
+      <div class="hero-copy">
+        <p>把山林、城墙、湖水、书店和夜色放在同一张长卷里。南京不是单一的古都，它更像一座慢慢翻开的城市相册，每一页都有温度、阴影和回声。</p>
+        <a class="enter" href="#gallery" aria-label="进入景点展示">进入</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section intro" id="impression">
+      <div class="intro-title">
+        <div class="eyebrow">City Texture</div>
+        <h2>这三天，看的是南京的层次。</h2>
+      </div>
+      <div class="intro-text">
+        <p>东郊的树影把城市放慢，秦淮的灯火把傍晚点亮；纪念馆让脚步沉下来，玄武湖又把视线打开。住在新街口，像把圆规扎在城市中心，向山、向河、向城墙一圈圈走出去。</p>
+        <p>这个页面不替代路线地图，它更像出发前的“景点图像志”：每一个地点都用图片、短文和停留气质标记出来，方便你快速建立南京的视觉记忆。</p>
+        <div class="metrics">
+          <div class="metric"><strong>20</strong><span>个旅行点位，覆盖山林、博物馆、秦淮、城北与城市记忆。</span></div>
+          <div class="metric"><strong>3</strong><span>个白天完成主线游玩，6月24只休整，6月27晚去扬州。</span></div>
+          <div class="metric"><strong>1</strong><span>个住宿锚点：新街口，方便每天回收体力与交通时间。</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="eyebrow">Impression Chapters</div>
+      <h2>四种南京气质</h2>
+      <div class="chapter-strip" aria-label="南京印象章节">
+        <article class="chapter">
+          <img src="https://store.is.autonavi.com/showpic/46bf800a21c42453ff756fc2b77c710f" alt="中山陵">
+          <b>山林与陵寝</b>
+          <span>钟山一线有南京最舒展的绿色，也有最庄重的轴线。</span>
+        </article>
+        <article class="chapter">
+          <img src="https://store.is.autonavi.com/showpic/8fd02cf1c04a8a5a91e32a5354d7a023" alt="夫子庙">
+          <b>秦淮与烟火</b>
+          <span>灯影贴着水面走，老门东与夫子庙把夜晚留给步行。</span>
+        </article>
+        <article class="chapter">
+          <img src="https://store.is.autonavi.com/showpic/86320c9712f056501ee51ad929a13033" alt="总统府">
+          <b>民国与书卷</b>
+          <span>总统府、颐和路、先锋书店，让南京的街巷带着纸页气。</span>
+        </article>
+        <article class="chapter">
+          <img src="https://store.is.autonavi.com/showpic/ff2f4114639e0110ae96ae76ad0c0287" alt="玄武湖">
+          <b>湖光与城墙</b>
+          <span>鸡鸣寺、台城与玄武湖连在一起，是城市北侧的开阔呼吸。</span>
+        </article>
+      </div>
+    </section>
+
+    <nav class="filters" aria-label="景点筛选">
+      <div class="filter-track" id="filters"></div>
+    </nav>
+
+    <section class="section" id="gallery">
+      <div class="gallery-head">
+        <div>
+          <div class="eyebrow">Attraction Gallery</div>
+          <h2>景点图像志</h2>
+        </div>
+        <p>按实际行程点位整理。图片以远程链接加载，文案偏向旅行感受；涉及开放、预约、票价仍以出发前清单和官方渠道为准。</p>
+      </div>
+      <div class="cards" id="cards"></div>
+
+      <div class="timeline" aria-label="三日行程摘要">
+        <article class="day-card">
+          <b>Day 1 / 06.25</b>
+          <h3>东郊钟山线</h3>
+          <p>梧桐大道、明孝陵、美龄宫、中山陵、音乐台、灵谷寺，最后回到科巷吃晚饭。</p>
+        </article>
+        <article class="day-card">
+          <b>Day 2 / 06.26</b>
+          <h3>颐和路与秦淮夜色</h3>
+          <p>从颐和路和先锋书店开始，经纪念馆、大报恩寺，收在老门东、夫子庙和秦淮河。</p>
+        </article>
+        <article class="day-card">
+          <b>Day 3 / 06.27</b>
+          <h3>博物馆、总统府、城北收尾</h3>
+          <p>南京博物院、总统府、六朝博物馆、鸡鸣寺、城墙与玄武湖，傍晚取行李去扬州。</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-backdrop" data-close></div>
+    <section class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <button class="drawer-close" type="button" data-close aria-label="关闭">×</button>
+      <div class="drawer-media" id="drawerMedia"></div>
+      <div class="drawer-body">
+        <div class="eyebrow" id="drawerZone"></div>
+        <h3 id="drawerTitle"></h3>
+        <p id="drawerText"></p>
+        <div class="drawer-meta" id="drawerMeta"></div>
+        <a class="source-link" id="drawerSource" href="#" target="_blank" rel="noopener noreferrer">查看图片来源</a>
+      </div>
+    </section>
+  </aside>
+
+  <a class="to-top" id="toTop" href="#top" aria-label="返回顶部">↑</a>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="eyebrow">Remote Assets</div>
+        <h2>单文件页面，图片远程加载。</h2>
+      </div>
+      <div>
+        <p>页面本体不下载本地图片。主要图源来自高德 POI 的 photos.url，并统一使用 HTTPS 远程加载；街区类点位优先选对应街区或市集 POI，不再使用相似景点图片冒充。若远程图临时不可用，卡片会显示内置色块兜底。</p>
+        <ul>
+          <li>地图执行页：同目录 <code>map.html</code></li>
+          <li>展示页面：<code>city-impression.html</code></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const imagePool = {
+      wutong: {
+        url: "https://store.is.autonavi.com/showpic/5660bca609524760f353bb4013ebe2ac",
+        poi: "南京梧桐大道(陵园路)",
+        source: "https://www.amap.com/search?query=%E5%8D%97%E4%BA%AC%E6%A2%A7%E6%A1%90%E5%A4%A7%E9%81%93(%E9%99%B5%E5%9B%AD%E8%B7%AF)",
+        match: "真实地点图"
+      },
+      ming: {
+        url: "https://store.is.autonavi.com/showpic/a9d8eb4d58561ffda8bb4ff08c8a4d2c",
+        poi: "明孝陵景区",
+        source: "https://www.amap.com/search?query=%E6%98%8E%E5%AD%9D%E9%99%B5%E6%99%AF%E5%8C%BA",
+        match: "真实地点图"
+      },
+      meiling: {
+        url: "https://store.is.autonavi.com/showpic/96b770335df1cbccbde50d714594dd78",
+        poi: "美龄宫",
+        source: "https://www.amap.com/search?query=%E7%BE%8E%E9%BE%84%E5%AE%AB",
+        match: "真实地点图"
+      },
+      zhongshan: {
+        url: "https://store.is.autonavi.com/showpic/46bf800a21c42453ff756fc2b77c710f",
+        poi: "中山陵景区",
+        source: "https://www.amap.com/search?query=%E4%B8%AD%E5%B1%B1%E9%99%B5%E6%99%AF%E5%8C%BA",
+        match: "真实地点图"
+      },
+      music: {
+        url: "https://store.is.autonavi.com/showpic/5f6f0991725450e2b8303b86403ffae2",
+        poi: "钟山风景名胜区中山陵景区音乐台",
+        source: "https://www.amap.com/search?query=%E9%92%9F%E5%B1%B1%E9%A3%8E%E6%99%AF%E5%90%8D%E8%83%9C%E5%8C%BA%E4%B8%AD%E5%B1%B1%E9%99%B5%E6%99%AF%E5%8C%BA%E9%9F%B3%E4%B9%90%E5%8F%B0",
+        match: "真实地点图"
+      },
+      linggu: {
+        url: "https://store.is.autonavi.com/showpic/30398af21636202303342b514bf2502c",
+        poi: "灵谷寺",
+        source: "https://www.amap.com/search?query=%E7%81%B5%E8%B0%B7%E5%AF%BA",
+        match: "真实地点图"
+      },
+      kexiang: {
+        url: "https://store.is.autonavi.com/query_pic?id=stb91c96f0-d440-410d-8d4a-9a6c915e02cd&user=search&operate=original",
+        poi: "科巷美食市集",
+        source: "https://www.amap.com/search?query=%E7%A7%91%E5%B7%B7%E7%BE%8E%E9%A3%9F%E5%B8%82%E9%9B%86",
+        match: "片区真实图"
+      },
+      yihe: {
+        url: "https://aos-comment.amap.com/B0LBSDSACJ/comment/6F430E18_1D36_484B_A7A4_BDF1122538CD_L0_001_1206_153_1766588939889_88557038.jpg",
+        poi: "颐和路历史文化街区",
+        source: "https://www.amap.com/search?query=%E9%A2%90%E5%92%8C%E8%B7%AF%E5%8E%86%E5%8F%B2%E6%96%87%E5%8C%96%E8%A1%97%E5%8C%BA",
+        match: "真实地点图"
+      },
+      pioneer: {
+        url: "https://store.is.autonavi.com/showpic/63b9a0ce56fb77fc8c7219db7b8facbd",
+        poi: "先锋书店(五台山总店)",
+        source: "https://www.amap.com/search?query=%E5%85%88%E9%94%8B%E4%B9%A6%E5%BA%97(%E4%BA%94%E5%8F%B0%E5%B1%B1%E6%80%BB%E5%BA%97)",
+        match: "真实地点图"
+      },
+      memorial: {
+        url: "https://store.is.autonavi.com/showpic/5bece6e3e3e4e0203fe0f2962394a46d",
+        poi: "侵华日军南京大屠杀遇难同胞纪念馆",
+        source: "https://www.amap.com/search?query=%E4%BE%B5%E5%8D%8E%E6%97%A5%E5%86%9B%E5%8D%97%E4%BA%AC%E5%A4%A7%E5%B1%A0%E6%9D%80%E9%81%87%E9%9A%BE%E5%90%8C%E8%83%9E%E7%BA%AA%E5%BF%B5%E9%A6%86",
+        match: "真实地点图"
+      },
+      baoen: {
+        url: "https://store.is.autonavi.com/showpic/841194e69d2da587d4f4032d6516c27f",
+        poi: "大报恩寺遗址景区",
+        source: "https://www.amap.com/search?query=%E5%A4%A7%E6%8A%A5%E6%81%A9%E5%AF%BA%E9%81%97%E5%9D%80%E6%99%AF%E5%8C%BA",
+        match: "真实地点图"
+      },
+      laomendong: {
+        url: "https://store.is.autonavi.com/showpic/69e7ca3e4d0357955c61d1ec1682a587",
+        poi: "老门东",
+        source: "https://www.amap.com/search?query=%E8%80%81%E9%97%A8%E4%B8%9C",
+        match: "真实地点图"
+      },
+      fuzimiao: {
+        url: "https://store.is.autonavi.com/showpic/8fd02cf1c04a8a5a91e32a5354d7a023",
+        poi: "南京夫子庙",
+        source: "https://www.amap.com/search?query=%E5%8D%97%E4%BA%AC%E5%A4%AB%E5%AD%90%E5%BA%99",
+        match: "真实地点图"
+      },
+      qinhuai: {
+        url: "https://store.is.autonavi.com/showpic/2b5070db544281e34500647f99447487",
+        poi: "秦淮河",
+        source: "https://www.amap.com/search?query=%E7%A7%A6%E6%B7%AE%E6%B2%B3",
+        match: "真实地点图"
+      },
+      museum: {
+        url: "https://store.is.autonavi.com/showpic/6d9679442d9f514b78d55213b43d9417",
+        poi: "南京博物院",
+        source: "https://www.amap.com/search?query=%E5%8D%97%E4%BA%AC%E5%8D%9A%E7%89%A9%E9%99%A2",
+        match: "真实地点图"
+      },
+      palace: {
+        url: "https://store.is.autonavi.com/showpic/86320c9712f056501ee51ad929a13033",
+        poi: "总统府",
+        source: "https://www.amap.com/search?query=%E6%80%BB%E7%BB%9F%E5%BA%9C",
+        match: "真实地点图"
+      },
+      six: {
+        url: "https://store.is.autonavi.com/showpic/de50004f8b367977e4d6a3543890a578",
+        poi: "六朝博物馆",
+        source: "https://www.amap.com/search?query=%E5%85%AD%E6%9C%9D%E5%8D%9A%E7%89%A9%E9%A6%86",
+        match: "真实地点图"
+      },
+      jiming: {
+        url: "https://store.is.autonavi.com/query_pic?id=st653d2760-3b45-47e5-ad2c-7a027aea5997&user=search&operate=original",
+        poi: "古鸡鸣寺",
+        source: "https://www.amap.com/search?query=%E5%8F%A4%E9%B8%A1%E9%B8%A3%E5%AF%BA",
+        match: "真实地点图"
+      },
+      wall: {
+        url: "https://store.is.autonavi.com/showpic/3d8ad5609f485a1e0000002244734512?type=pic",
+        poi: "南京城墙台城景区",
+        source: "https://www.amap.com/search?query=%E5%8D%97%E4%BA%AC%E5%9F%8E%E5%A2%99%E5%8F%B0%E5%9F%8E%E6%99%AF%E5%8C%BA",
+        match: "真实地点图"
+      },
+      lake: {
+        url: "https://store.is.autonavi.com/showpic/ff2f4114639e0110ae96ae76ad0c0287",
+        poi: "玄武湖景区",
+        source: "https://www.amap.com/search?query=%E7%8E%84%E6%AD%A6%E6%B9%96%E6%99%AF%E5%8C%BA",
+        match: "真实地点图"
+      },
+      xinjiekou: {
+        url: "https://store.is.autonavi.com/showpic/853a12134a063d2a01ea09a6d6e177cc",
+        poi: "新街口",
+        source: "https://www.amap.com/search?query=%E6%96%B0%E8%A1%97%E5%8F%A3",
+        match: "真实地点图"
+      }
+    };
+
+    const spots = [
+      {
+        name: "梧桐大道",
+        group: "东郊山林",
+        mood: "树影",
+        time: "Day 1 上午",
+        image: imagePool.wutong,
+        accent: "#1f776d",
+        feature: true,
+        text: "树冠在路面上合拢，阳光被筛成细碎的金色。它不是一个匆忙打卡点，更像进入钟山前的开场白。",
+        detail: "适合慢慢走，不必把它当成单独景区。把脚步放轻，先让自己从城市节奏里降下来，再进入明孝陵和美龄宫。六月树荫很有用，但也要留意补水。"
+      },
+      {
+        name: "明孝陵",
+        group: "东郊山林",
+        mood: "陵寝",
+        time: "Day 1 上午",
+        image: imagePool.ming,
+        accent: "#1f776d",
+        feature: false,
+        text: "石像路沉稳，红墙与树色把明代气象压得很低。这里适合用半天里最清醒的时间进入。",
+        detail: "明孝陵的重点不是跑完所有角落，而是看神道、石刻、红墙与林木之间的比例。建议上午完成，光线和体力都更适合。"
+      },
+      {
+        name: "美龄宫",
+        group: "东郊山林",
+        mood: "民国",
+        time: "Day 1 中午前后",
+        image: imagePool.meiling,
+        accent: "#c69237",
+        feature: false,
+        text: "绿色屋顶藏在山色里，像一枚旧时代的胸针。它的美不张扬，胜在轮廓和细部。",
+        detail: "美龄宫适合安排在明孝陵之后、中山陵之前。停留时间不宜拉太长，重点看建筑外观、室内陈设和窗外的钟山绿意。"
+      },
+      {
+        name: "中山陵",
+        group: "东郊山林",
+        mood: "轴线",
+        time: "Day 1 下午",
+        image: imagePool.zhongshan,
+        accent: "#1b4f72",
+        feature: true,
+        text: "长阶把视线抬高，蓝瓦、白墙和山势连成一条清晰的线。南京在这里显得庄重、开阔。",
+        detail: "这一天最需要体力的点之一。台阶和人流都会消耗时间，建议把节奏留松一点；若遇高温，减少停留拍照，保留后续音乐台和灵谷寺的体力。"
+      },
+      {
+        name: "中山陵音乐台",
+        group: "东郊山林",
+        mood: "白鸽",
+        time: "Day 1 下午",
+        image: imagePool.music,
+        accent: "#c69237",
+        feature: false,
+        text: "弧形看台把声音、树影和风都收进来。它比中山陵轻盈，是钟山线里最有呼吸感的一站。",
+        detail: "适合短暂停留，坐一会儿比匆忙拍照更好。若当天体力下降，可把它作为中山陵后的缓冲点。"
+      },
+      {
+        name: "灵谷寺",
+        group: "东郊山林",
+        mood: "幽深",
+        time: "Day 1 傍晚前",
+        image: imagePool.linggu,
+        accent: "#1f776d",
+        feature: false,
+        text: "钟山深处的安静会把游客声浪慢慢滤掉。这里适合给第一天一个清凉、沉静的尾声。",
+        detail: "灵谷寺是 Day 1 的体力弹性点。如果前面耗时过久，可只取核心区域；如果状态不错，它会让钟山线更完整。"
+      },
+      {
+        name: "科巷",
+        group: "民国与书卷",
+        mood: "烟火",
+        time: "Day 1 晚餐",
+        image: imagePool.kexiang,
+        accent: "#e05d33",
+        feature: false,
+        text: "从山里回到城中，科巷用小吃和人声把一天落到胃里。它的价值是顺路、热闹、选择多。",
+        detail: "科巷离新街口近，适合作为 Day 1 晚餐弹性点。钟山线太累就直接回酒店，科巷可挪到 Day 3 午餐。"
+      },
+      {
+        name: "颐和路",
+        group: "民国与书卷",
+        mood: "街区",
+        time: "Day 2 上午",
+        image: imagePool.yihe,
+        accent: "#c69237",
+        feature: true,
+        text: "梧桐、院墙和老房子的比例很南京。这里不靠宏大取胜，靠的是街角的克制和生活的余温。",
+        detail: "颐和路适合步行，不建议赶路式穿过。把它看成城市街区，而不是单个景点，会更舒服。天气热时控制步行长度。"
+      },
+      {
+        name: "先锋书店",
+        group: "民国与书卷",
+        mood: "纸页",
+        time: "Day 2 上午",
+        image: imagePool.pioneer,
+        accent: "#1b4f72",
+        feature: false,
+        text: "书店把南京的文艺气收束在地下空间里。纸页、灯光和人群，给上午添一点柔软。",
+        detail: "把它作为颐和路后的室内缓冲很好。适合短暂停留、买明信片或翻书，不宜占用过多纪念馆前的时间。"
+      },
+      {
+        name: "侵华日军南京大屠杀遇难同胞纪念馆",
+        group: "城市记忆",
+        mood: "肃穆",
+        time: "Day 2 中午前后",
+        image: imagePool.memorial,
+        accent: "#2b2520",
+        feature: true,
+        text: "这不是普通景点，是南京必须被认真面对的一页。安静、克制、留出时间，是对这里最基本的尊重。",
+        detail: "建议提前预约，现场保持安静。不要把这段安排得太紧，也不建议刚结束就立刻进入过度喧闹的活动，中间可留一段交通和休息缓冲。"
+      },
+      {
+        name: "大报恩寺",
+        group: "秦淮夜色",
+        mood: "塔影",
+        time: "Day 2 下午",
+        image: imagePool.baoen,
+        accent: "#c69237",
+        feature: false,
+        text: "遗址与当代展陈叠在一起，像南京把旧塔影重新点亮。它适合作为进入南城夜色前的过渡。",
+        detail: "大报恩寺的位置适合接老门东、夫子庙。若当天纪念馆停留较久，可以压缩这里的参观时长，保留傍晚后的秦淮体验。"
+      },
+      {
+        name: "老门东",
+        group: "秦淮夜色",
+        mood: "巷陌",
+        time: "Day 2 傍晚",
+        image: imagePool.laomendong,
+        accent: "#e05d33",
+        feature: false,
+        text: "青砖墙、窄巷和小吃摊把南城气息堆起来。它适合黄昏后进入，边走边吃最自然。",
+        detail: "老门东是 Day 2 晚餐主场之一。商业化明显，但动线顺、选择多，作为从大报恩寺到夫子庙的过渡很实用。"
+      },
+      {
+        name: "夫子庙",
+        group: "秦淮夜色",
+        mood: "灯市",
+        time: "Day 2 夜间",
+        image: imagePool.fuzimiao,
+        accent: "#e05d33",
+        feature: false,
+        text: "人潮和灯牌会把夜晚推得很满。它不一定清净，却很像南京最外放的一面。",
+        detail: "建议把夫子庙看成夜游片区，不必执着每个店。人多时控制购物和排队，把时间留给秦淮河沿岸散步。"
+      },
+      {
+        name: "秦淮河",
+        group: "秦淮夜色",
+        mood: "水光",
+        time: "Day 2 夜间",
+        image: imagePool.qinhuai,
+        accent: "#1b4f72",
+        feature: true,
+        text: "灯影在水面铺开，桥与船把旧故事变得可见。南京的夜色，最好沿着河慢慢看。",
+        detail: "夜景是这一天的收束点。是否坐船看预算和现场排队情况；即使不坐船，沿河步行也足够形成记忆点。"
+      },
+      {
+        name: "南京博物院",
+        group: "民国与书卷",
+        mood: "器物",
+        time: "Day 3 上午",
+        image: imagePool.museum,
+        accent: "#c69237",
+        feature: true,
+        text: "南博把时间陈列得很有秩序。器物、展厅和民国馆，让南京从地理城市变成历史城市。",
+        detail: "建议提前预约，并把它放在 Day 3 上午。展馆选择要有取舍，重点看历史馆与民国馆，避免把上午全部耗尽。"
+      },
+      {
+        name: "总统府",
+        group: "民国与书卷",
+        mood: "院落",
+        time: "Day 3 中午前后",
+        image: imagePool.palace,
+        accent: "#1b4f72",
+        feature: false,
+        text: "院落、回廊和办公室保存着近代南京的复杂气息。它离热闹很近，却自带一种旧秩序。",
+        detail: "总统府适合和六朝博物馆连在一起。注意闭馆和停止入园时间，Day 3 需要给取行李和去南京南留出余量。"
+      },
+      {
+        name: "六朝博物馆",
+        group: "民国与书卷",
+        mood: "建康",
+        time: "Day 3 下午",
+        image: imagePool.six,
+        accent: "#1f776d",
+        feature: false,
+        text: "它把南京更早的名字轻轻翻出来。看完总统府再来这里，城市的纵深会突然加厚。",
+        detail: "六朝博物馆体量比南博更轻，适合作为 Day 3 下午衔接点。若前面耗时，可保留核心展厅即可。"
+      },
+      {
+        name: "鸡鸣寺",
+        group: "城墙湖寺",
+        mood: "寺院",
+        time: "Day 3 下午",
+        image: imagePool.jiming,
+        accent: "#e05d33",
+        feature: false,
+        text: "寺在城里，却有一段向上的安静。登高之后，南京的屋顶、城墙和湖水会一起出现。",
+        detail: "鸡鸣寺适合接台城段城墙。六月不是樱花季，但寺院、坡道与视野仍然值得停留。注意台阶和天气。"
+      },
+      {
+        name: "南京城墙",
+        group: "城墙湖寺",
+        mood: "台城",
+        time: "Day 3 下午",
+        image: imagePool.wall,
+        accent: "#c69237",
+        feature: false,
+        text: "城墙是南京最有力的线条。走在台城段，脚下是砖，眼前是玄武湖和现代城市。",
+        detail: "推荐台城段，因为它能自然衔接鸡鸣寺和玄武湖。不要走太长，Day 3 关键是漂亮收尾而不是消耗殆尽。"
+      },
+      {
+        name: "玄武湖",
+        group: "城墙湖寺",
+        mood: "湖风",
+        time: "Day 3 傍晚前",
+        image: imagePool.lake,
+        accent: "#1b4f72",
+        feature: true,
+        text: "湖面把城市边界推远，风一吹，三天的密度会松下来。它适合作为离开南京前的缓冲。",
+        detail: "只安排短走即可，不必完整绕湖。视体力选择靠近城墙的一段，之后回新街口取行李，再去南京南站。"
+      },
+      {
+        name: "新街口",
+        group: "民国与书卷",
+        mood: "中心",
+        time: "每日出发",
+        image: imagePool.xinjiekou,
+        accent: "#b63a24",
+        feature: false,
+        text: "它是这三天的圆心。白天从这里出发，夜里回到这里，南京的效率感和烟火气都在这里汇合。",
+        detail: "住宿放新街口的价值在于交通和餐饮选择。每天不要把最后一段安排得太复杂，回到这里就能迅速休整。"
+      }
+    ];
+
+    const filters = ["全部", "东郊山林", "秦淮夜色", "民国与书卷", "城墙湖寺", "城市记忆"];
+    const filterBox = document.getElementById("filters");
+    const cardsBox = document.getElementById("cards");
+    const drawer = document.getElementById("drawer");
+    const drawerMedia = document.getElementById("drawerMedia");
+    const drawerZone = document.getElementById("drawerZone");
+    const drawerTitle = document.getElementById("drawerTitle");
+    const drawerText = document.getElementById("drawerText");
+    const drawerMeta = document.getElementById("drawerMeta");
+    const drawerSource = document.getElementById("drawerSource");
+    const progressBar = document.getElementById("progressBar");
+    const toTop = document.getElementById("toTop");
+
+    function makeImage(src, alt) {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = alt;
+      img.loading = "lazy";
+      img.referrerPolicy = "no-referrer";
+      img.addEventListener("error", () => {
+        const fallback = document.createElement("div");
+        fallback.className = "fallback";
+        fallback.textContent = alt;
+        img.replaceWith(fallback);
+      });
+      return img;
+    }
+
+    function renderFilters() {
+      filterBox.innerHTML = filters.map((name) => (
+        `<button type="button" class="filter-btn${name === "全部" ? " active" : ""}" data-filter="${name}">${name}</button>`
+      )).join("");
+    }
+
+    function renderCards(active = "全部") {
+      cardsBox.innerHTML = "";
+      spots.forEach((spot, index) => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = `spot-card${spot.feature ? " feature" : ""}`;
+        card.style.setProperty("--accent", spot.accent);
+        card.style.transitionDelay = `${Math.min(index * 28, 280)}ms`;
+        card.dataset.group = spot.group;
+        if (active !== "全部" && spot.group !== active) card.classList.add("hide");
+        card.appendChild(makeImage(spot.image.url, spot.name));
+        card.insertAdjacentHTML("beforeend", `
+          <div class="card-content">
+            <div class="card-top">
+              <span class="zone">${spot.group} / ${spot.mood}</span>
+              <span class="time">${spot.time}</span>
+            </div>
+            <h3>${spot.name}</h3>
+            <p>${spot.text}</p>
+          </div>
+        `);
+        card.addEventListener("pointermove", (event) => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty("--mx", `${((event.clientX - rect.left) / rect.width) * 100}%`);
+          card.style.setProperty("--my", `${((event.clientY - rect.top) / rect.height) * 100}%`);
+        });
+        card.addEventListener("click", () => openDrawer(spot));
+        cardsBox.appendChild(card);
+      });
+      observeCards();
+    }
+
+    function observeCards() {
+      const cards = document.querySelectorAll(".spot-card:not(.hide)");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .12 });
+      cards.forEach((card) => observer.observe(card));
+    }
+
+    function openDrawer(spot) {
+      drawerMedia.innerHTML = "";
+      drawerMedia.appendChild(makeImage(spot.image.url, spot.name));
+      drawerZone.textContent = `${spot.group} / ${spot.mood}`;
+      drawerTitle.textContent = spot.name;
+      drawerText.textContent = spot.detail;
+      drawerMeta.innerHTML = `
+        <span>${spot.time}</span>
+        <span>${spot.group}</span>
+        <span>${spot.mood}</span>
+        <span>${spot.image.match}</span>
+        <span>高德POI：${spot.image.poi}</span>
+      `;
+      drawerSource.href = spot.image.source;
+      drawerSource.textContent = "查看高德图片来源";
+      drawer.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove("open");
+      drawer.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    function updateProgress() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = max > 0 ? window.scrollY / max : 0;
+      progressBar.style.width = `${Math.max(0, Math.min(1, ratio)) * 100}%`;
+      toTop.classList.toggle("show", window.scrollY > window.innerHeight * .7);
+    }
+
+    renderFilters();
+    renderCards();
+
+    filterBox.addEventListener("click", (event) => {
+      const button = event.target.closest(".filter-btn");
+      if (!button) return;
+      document.querySelectorAll(".filter-btn").forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+      renderCards(button.dataset.filter);
+    });
+
+    drawer.addEventListener("click", (event) => {
+      if (event.target.matches("[data-close]")) closeDrawer();
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeDrawer();
+    });
+
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    updateProgress();
+  </script>
+</body>
+</html>
