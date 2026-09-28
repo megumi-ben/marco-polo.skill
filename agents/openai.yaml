@@ -1,4 +1,4 @@
 interface:
-  display_name: "马可波罗"
-  short_description: "分阶段规划旅行、预算、地图和手册"
-  default_prompt: "使用马可波罗帮我分阶段规划一次旅行。"
+  display_name: "马可波罗 · 单城市旅行规划"
+  short_description: "先选住宿与景点，再按高德坐标和真实交通规划每日路线、预约与人均预算"
+  default_prompt: "使用 $marco-polo 帮我规划一次单城市旅行，先确认需求和景点选择，再安排路线并生成地图。"

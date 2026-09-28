@@ -2,1229 +2,141 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>南京三日路线地图</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>马可波罗 · 旅行地图</title>
   <style>
-    :root {
-      --ink: #17201d;
-      --muted: #65706b;
-      --paper: #f5efe3;
-      --panel: rgba(255, 252, 244, 0.95);
-      --line: rgba(23, 32, 29, 0.14);
-      --shadow: 0 18px 44px rgba(28, 35, 32, 0.18);
-      --day1: #00897b;
-      --day2: #e4572e;
-      --day3: #3f51b5;
-      --food: #d58a00;
-      --warn: #b4512f;
-      --ok: #2b7351;
-      --station: #202020;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--ink);
-      background: var(--paper);
-      font-family: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      letter-spacing: 0;
-    }
-
-    button {
-      border: 0;
-      font: inherit;
-      letter-spacing: 0;
-    }
-
-    .app {
-      display: grid;
-      grid-template-columns: minmax(360px, 440px) minmax(0, 1fr);
-      min-height: 100vh;
-      overflow: hidden;
-      transition: grid-template-columns 220ms ease;
-    }
-
-    .app.sidebar-collapsed {
-      grid-template-columns: 0 minmax(0, 1fr);
-    }
-
-    aside {
-      position: relative;
-      z-index: 4;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      max-height: 100vh;
-      padding: 22px 20px;
-      overflow: hidden;
-      border-right: 1px solid var(--line);
-      background:
-        linear-gradient(145deg, rgba(0, 137, 123, 0.14), transparent 34%),
-        linear-gradient(28deg, rgba(228, 87, 46, 0.13), transparent 42%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 249, 238, 0.94));
-      box-shadow: var(--shadow);
-      transition: transform 220ms ease, opacity 180ms ease;
-    }
-
-    .app.sidebar-collapsed aside {
-      transform: translateX(-100%);
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .sidebar-toggle {
-      position: fixed;
-      z-index: 8;
-      left: 376px;
-      top: 20px;
-      display: grid;
-      place-items: center;
-      width: 38px;
-      height: 38px;
-      padding: 0;
-      border: 1px solid rgba(23, 32, 29, 0.14);
-      border-radius: 50%;
-      background: rgba(255, 252, 244, 0.92);
-      color: var(--ink);
-      box-shadow: 0 12px 26px rgba(21, 31, 27, 0.14);
-      backdrop-filter: blur(12px);
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 900;
-      transition: left 220ms ease, transform 160ms ease, background 160ms ease;
-    }
-
-    .sidebar-toggle:hover {
-      transform: translateY(-1px);
-      background: #fff;
-    }
-
-    .app.sidebar-collapsed .sidebar-toggle {
-      left: 18px;
-    }
-
-    .sidebar-toggle .toggle-icon {
-      display: inline-block;
-      width: 18px;
-      text-align: center;
-      font-size: 24px;
-      line-height: 1;
-      transform: translateY(-1px);
-    }
-
-    .toggle-text {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-    }
-
-    .brand {
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      color: var(--day1);
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .kicker::before {
-      content: "";
-      flex: 0 0 auto;
-      width: 30px;
-      height: 3px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--day1) 0 33%, var(--day2) 33% 66%, var(--day3) 66% 100%);
-      box-shadow: none;
-    }
-
-    h1 {
-      margin: 0;
-      font-family: Georgia, "Songti SC", "SimSun", serif;
-      font-size: 34px;
-      line-height: 1.05;
-      font-weight: 700;
-    }
-
-    .summary {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.65;
-    }
-
-    .toolbar {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .toolbar button,
-    .day-tabs button,
-    .utility button {
-      min-height: 38px;
-      padding: 0 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.78);
-      color: var(--ink);
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 850;
-      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
-    }
-
-    .toolbar button:hover,
-    .day-tabs button:hover,
-    .utility button:hover {
-      transform: translateY(-1px);
-      background: #fff;
-      border-color: rgba(0, 137, 123, 0.45);
-    }
-
-    .day-tabs {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
-      margin-top: 14px;
-    }
-
-    .day-tabs button.active {
-      color: #fff;
-      background: var(--ink);
-      border-color: var(--ink);
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .stat {
-      padding: 10px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.64);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 18px;
-      line-height: 1.1;
-    }
-
-    .stat span {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.35;
-    }
-
-    .timeline {
-      flex: 1;
-      min-height: 0;
-      margin-top: 14px;
-      padding-right: 2px;
-      overflow: auto;
-    }
-
-    .day-block {
-      margin-bottom: 16px;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.62);
-    }
-
-    .day-block.hidden { display: none; }
-
-    .day-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-
-    .day-head h2 {
-      margin: 0;
-      font-size: 16px;
-      line-height: 1.35;
-    }
-
-    .day-head p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .badge {
-      flex: 0 0 auto;
-      padding: 5px 8px;
-      border-radius: 999px;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .day1-bg { background: var(--day1); }
-    .day2-bg { background: var(--day2); }
-    .day3-bg { background: var(--day3); }
-
-    .stop-list {
-      display: grid;
-      gap: 7px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .stop {
-      display: grid;
-      grid-template-columns: 34px 1fr;
-      gap: 9px;
-      align-items: start;
-      padding: 10px;
-      border: 1px solid rgba(23, 32, 29, 0.10);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.7);
-      cursor: pointer;
-      transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
-    }
-
-    .stop:hover,
-    .stop.active {
-      transform: translateY(-1px);
-      border-color: rgba(0, 137, 123, 0.45);
-      box-shadow: 0 10px 22px rgba(31, 40, 37, 0.10);
-    }
-
-    .num {
-      display: grid;
-      place-items: center;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 900;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .day1 .num { background: var(--day1); }
-    .day2 .num { background: var(--day2); }
-    .day3 .num { background: var(--day3); }
-    .num.home { background: var(--ok); }
-    .num.station { background: var(--station); }
-
-    .stop-name {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 900;
-      line-height: 1.3;
-    }
-
-    .stop-time {
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .stop-note {
-      display: block;
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .map-shell {
-      position: relative;
-      min-height: 100vh;
-      background: #d7dfd8;
-    }
-
-    #map {
-      position: absolute;
-      inset: 0;
-    }
-
-    .top-card {
-      position: absolute;
-      z-index: 3;
-      top: 18px;
-      left: 18px;
-      right: 18px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 14px;
-      align-items: center;
-      max-width: 820px;
-      padding: 14px 16px;
-      border: 1px solid rgba(255, 255, 255, 0.72);
-      border-radius: 8px;
-      background: rgba(255, 252, 244, 0.86);
-      box-shadow: 0 14px 32px rgba(21, 31, 27, 0.14);
-      backdrop-filter: blur(14px);
-      transition: transform 180ms ease, opacity 160ms ease;
-    }
-
-    .app.top-collapsed .top-card {
-      transform: translateY(calc(-100% - 22px));
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .floating-control {
-      position: absolute;
-      z-index: 5;
-      display: grid;
-      place-items: center;
-      width: 38px;
-      height: 38px;
-      border: 1px solid rgba(23, 32, 29, 0.14);
-      border-radius: 50%;
-      background: rgba(255, 252, 244, 0.93);
-      color: var(--ink);
-      box-shadow: 0 12px 26px rgba(21, 31, 27, 0.14);
-      backdrop-filter: blur(12px);
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: 950;
-      transition: transform 160ms ease, background 160ms ease, opacity 160ms ease;
-    }
-
-    .floating-control:hover {
-      transform: translateY(-1px);
-      background: #fff;
-    }
-
-    .top-toggle {
-      top: 12px;
-      right: 12px;
-    }
-
-    .top-close-icon {
-      top: -14px;
-      right: -14px;
-    }
-
-    .detail-toggle {
-      right: 18px;
-      bottom: 18px;
-    }
-
-    .app:not(.top-collapsed) .top-open-icon {
-      display: none;
-    }
-
-    .app.top-collapsed .top-close-icon {
-      display: none;
-    }
-
-    .top-card strong {
-      display: block;
-      font-size: 14px;
-      line-height: 1.35;
-    }
-
-    .top-card span {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .utility {
-      display: flex;
-      gap: 8px;
-    }
-
-    .detail {
-      position: absolute;
-      z-index: 3;
-      right: 18px;
-      bottom: 18px;
-      width: min(430px, calc(100% - 36px));
-      max-height: min(62vh, 560px);
-      overflow: auto;
-      border: 1px solid rgba(255, 255, 255, 0.75);
-      border-radius: 8px;
-      background: rgba(255, 252, 244, 0.94);
-      box-shadow: 0 18px 40px rgba(21, 31, 27, 0.18);
-      backdrop-filter: blur(16px);
-      transition: transform 180ms ease, opacity 160ms ease;
-    }
-
-    .detail.empty {
-      display: none;
-    }
-
-    .app.detail-collapsed .detail:not(.empty) {
-      transform: translateY(18px);
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .app:not(.detail-collapsed) .detail-open {
-      display: none;
-    }
-
-    .detail-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 2;
-      width: 28px;
-      height: 28px;
-      border: 1px solid rgba(23, 32, 29, 0.12);
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.76);
-      color: var(--muted);
-      cursor: pointer;
-      font-size: 17px;
-      font-weight: 900;
-      line-height: 1;
-    }
-
-    .detail-close:hover {
-      color: var(--ink);
-      background: #fff;
-    }
-
-    .detail-header {
-      padding: 16px 56px 12px 18px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .detail-eyebrow {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 850;
-    }
-
-    .detail h3 {
-      margin: 8px 0 0;
-      font-size: 22px;
-      line-height: 1.25;
-      font-family: Georgia, "Songti SC", "SimSun", serif;
-    }
-
-    .detail-body {
-      display: grid;
-      gap: 12px;
-      padding: 14px 18px 18px;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .chip {
-      padding: 5px 8px;
-      border-radius: 999px;
-      background: rgba(23, 32, 29, 0.08);
-      color: var(--ink);
-      font-size: 12px;
-      font-weight: 850;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .info-box {
-      padding: 10px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.68);
-    }
-
-    .info-box label {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 850;
-      margin-bottom: 4px;
-    }
-
-    .info-box div {
-      font-size: 13px;
-      line-height: 1.45;
-      font-weight: 760;
-    }
-
-    .paragraph {
-      margin: 0;
-      color: #2a3531;
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    .warning {
-      padding: 10px 12px;
-      border: 1px solid rgba(180, 81, 47, 0.25);
-      border-radius: 8px;
-      background: rgba(180, 81, 47, 0.08);
-      color: #6d2d1f;
-      font-size: 12px;
-      line-height: 1.6;
-      font-weight: 760;
-    }
-
-    .pin-wrap {
-      position: relative;
-      display: block;
-      width: 31px;
-      height: 31px;
-      transform: none;
-      filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.18));
-      user-select: none;
-    }
-
-    .pin {
-      position: relative;
-      display: grid;
-      place-items: center;
-      width: 31px;
-      height: 31px;
-      border: 2px solid currentColor;
-      border-radius: 50%;
-      background: #fffaf1;
-      color: var(--day1);
-      box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.9),
-        0 0 0 1px rgba(255, 255, 255, 0.90);
-      transform: none;
-      font-size: 16px;
-      font-weight: 1000;
-      font-family: "DIN Alternate", "Avenir Next Condensed", "Arial Narrow", "PingFang SC", sans-serif;
-      line-height: 1;
-      letter-spacing: 0;
-    }
-
-    .pin span {
-      transform: none;
-      font-variant-numeric: tabular-nums;
-      font-weight: 1000;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: geometricPrecision;
-    }
-
-    .pin.meta span {
-      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      font-size: 13px;
-      font-weight: 1000;
-    }
-
-    .pin-label {
-      position: absolute;
-      left: 36px;
-      top: 4px;
-      max-width: 92px;
-      padding: 5px 7px;
-      border: 1px solid rgba(255, 255, 255, 0.82);
-      border-radius: 8px;
-      background: rgba(255, 252, 244, 0.94);
-      color: #14201d;
-      font-size: 12px;
-      font-weight: 900;
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      box-shadow: 0 6px 14px rgba(24, 32, 29, 0.14);
-      pointer-events: none;
-    }
-
-    body.labels-hidden .pin-label {
-      opacity: 0;
-      visibility: hidden;
-      transform: translateX(-4px);
-    }
-
-    body:not(.labels-hidden) .pin-label {
-      opacity: 1;
-      visibility: visible;
-      transform: translateX(0);
-      transition: opacity 150ms ease, transform 150ms ease, visibility 150ms ease;
-    }
-
-    .pin.day1 { color: var(--day1); }
-    .pin.day2 { color: var(--day2); }
-    .pin.day3 { color: var(--day3); }
-    .pin.home { color: var(--ok); }
-    .pin.station { color: var(--station); }
-    .pin.active {
-      background: #fff;
-      box-shadow:
-        0 0 0 3px rgba(255, 255, 255, 0.88),
-        0 0 0 5px rgba(0, 137, 123, 0.20),
-        0 7px 14px rgba(0, 0, 0, 0.18);
-    }
-
-    .pin-wrap.active .pin-label {
-      border-color: rgba(0, 137, 123, 0.55);
-      background: #fff;
-      box-shadow: 0 0 0 4px rgba(0, 137, 123, 0.14), 0 10px 22px rgba(24, 32, 29, 0.18);
-    }
-
-    .amap-info-content {
-      border-radius: 8px;
-      padding: 0;
-      overflow: hidden;
-    }
-
-    .mini-window {
-      width: 270px;
-      padding: 12px 13px;
-      color: var(--ink);
-      background: #fffaf1;
-    }
-
-    .mini-window strong {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 15px;
-      line-height: 1.35;
-    }
-
-    .mini-window p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.55;
-    }
-
-    .load-state {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      z-index: 1;
-      color: var(--muted);
-      font-size: 14px;
-      text-align: center;
-      padding: 24px;
-    }
-
-    @media (max-width: 900px) {
-      .app {
-        display: block;
-        min-height: 100vh;
-      }
-
-      .app.sidebar-collapsed {
-        display: block;
-      }
-
-      aside {
-        min-height: 0;
-        max-height: 46vh;
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .app.sidebar-collapsed aside {
-        display: none;
-      }
-
-      .sidebar-toggle,
-      .app.sidebar-collapsed .sidebar-toggle {
-        left: 10px;
-        top: 10px;
-      }
-
-      .map-shell {
-        min-height: 54vh;
-      }
-
-      .top-card {
-        top: 10px;
-        left: 10px;
-        right: 10px;
-        grid-template-columns: 1fr;
-      }
-
-      .detail {
-        left: 10px;
-        right: 10px;
-        bottom: 10px;
-        width: auto;
-        max-height: 42vh;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-    }
+    :root{--ink:#263f3a;--muted:#697671;--paper:#f5f6ef;--line:#dfe5dd;--accent:#b98755}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.65 system-ui,-apple-system,"PingFang SC",sans-serif}
+    button{font:inherit;color:inherit;cursor:pointer}button:focus-visible{outline:3px solid #b98755;outline-offset:3px}
+    header{height:100px;padding:20px 30px;background:#fff;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:20px}
+    .eyebrow{font-size:10px;letter-spacing:3px;color:var(--muted)}h1{margin:0;font-size:27px;letter-spacing:2px}h2{font-size:20px;margin:4px 0 12px}h3{font-size:15px;margin:0}
+    p{margin:5px 0;color:var(--muted)}.meta{text-align:right;font-size:13px}.app{display:grid;grid-template-columns:355px minmax(0,1fr);height:calc(100vh - 100px)}
+    aside{padding:24px;overflow:auto;border-right:1px solid var(--line)}.notice{padding:12px 14px;background:#ece9dc;border-left:3px solid var(--accent);font-size:12px;margin:16px 0 22px}
+    .day{margin:22px 0}.day-head{display:flex;gap:10px;align-items:center;margin-bottom:10px}.badge{background:var(--day);color:#fff;padding:2px 9px;border-radius:5px;font-size:12px;white-space:nowrap}
+    .stop{display:flex;align-items:center;width:100%;gap:12px;background:#fff;border:1px solid var(--line);border-radius:12px;text-align:left;padding:14px;margin:8px 0}
+    .stop:hover{border-color:var(--day);box-shadow:0 4px 15px #263f3a0c}.num{border-radius:50%;background:var(--day);color:white;min-width:27px;height:27px;text-align:center;line-height:27px;font-size:12px}
+    .stop small{display:block;color:var(--muted);font-size:12px}.arrow{margin-left:auto;color:#8f9b92}.day-note{font-size:12px;margin-top:10px}
+    #detail{background:#fff;padding:15px;border:1px solid var(--line);border-radius:12px;margin-top:20px;font-size:13px}#detail:empty{display:none}#detail h3{font-size:18px}#detail p{margin-top:8px}
+    .map-shell{min-width:0;position:relative;display:flex;flex-direction:column;background:#edf1e6}.controls{background:#fff;padding:12px 20px;display:flex;gap:7px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+    .tab,.fit{border:1px solid var(--line);border-radius:8px;background:white;padding:6px 13px;font-size:13px}.tab[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}.fit{margin-left:auto}
+    #map{flex:1;min-height:300px}.legend{background:white;padding:10px 20px;color:var(--muted);font-size:11px;border-top:1px solid var(--line)}
+    #status{position:absolute;left:20px;top:76px;max-width:calc(100% - 40px);background:#fffffff2;border:1px solid var(--line);padding:10px 14px;border-radius:8px;font-size:12px;z-index:150}
+    .pin-wrap{text-align:center;position:relative}.pin{border:3px solid white;box-shadow:0 2px 9px #263f3a33;background:var(--day);border-radius:50%;color:white;width:34px;height:34px;font:600 13px/28px system-ui}
+    .pin-label{position:absolute;left:50%;top:38px;transform:translateX(-50%);background:#fff;padding:3px 8px;white-space:nowrap;font-size:12px;border-radius:5px;box-shadow:0 2px 8px #263f3a20}
+    .labels-hidden .pin-label{display:none}.footer{margin-top:25px;padding-top:15px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
+    @media(max-width:720px){header{height:auto;min-height:100px;padding:18px;align-items:flex-start}h1{font-size:22px}.meta{font-size:11px;max-width:130px}.app{display:flex;flex-direction:column;height:auto}.map-shell{order:0;height:56vh;min-height:380px}aside{order:1;overflow:visible;border-right:0;padding:20px}.controls{padding:10px;gap:5px}.tab,.fit{padding:6px 9px}#status{left:10px;top:72px;font-size:11px}.legend{padding:8px 10px}}
   </style>
 </head>
-<body>
+<body class="labels-hidden">
+  <header><div><div class="eyebrow">MARCO POLO / TRAVEL PLANNER</div><h1 id="title">旅行地图</h1><p id="subtitle">从想去哪儿，到今天怎么走。</p></div><div class="meta" id="meta"></div></header>
   <div class="app">
-    <button id="sidebarToggle" class="sidebar-toggle" type="button" aria-expanded="true" aria-controls="timeline">
-      <span class="toggle-icon">‹</span>
-      <span class="toggle-text">收起行程</span>
-    </button>
-    <aside>
-      <section class="brand">
-        <div class="kicker">Nanjing Route Map</div>
-        <h1>南京三日高强度路线</h1>
-        <p class="summary">新街口住宿，6月25-27覆盖21个点位，6月27晚乘 G1547 去扬州。点击左侧行程或地图点位，可查看营业、预约、餐饮和现场说明。</p>
-        <div class="toolbar">
-          <button id="fitAllBtn" type="button">适配当前</button>
-          <button id="nextStopBtn" type="button">下一个点</button>
-        </div>
-        <div class="day-tabs" aria-label="日期筛选">
-          <button class="active" type="button" data-filter="all">全部</button>
-          <button type="button" data-filter="day1">6/25</button>
-          <button type="button" data-filter="day2">6/26</button>
-          <button type="button" data-filter="day3">6/27</button>
-        </div>
-        <div class="stats">
-          <div class="stat"><strong>21</strong><span>已选南京点位</span></div>
-          <div class="stat"><strong>3天</strong><span>实际游玩时间</span></div>
-          <div class="stat"><strong>20:36</strong><span>南京南出发去扬州</span></div>
-        </div>
-      </section>
-      <section id="timeline" class="timeline"></section>
-    </aside>
-
-    <main class="map-shell">
-      <div id="map"></div>
-      <div class="load-state" id="loadState">正在加载高德地图和路线点位...</div>
-      <section class="top-card">
-        <button id="topToggle" class="floating-control top-toggle top-close-icon" type="button" aria-label="收起顶部说明">×</button>
-        <div>
-          <strong>路线策略：钟山单独成天，秦淮夜景放6/26，6/27留给南博和城北线。</strong>
-          <span>地图路线为点位串联参考，实际市内交通以地铁、步行、打车组合为准。</span>
-        </div>
-        <div class="utility">
-          <button type="button" id="focusHotelBtn">回到新街口</button>
-          <button type="button" id="focusStationBtn">南京南站</button>
-        </div>
-      </section>
-      <button id="topOpen" class="floating-control top-toggle top-open-icon" type="button" aria-label="展开顶部说明">i</button>
-      <button id="detailOpen" class="floating-control detail-toggle detail-open" type="button" aria-label="展开景点详情">i</button>
-      <section id="detail" class="detail empty" aria-live="polite"></section>
-    </main>
+    <aside><div class="eyebrow">YOUR JOURNEY</div><h2 id="panel-title">路线总览</h2><div class="notice" id="notice"></div><div id="itinerary"></div><section id="detail" aria-live="polite"></section><div class="footer" id="footer"></div></aside>
+    <main class="map-shell" aria-label="旅行地图"><div class="controls" id="controls"></div><div id="map"></div><div id="status" role="status">等待行程数据</div><div class="legend">实线：已查询道路路线　 ·　 虚线：顺序示意　 ·　 箭头：前进方向　 ·　 数字：当天顺序</div></main>
   </div>
-
-  <script src="./config.local.js"></script>
-  <script src="https://webapi.amap.com/loader.js"></script>
   <script>
-    const days = [
-      {
-        id: 'day1',
-        label: '6/25 周四',
-        title: '钟山线 + 科巷',
-        color: '#2f6f73',
-        summary: '完整钟山线，不叠加南博；晚上用科巷收尾。',
-        stops: [
-          { id: 'd1-0', order: '住', name: '新街口', time: '07:40 出发', type: '住宿/商圈', lng: 118.788055, lat: 32.041500, duration: '起点', ticket: '免费', booking: '无需预约', hours: '商圈全天可达', note: '住宿区域和补给点。早上直接出发去钟山，别在商圈耗太久。', food: '早上可带水、面包、电解质饮料。', action: '建议打车或地铁+景区交通，减少钟山线步行压力。', kind: 'home' },
-          { id: 'd1-1', order: '1', name: '梧桐大道', time: '08:20-08:50', type: '街区拍照', lng: 118.841586, lat: 32.046050, duration: '30分钟', ticket: '免费', booking: '无需预约', hours: '开放道路，全天可达', note: '以陵园路梧桐大道为参考点，拍照后进入明孝陵，不单独绕路。', food: '不安排用餐。', action: '拍完就走，给明孝陵留足时间。' },
-          { id: 'd1-2', order: '2', name: '明孝陵', time: '08:55-11:15', type: '历史自然', lng: 118.840463, lat: 32.051926, duration: '约2小时20分', ticket: '联票/单点票，以购票页为准', booking: '建议提前购票', hours: '6月售票约06:30-18:30', note: '重点走神道、石象路、陵寝核心区。这里是钟山线体力消耗最大的点之一。', food: '不出景区找餐厅。', action: '只走主线，避免在支路里拖慢节奏。' },
-          { id: 'd1-3', order: '3', name: '美龄宫', time: '11:25-12:10', type: '历史建筑', lng: 118.846557, lat: 32.045458, duration: '45分钟', ticket: '约30元或联票', booking: '建议提前购票', hours: '约07:30-17:30，17:30停止售票', note: '放在中午前后是为了避开下午尾段卡停止售票。', food: '结束后在景区内快速午餐。', action: '控制在45分钟左右，别影响中山陵预约时段。' },
-          { id: 'd1-4', order: '午', name: '中山陵商业街午餐', time: '12:10-13:00', type: '餐饮补给', lng: 118.853960, lat: 32.053610, duration: '50分钟', ticket: '按店消费', booking: '无需预约', hours: '以当天商户为准', note: '钟山线午餐只求快和稳，不回市区。', food: '回味鸭血粉丝汤、中山陵美食市集、米线类都可。', action: '排队超过10-15分钟就换店。' },
-          { id: 'd1-5', order: '4', name: '中山陵', time: '13:20-15:00', type: '历史纪念', lng: 118.854097, lat: 32.054508, duration: '约1小时40分', ticket: '免费', booking: '6/18 16:00抢预约，目标12:30-14:30', hours: '通常日间开放；以官方预约页为准', note: '台阶多，6月天气热，保持节奏。若只约到14:30-16:30，要把音乐台提前。', food: '入园前补水。', action: '预约二维码和身份证都要带。' },
-          { id: 'd1-6', order: '5', name: '音乐台', time: '15:05-15:45', type: '自然体验', lng: 118.855382, lat: 32.055096, duration: '40分钟', ticket: '约10元', booking: '建议线上购票', hours: '6月售票约06:30-18:30', note: '紧邻中山陵，适合短暂停留和休息。体验受天气影响。', food: '不安排用餐。', action: '作为缓冲点，不拖太久。' },
-          { id: 'd1-7', order: '6', name: '灵谷寺', time: '16:15-17:45', type: '寺庙历史', lng: 118.867693, lat: 32.055286, duration: '约1小时30分', ticket: '约32元或联票', booking: '建议提前购票', hours: '6月售票约06:30-18:30', note: '钟山东线收尾。因为你要求都去，这里保留，但需要控制体力。', food: '结束后回城吃科巷。', action: '如果景区交通等候过久，优先打车回城。' },
-          { id: 'd1-8', order: '食', name: '科巷', time: '18:30-19:45', type: '美食街区', lng: 118.796070, lat: 32.039213, duration: '约1小时15分', ticket: '免费', booking: '无需预约', hours: '街区开放，商户时间不一', note: '离新街口近，适合Day 1晚餐收尾。', food: '叶新鸭血粉丝汤、老新隆牛肉锅贴、桂花鸭轻厨、糕团类。', action: '不要排长队，吃完回酒店休息。' }
-        ]
-      },
-      {
-        id: 'day2',
-        label: '6/26 周五',
-        title: '颐和路、纪念馆、秦淮夜景',
-        color: '#a64b3c',
-        summary: '西北街区到纪念馆，再向老城南收束，夜晚落在秦淮河。',
-        stops: [
-          { id: 'd2-0', order: '住', name: '新街口', time: '08:40 出发', type: '住宿/商圈', lng: 118.788055, lat: 32.041500, duration: '起点', ticket: '免费', booking: '无需预约', hours: '商圈全天可达', note: '今天城市转场多，早上别拖延。', food: '酒店附近简单早餐即可。', action: '先去颐和路，最后回新街口。', kind: 'home' },
-          { id: 'd2-1', order: '1', name: '颐和路', time: '09:00-10:10', type: '民国建筑街区', lng: 118.767072, lat: 32.063603, duration: '约1小时10分', ticket: '免费', booking: '无需预约', hours: '开放街区，全天可达', note: '适合慢走拍照，但今天不能深逛。', food: '不安排正餐。', action: '只取核心街区，按时间撤。' },
-          { id: 'd2-2', order: '2', name: '先锋书店五台山总店', time: '10:25-11:10', type: '书店体验', lng: 118.773496, lat: 32.050720, duration: '45分钟', ticket: '免费', booking: '无需预约', hours: '门店时间以当天公告为准', note: '雨天也适合；如果没开门，直接提前午餐。', food: '周边五台山/广州路简餐。', action: '别买太多重物，后面还要纪念馆和老城南。' },
-          { id: 'd2-3', order: '午', name: '五台山/云锦路轻午餐', time: '11:10-12:00', type: '餐饮转场', lng: 118.758430, lat: 32.043660, duration: '50分钟', ticket: '按店消费', booking: '无需预约', hours: '以当天商户为准', note: '纪念馆参观前吃点热食，不吃太重。', food: '五台山简餐、云锦路/河西万达附近快餐。', action: '优先快餐，不排队。' },
-          { id: 'd2-4', order: '3', name: '侵华日军南京大屠杀遇难同胞纪念馆', time: '12:00-14:10', type: '纪念馆', lng: 118.742372, lat: 32.035217, duration: '约2小时10分', ticket: '免费', booking: '6/19 08:00抢预约，未中17:00再刷', hours: '08:30-17:30，16:30停止入馆；周一闭馆', note: '情绪负担较重，建议严肃参观，不赶场拍照。', food: '入馆前吃完，出馆后直接转场。', action: '两人都要实名预约和带身份证。' },
-          { id: 'd2-5', order: '4', name: '大报恩寺遗址景区', time: '14:45-16:20', type: '历史建筑', lng: 118.783010, lat: 32.009204, duration: '约1小时35分', ticket: '约73元', booking: '建议提前购票', hours: '日场通常约09:00-17:30，以购票页为准', note: '连接老门东很顺。若末入园早于计划，要提前调整。', food: '不在这里吃正餐，留给老门东。', action: '6/25晚复查末入园时间。' },
-          { id: 'd2-6', order: '食', name: '老门东', time: '16:35-18:10', type: '街区美食', lng: 118.787645, lat: 32.011604, duration: '约1小时35分', ticket: '免费', booking: '无需预约', hours: '街区开放，商户时间不一', note: '晚餐主场，吃完步行到夫子庙和秦淮河。', food: '鸡鸣汤包、问柳菜馆、豆花莊、蓝老大糖粥藕；南京大牌档排队长就放弃。', action: '正餐优先老门东，不在夫子庙主街硬找。' },
-          { id: 'd2-7', order: '5', name: '夫子庙', time: '18:25-19:35', type: '夜景街区', lng: 118.788899, lat: 32.020660, duration: '约1小时10分', ticket: '街区免费', booking: '街区无需预约', hours: '街区全天可达，商户夜间营业为主', note: '商业化强，人多，适合看夜景和轻逛。', food: '买小吃可以，正餐不优先。', action: '看人流决定是否进收费小景点。' },
-          { id: 'd2-8', order: '6', name: '秦淮河', time: '19:35-20:40', type: '夜景河道', lng: 118.792026, lat: 32.021196, duration: '约1小时', ticket: '沿河免费，游船另收费', booking: '游船可现场/提前购票', hours: '沿河全天可达；游船以购票页为准', note: '这是唯一安排的秦淮夜景，因为6/27晚上要去扬州。', food: '甜品少量尝即可。', action: '游船不是必选，排队长就沿河走。' }
-        ]
-      },
-      {
-        id: 'day3',
-        label: '6/27 周六',
-        title: '南博、总统府、玄武湖台城，晚去扬州',
-        color: '#4c5f98',
-        summary: '上午南博，下午长江路与城北线，19:00去南京南站。',
-        stops: [
-          { id: 'd3-0', order: '住', name: '新街口', time: '08:20 出发', type: '住宿/商圈', lng: 118.788055, lat: 32.041500, duration: '起点/取行李', ticket: '免费', booking: '无需预约', hours: '商圈全天可达', note: '出门前确认行李寄存或酒店前台保管。18:20左右回来取行李。', food: '早餐和车前补给都可在这里解决。', action: '晚上不要安排夜景，按20:36火车倒推。', kind: 'home' },
-          { id: 'd3-1', order: '1', name: '南京博物院', time: '09:00-11:35', type: '博物馆', lng: 118.825064, lat: 32.040802, duration: '约2小时35分', ticket: '免费', booking: '6/20 18:00抢上午场', hours: '09:00-17:00，16:00停止入场；周一闭馆', note: '只看重点馆：历史馆、特展馆、民国馆，不全馆细逛。', food: '结束后向总统府/1912方向午餐。', action: '免费馆也要两人实名预约。' },
-          { id: 'd3-2', order: '午', name: '长江路/1912午餐', time: '11:35-12:25', type: '餐饮转场', lng: 118.796350, lat: 32.045060, duration: '50分钟', ticket: '按店消费', booking: '热门店不硬排', hours: '以当天商户为准', note: '这天午餐必须控制在45-50分钟，下午还要赶城北线。', food: '南京大牌档1912能快速入座再吃，否则选苏百味、便当类简餐。', action: '排队超过15-20分钟就换。' },
-          { id: 'd3-3', order: '2', name: '总统府', time: '12:30-14:00', type: '历史遗址', lng: 118.797398, lat: 32.044228, duration: '约1小时30分', ticket: '35元', booking: '6/20起买12:30-14:00附近分时票', hours: '旺季08:30-18:00，17:00停止入馆；周一闭馆', note: '长江路核心点，午后安排不踩末入馆。', food: '午餐前解决。', action: '凭本人身份证原件入园。' },
-          { id: 'd3-4', order: '3', name: '六朝博物馆', time: '14:10-15:20', type: '博物馆', lng: 118.799124, lat: 32.042840, duration: '约1小时10分', ticket: '约30元，以购票页为准', booking: '建议提前购票/预约', hours: '日间开放，以官方页为准；周一闭馆风险', note: '紧邻总统府，按短馆处理，补充六朝历史。', food: '不安排用餐。', action: '如果排队或预约有问题，压缩馆内时间。' },
-          { id: 'd3-5', order: '4', name: '鸡鸣寺', time: '15:45-16:25', type: '寺庙历史', lng: 118.795246, lat: 32.061061, duration: '40分钟', ticket: '约10元，以当天公告为准', booking: '通常无需复杂预约', hours: '日间开放为主，以寺院公告为准', note: '与台城、玄武湖顺路。非樱花季降低期待。', food: '不安排用餐。', action: '控制停留，给城墙和玄武湖留时间。' },
-          { id: 'd3-6', order: '5', name: '南京城墙台城段', time: '16:35-17:30', type: '历史城市景观', lng: 118.803085, lat: 32.061269, duration: '55分钟', ticket: '以台城段购票页为准', booking: '现场/线上购票', hours: '日间至傍晚，不同城墙段不同', note: '本行程走鸡鸣寺旁台城/解放门段，不按中华门城堡处理。', food: '不安排用餐。', action: '提前一天核对台城段开放时间。' },
-          { id: 'd3-7', order: '6', name: '玄武湖短走', time: '17:30-18:10', type: '自然休闲', lng: 118.812688, lat: 32.069455, duration: '40分钟', ticket: '免费', booking: '无需预约', hours: '公园全天/长时段开放，以公告为准', note: '只走靠台城、解放门一侧，不绕完整湖。', food: '不安排用餐。', action: '18:10必须撤回新街口取行李。' },
-          { id: 'd3-8', order: '取', name: '新街口取行李', time: '18:20-18:55', type: '行李/补给', lng: 118.788055, lat: 32.041500, duration: '35分钟', ticket: '免费', booking: '无需预约', hours: '住宿前台/寄存点以实际为准', note: '取行李、买水、打包简餐。', food: '新街口打包或南京南站简餐，不坐下吃大餐。', action: '19:00左右出发去南京南。', kind: 'home' },
-          { id: 'd3-9', order: '站', name: '南京南站', time: '20:36 发车', type: '交通节点', lng: 118.798034, lat: 31.968763, duration: '进站候车', ticket: 'G1547 67元/人', booking: '已按推荐车次处理', hours: '20:36南京南 -> 21:34扬州东', note: '最晚直达备选D5517为20:48 -> 21:49。', food: '可在南京南站买简餐，但要留进站时间。', action: '周六晚建议至少提前45分钟到站。', kind: 'station' }
-        ]
-      }
-    ];
+    // 从已确认的行程数据生成此视图；这里不保存任何示例行程、真实凭据或默认坐标。
+    // 数据嵌入 HTML 时将字符串中的 < 转义为 \u003c，避免意外结束 script 标签。
+    // days: [{id,label,title,color,note,stops:[{id,name,order,kind,lng,lat,time,
+    // duration,aliases,booking,hours,transport,note}],legs:[{from,to,path,verified}]}]
+    // stop.id 为此日活动的唯一ID；地点稳定ID可另存 placeId。kind可为stay/food/station。
+    // leg.path 为 [经度,纬度] 数组；仅已查询到的道路几何设 verified:true。
+    // 不能获得道路几何时只画虚线顺序示意，不把当前路况当作未来保证。
+    const TRIP = {
+      title: '旅行地图', subtitle: '由已确认的行程生成', meta: '',
+      notice: '尚未填入行程数据。此文件是地图骨架，不是已经完成的旅行方案。',
+      footer: '预约、酒店和交通状态以当前行程文件为准。', days: []
+    };
+    const $ = id => document.getElementById(id);
+    const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    const palette = ['#b7794e','#4f7c6c','#607fa0','#8672a5'];
+    const validPoint = s => Number.isFinite(s.lng) && Number.isFinite(s.lat) && Math.abs(s.lng)<=180 && Math.abs(s.lat)<=90;
+    const days = TRIP.days.map((day,i)=>({...day,color:/^#[0-9a-f]{6}$/i.test(day.color || '')?day.color:palette[i%palette.length]}));
+    const stops = days.flatMap(day=>(day.stops || []).map((stop,i)=>({...stop,order:stop.order ?? i+1,day:day.id,dayLabel:day.label,color:day.color})));
+    const located = stops.filter(validPoint);
+    let map, AMapRef, activeDay='all';
+    const markers = new Map(), lines=[];
+    $('title').textContent=TRIP.title; document.title=TRIP.title+' · 马可波罗';
+    $('subtitle').textContent=TRIP.subtitle; $('meta').textContent=TRIP.meta;
+    $('notice').textContent=TRIP.notice; $('footer').textContent=TRIP.footer;
 
-    const allStops = days.flatMap(day => day.stops.map(stop => ({ ...stop, day: day.id, dayLabel: day.label, dayTitle: day.title, color: day.color })));
-    let map;
-    let AMapRef;
-    let markers = new Map();
-    let lines = new Map();
-    let activeFilter = 'all';
-    let activeStopId = null;
-    let activeIndex = -1;
-    let infoWindow;
-    const LABEL_ZOOM_THRESHOLD = 14;
-
-    function markerClass(stop) {
-      if (stop.kind === 'home') return 'home';
-      if (stop.kind === 'station') return 'station';
-      return stop.day;
+    function renderList(){
+      $('panel-title').textContent=activeDay==='all'?'路线总览':(days.find(d=>d.id===activeDay)?.title || '当日路线');
+      $('itinerary').innerHTML=days.filter(d=>activeDay==='all'||d.id===activeDay).map(day=>
+        `<section class="day" style="--day:${day.color}"><div class="day-head"><span class="badge">${esc(day.label)}</span><h3>${esc(day.title)}</h3></div>`+
+        stops.filter(s=>s.day===day.id).map(s=>`<button class="stop" data-stop="${esc(s.id)}"><span class="num">${esc(s.kind==='stay'?'⌂':s.kind==='station'?'站':s.kind==='food'?'食':s.order)}</span><span><strong>${esc(s.name)}</strong><small>${esc(s.time)} · ${esc(s.duration || '停留待定')}</small></span><span class="arrow">↗</span></button>`).join('')+
+        `<p class="day-note">${esc(day.note)}</p></section>`).join('');
+      document.querySelectorAll('[data-stop]').forEach(b=>b.addEventListener('click',()=>focusStop(b.dataset.stop)));
     }
-
-    function shortName(stop) {
-      const aliases = {
-        '新街口': '新街口',
-        '梧桐大道': '梧桐大道',
-        '明孝陵': '明孝陵',
-        '美龄宫': '美龄宫',
-        '中山陵商业街午餐': '景区午餐',
-        '中山陵': '中山陵',
-        '音乐台': '音乐台',
-        '灵谷寺': '灵谷寺',
-        '科巷': '科巷',
-        '颐和路': '颐和路',
-        '先锋书店五台山总店': '先锋书店',
-        '五台山/云锦路轻午餐': '轻午餐',
-        '侵华日军南京大屠杀遇难同胞纪念馆': '纪念馆',
-        '大报恩寺遗址景区': '大报恩寺',
-        '老门东': '老门东',
-        '夫子庙': '夫子庙',
-        '秦淮河': '秦淮河',
-        '南京博物院': '南博',
-        '长江路/1912午餐': '1912午餐',
-        '总统府': '总统府',
-        '六朝博物馆': '六朝馆',
-        '鸡鸣寺': '鸡鸣寺',
-        '南京城墙台城段': '台城城墙',
-        '玄武湖短走': '玄武湖',
-        '新街口取行李': '取行李',
-        '南京南站': '南京南站'
-      };
-      return aliases[stop.name] || stop.name;
+    function showDetail(stop){
+      const aliases=Array.isArray(stop.aliases)?stop.aliases.join('、'):'';
+      $('detail').innerHTML=`<div class="eyebrow">${esc(stop.dayLabel)} / ${esc(stop.time)}</div><h3>${esc(stop.name)}</h3>`+
+        (aliases?`<p>别名：${esc(aliases)}</p>`:'')+
+        `<p>停留：${esc(stop.duration || '待定')}<br>开放：${esc(stop.hours || '待核验')}<br>预约：${esc(stop.booking || '待核验')}</p>`+
+        `<p>${esc(stop.transport || '')}</p><p>${esc(stop.note || '')}</p>`+
+        (!validPoint(stop)?'<p>坐标待核验，暂不在地图定位。</p>':'');
     }
-
-    function markerContent(stop, active = false) {
-      const metaClass = /^\d+$/.test(String(stop.order)) ? '' : 'meta';
-      return `
-        <div class="pin-wrap ${active ? 'active' : ''}">
-          <div class="pin ${markerClass(stop)} ${metaClass} ${active ? 'active' : ''}"><span>${stop.order}</span></div>
-          <div class="pin-label" title="${stop.name}">${shortName(stop)}</div>
-        </div>
-      `;
+    function focusStop(id){
+      const stop=stops.find(s=>s.id===id); if(!stop)return;
+      showDetail(stop);
+      if(map && validPoint(stop)){map.setZoomAndCenter(15,[stop.lng,stop.lat]);map.setPitch(0);map.setRotation(0);}
+      if(window.innerWidth<=720) $('detail').scrollIntoView({behavior:'smooth',block:'nearest'});
     }
-
-    function renderTimeline() {
-      const root = document.getElementById('timeline');
-      root.innerHTML = days.map(day => `
-        <article class="day-block ${day.id}" data-day="${day.id}">
-          <div class="day-head">
-            <div>
-              <h2>${day.label} · ${day.title}</h2>
-              <p>${day.summary}</p>
-            </div>
-            <span class="badge ${day.id}-bg">${day.stops.length}点</span>
-          </div>
-          <ol class="stop-list ${day.id}">
-            ${day.stops.map(stop => `
-              <li class="stop ${day.id}" data-stop-id="${stop.id}">
-                <span class="num ${stop.kind || ''}">${stop.order}</span>
-                <span>
-                  <span class="stop-name">${stop.name}<em class="stop-time">${stop.time}</em></span>
-                  <span class="stop-note">${stop.type} · ${stop.duration}</span>
-                </span>
-              </li>
-            `).join('')}
-          </ol>
-        </article>
-      `).join('');
-
-      root.querySelectorAll('.stop').forEach(item => {
-        item.addEventListener('click', () => focusStop(item.dataset.stopId, true));
-      });
+    function updateLabels(){if(map)document.body.classList.toggle('labels-hidden',map.getZoom()<14);}
+    function fit(){
+      if(!map)return;
+      const items=located.filter(s=>activeDay==='all'||s.day===activeDay).map(s=>markers.get(s.id)).filter(Boolean);
+      lines.filter(l=>activeDay==='all'||l.day===activeDay).forEach(l=>items.push(l.overlay));
+      if(items.length)map.setFitView(items,false,[75,65,65,65],15);
+      map.setPitch(0);map.setRotation(0);updateLabels();
     }
-
-    function renderDetail(stop) {
-      const detail = document.getElementById('detail');
-      detail.classList.remove('empty');
-      detail.innerHTML = `
-        <button class="detail-close" type="button" aria-label="收起景点详情">×</button>
-        <div class="detail-header">
-          <div class="detail-eyebrow">
-            <span>${stop.dayLabel} · ${stop.time}</span>
-            <span>${stop.type}</span>
-          </div>
-          <h3>${stop.name}</h3>
-        </div>
-        <div class="detail-body">
-          <div class="chips">
-            <span class="chip">停留：${stop.duration}</span>
-            <span class="chip">门票：${stop.ticket}</span>
-            <span class="chip">预约：${stop.booking}</span>
-          </div>
-          <div class="info-grid">
-            <div class="info-box">
-              <label>开放/交通时间</label>
-              <div>${stop.hours}</div>
-            </div>
-            <div class="info-box">
-              <label>现场动作</label>
-              <div>${stop.action}</div>
-            </div>
-          </div>
-          <p class="paragraph">${stop.note}</p>
-          <div class="warning">餐饮/补给：${stop.food}</div>
-        </div>
-      `;
-      detail.querySelector('.detail-close').addEventListener('click', () => {
-        document.querySelector('.app').classList.add('detail-collapsed');
-      });
+    function filter(day){
+      activeDay=day;renderList();$('detail').replaceChildren();
+      document.querySelectorAll('[data-day]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.day===day)));
+      markers.forEach((m,id)=>{const s=stops.find(s=>s.id===id);day==='all'||s.day===day?m.show():m.hide();});
+      lines.forEach(l=>day==='all'||l.day===day?l.overlay.show():l.overlay.hide());fit();
     }
-
-    function miniWindow(stop) {
-      return `
-        <div class="mini-window">
-          <strong>${stop.order}. ${stop.name}</strong>
-          <p>${stop.dayLabel} ${stop.time}<br>${stop.note}</p>
-        </div>
-      `;
-    }
-
-    function setActiveClasses(stopId) {
-      document.querySelectorAll('.stop').forEach(el => el.classList.toggle('active', el.dataset.stopId === stopId));
-      markers.forEach((marker, id) => {
-        const stop = allStops.find(item => item.id === id);
-        marker.setContent(markerContent(stop, id === stopId));
-        if (id === stopId) {
-          marker.setzIndex(220);
-        } else {
-          marker.setzIndex(stop.kind ? 140 : 120);
-        }
-      });
-    }
-
-    function focusStop(stopId, pan) {
-      const stop = allStops.find(item => item.id === stopId);
-      if (!stop || !map) return;
-      activeStopId = stopId;
-      activeIndex = allStops.findIndex(item => item.id === stopId);
-      setActiveClasses(stopId);
-      document.querySelector('.app').classList.remove('detail-collapsed');
-      renderDetail(stop);
-      const marker = markers.get(stopId);
-      if (pan) {
-        map.setZoomAndCenter(stop.kind === 'station' ? 13 : 15, [stop.lng, stop.lat], false, 400);
-      }
-      if (marker) {
-        infoWindow.setContent(miniWindow(stop));
-        infoWindow.open(map, marker.getPosition());
-      }
-      const listItem = document.querySelector(`[data-stop-id="${stopId}"]`);
-      if (listItem) listItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    }
-
-    function visibleStops() {
-      return activeFilter === 'all' ? allStops : allStops.filter(stop => stop.day === activeFilter);
-    }
-
-    function updateLabelVisibility() {
-      if (!map) return;
-      document.body.classList.toggle('labels-hidden', map.getZoom() < LABEL_ZOOM_THRESHOLD);
-    }
-
-    function applyFilter(filter) {
-      activeFilter = filter;
-      document.querySelectorAll('.day-tabs button').forEach(btn => btn.classList.toggle('active', btn.dataset.filter === filter));
-      document.querySelectorAll('.day-block').forEach(block => {
-        block.classList.toggle('hidden', filter !== 'all' && block.dataset.day !== filter);
-      });
-      markers.forEach((marker, id) => {
-        const stop = allStops.find(item => item.id === id);
-        if (filter === 'all' || stop.day === filter) marker.show();
-        else marker.hide();
-      });
-      lines.forEach((line, id) => {
-        if (filter === 'all' || id === filter) line.show();
-        else line.hide();
-      });
-      fitCurrent();
-    }
-
-    function fitCurrent() {
-      if (!map) return;
-      const overlays = [];
-      markers.forEach((marker, id) => {
-        const stop = allStops.find(item => item.id === id);
-        if (activeFilter === 'all' || stop.day === activeFilter) overlays.push(marker);
-      });
-      lines.forEach((line, id) => {
-        if (activeFilter === 'all' || id === activeFilter) overlays.push(line);
-      });
-      if (overlays.length) map.setFitView(overlays, false, [72, 72, 72, 72], 12);
-    }
-
-    function createMap() {
-      if (!window.AMAP_LOCAL_CONFIG) throw new Error('缺少当前目录下的 config.local.js');
-      window._AMapSecurityConfig = {
-        securityJsCode: window.AMAP_LOCAL_CONFIG.securityJsCode
-      };
-      AMapLoader.load({
-        key: window.AMAP_LOCAL_CONFIG.jsapiKey,
-        version: '2.0',
-        plugins: ['AMap.Scale', 'AMap.ToolBar', 'AMap.ControlBar']
-      }).then(AMap => {
-        AMapRef = AMap;
-        AMap.getConfig().appname = 'amap-jsapi-skill';
-        map = new AMap.Map('map', {
-          viewMode: '2D',
-          zoom: 12,
-          pitch: 0,
-          rotation: 0,
-          center: [118.802, 32.041],
-          mapStyle: 'amap://styles/normal',
-          showBuildingBlock: false
+    function loadScript(src){return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=()=>reject(new Error('资源未加载'));document.head.appendChild(s);});}
+    async function boot(){
+      renderList();
+      $('controls').innerHTML='<button class="tab" data-day="all" aria-pressed="true">总览</button>'+days.map(d=>`<button class="tab" data-day="${esc(d.id)}" aria-pressed="false">${esc(d.label)}</button>`).join('')+'<button class="fit" id="fit">适合视野</button>';
+      document.querySelectorAll('[data-day]').forEach(b=>b.addEventListener('click',()=>filter(b.dataset.day)));$('fit').addEventListener('click',fit);
+      if(!located.length){$('status').textContent='请先填入已确认的行程及高德坐标；地图尚未生成。';return;}
+      try{
+        $('status').textContent='正在加载高德地图…';
+        await loadScript('./config.local.js');
+        const c=window.AMAP_LOCAL_CONFIG;
+        const configured=v=>typeof v==='string' && v.trim() && !v.startsWith('YOUR_');
+        if(!c || !configured(c.jsapiKey) || !(configured(c.serviceHost)||configured(c.securityJsCode)))throw new Error('配置缺失');
+        window._AMapSecurityConfig=configured(c.serviceHost)?{serviceHost:c.serviceHost}:{securityJsCode:c.securityJsCode};
+        await loadScript('https://webapi.amap.com/loader.js');
+        AMapRef=await AMapLoader.load({key:c.jsapiKey,version:'2.0',plugins:['AMap.Scale','AMap.ToolBar']});
+        map=new AMapRef.Map('map',{viewMode:'2D',pitch:0,rotation:0,zoom:12,center:[located[0].lng,located[0].lat]});
+        map.addControl(new AMapRef.Scale());map.addControl(new AMapRef.ToolBar({position:{right:'16px',top:'16px'}}));
+        map.on('zoomend',updateLabels);
+        map.on('complete',()=>{updateLabels();$('status').textContent='高德地图 · 北向上 · 点击景点查看详情';});
+        located.forEach(s=>{
+          const symbol=s.kind==='stay'?'⌂':s.kind==='food'?'食':s.kind==='station'?'站':s.order;
+          const m=new AMapRef.Marker({position:[s.lng,s.lat],anchor:'center',title:s.name,content:`<div class="pin-wrap" style="--day:${s.color}"><div class="pin">${esc(symbol)}</div><div class="pin-label">${esc(s.name)}</div></div>`});
+          m.on('click',()=>focusStop(s.id));m.setMap(map);markers.set(s.id,m);
         });
-        map.addControl(new AMap.Scale());
-        map.addControl(new AMap.ToolBar({ position: { right: '18px', top: '110px' } }));
-        map.addControl(new AMap.ControlBar({ position: { right: '18px', top: '178px' } }));
-        map.on('zoomend', updateLabelVisibility);
-        map.on('complete', updateLabelVisibility);
-        infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(0, -34), isCustom: false });
-
-        days.forEach(day => {
-          const path = day.stops.map(stop => [stop.lng, stop.lat]);
-          const line = new AMap.Polyline({
-            path,
-            isOutline: true,
-            outlineColor: '#fff7ea',
-            borderWeight: 4,
-            strokeColor: day.color,
-            strokeWeight: 7,
-            strokeOpacity: 0.9,
-            showDir: true,
-            lineJoin: 'round',
-            lineCap: 'round',
-            zIndex: 50
+        days.forEach(day=>{
+          const points=stops.filter(s=>s.day===day.id);
+          const legs=day.legs?.length?day.legs:points.slice(1).map((p,i)=>({from:points[i].id,to:p.id,verified:false}));
+          legs.forEach(leg=>{
+            const from=points.find(p=>p.id===leg.from),to=points.find(p=>p.id===leg.to);
+            const real=leg.verified===true && Array.isArray(leg.path) && leg.path.length>1 && leg.path.every(p=>Array.isArray(p)&&validPoint({lng:p[0],lat:p[1]}));
+            const path=real?leg.path:(from&&to&&validPoint(from)&&validPoint(to)?[[from.lng,from.lat],[to.lng,to.lat]]:null);
+            if(!path)return;
+            const overlay=new AMapRef.Polyline({path,strokeColor:day.color,strokeWeight:5,strokeOpacity:.85,strokeStyle:real?'solid':'dashed',showDir:true,isOutline:real,outlineColor:'#ffffff',borderWeight:2,lineJoin:'round'});
+            overlay.setMap(map);lines.push({day:day.id,overlay});
           });
-          line.setMap(map);
-          lines.set(day.id, line);
         });
-
-        allStops.forEach(stop => {
-          const marker = new AMap.Marker({
-            position: [stop.lng, stop.lat],
-            anchor: 'center',
-            content: markerContent(stop),
-            title: stop.name,
-            zIndex: stop.kind ? 140 : 120
-          });
-          marker.on('click', () => focusStop(stop.id, false));
-          marker.setMap(map);
-          markers.set(stop.id, marker);
-        });
-
-        document.getElementById('loadState').style.display = 'none';
-        fitCurrent();
-        focusStop('d1-1', false);
-        updateLabelVisibility();
-      }).catch(err => {
-        const load = document.getElementById('loadState');
-        load.style.display = 'grid';
-        load.innerHTML = '地图加载失败。请检查高德 JSAPI Key、安全密钥或网络。<br>' + String(err && err.message ? err.message : err);
-      });
-    }
-
-    renderTimeline();
-    createMap();
-
-    document.querySelectorAll('.day-tabs button').forEach(btn => {
-      btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
-    });
-
-    document.getElementById('fitAllBtn').addEventListener('click', fitCurrent);
-    document.getElementById('focusHotelBtn').addEventListener('click', () => focusStop('d3-8', true));
-    document.getElementById('focusStationBtn').addEventListener('click', () => focusStop('d3-9', true));
-    document.getElementById('nextStopBtn').addEventListener('click', () => {
-      const list = visibleStops();
-      if (!list.length) return;
-      const currentInVisible = list.findIndex(stop => stop.id === activeStopId);
-      const next = list[(currentInVisible + 1 + list.length) % list.length];
-      focusStop(next.id, true);
-    });
-
-    document.getElementById('sidebarToggle').addEventListener('click', () => {
-      const app = document.querySelector('.app');
-      const collapsed = app.classList.toggle('sidebar-collapsed');
-      const toggle = document.getElementById('sidebarToggle');
-      toggle.setAttribute('aria-expanded', String(!collapsed));
-      toggle.querySelector('.toggle-icon').textContent = collapsed ? '›' : '‹';
-      toggle.querySelector('.toggle-text').textContent = collapsed ? '展开行程' : '收起行程';
-      window.setTimeout(() => {
-        if (map) {
-          map.resize();
-          fitCurrent();
-        }
-      }, 240);
-    });
-
-    document.getElementById('topToggle').addEventListener('click', () => {
-      document.querySelector('.app').classList.add('top-collapsed');
-    });
-
-    document.getElementById('topOpen').addEventListener('click', () => {
-      document.querySelector('.app').classList.remove('top-collapsed');
-    });
-
-    document.getElementById('detailOpen').addEventListener('click', () => {
-      const app = document.querySelector('.app');
-      if (activeStopId && document.getElementById('detail').classList.contains('empty')) {
-        renderDetail(allStops.find(stop => stop.id === activeStopId));
+        fit();
+      }catch{
+        $('status').textContent='地图未加载。请检查本地 config.local.js、有效的 JSAPI 安全配置与网络；不要把此状态当作验收成功。';
       }
-      app.classList.remove('detail-collapsed');
-    });
+    }
+    boot();
   </script>
 </body>
 </html>

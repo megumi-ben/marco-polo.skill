@@ -2,3 +2,16 @@
 config.local.js
 assets/amap-html-template/config.local.js
 travel_plan/
+config.json
+.env
+.env.*
+!.env.example
+*密钥*
+*cookies*
+*session*.json
+node_modules/
+.venv/
+__pycache__/
+__MACOSX/
+*.log
+*.zip
