@@ -6,24 +6,16 @@
 
 ### 把旅行灵感，变成走得通的行程。
 
-**一个和你一起做选择、查路线、安排每一天的 AI 旅行规划 Skill。**
-
-高德定位有依据 · 每天安排有细节 · 交互地图看得见
+一个围绕住宿、真实交通与游玩时间安排行程，最终交付交互地图的 **AI 旅行规划 Skill**。
 
 ![Agent Skill](https://img.shields.io/badge/Agent-Skill-263F3A?style=flat-square)
 ![高德地图](https://img.shields.io/badge/地图与路线-高德-397D68?style=flat-square)
 ![小红书](https://img.shields.io/badge/旅行经验-小红书-C76565?style=flat-square)
 [![GitHub Stars](https://img.shields.io/github/stars/megumi-ben/marco-polo.skill?style=flat-square&color=C18A53)](https://github.com/megumi-ben/marco-polo.skill/stargazers)
 
-[为什么选择它](#为什么选择马可波罗) · [快速上手](#快速上手) · [看一趟旅行怎样生成](#从一句话到一趟旅行) · [工作流](#工作流) · [参与改进](#一起让旅行规划更好用)
+[核心优势](#为什么选择马可波罗) · [快速上手](#快速上手) · [看一个例子](#从一句话到一趟旅行) · [工作流](#工作流) · [依赖安装](#依赖安装)
 
 </div>
-
-收藏了很多攻略，真正出发前，还是要把问题一个个串起来：**住哪里方便？哪些地方值得去？一天怎么走？预约来得及吗？**
-
-马可波罗结合小红书经验、官方信息与高德地图，先帮你选住宿和景点，再围绕**住宿位置、景点分布与适合游玩的时间**，把交通、吃饭、预约和休息一起排进每天。最后交付一份能继续修改的旅行计划，以及一张可以点击、筛选和查看路线的地图网页。
-
-**你决定旅行的样子，马可波罗帮你理清实现它的细节。**
 
 ![南京旅行地图：分日路线、行程时间轴与景点详情](assets/demo-map.png)
 
@@ -31,7 +23,18 @@
 
 ## 为什么选择马可波罗
 
-马可波罗把 **位置准确、时间合适、体验完整、地图清楚** 放进同一套工作流。每个推荐都要回答：它为什么适合你，又怎样融入这一天？
+**从住哪里、选哪些景点，到每天怎么走、什么时候预约，一起规划。**
+
+| 核心优势 | 怎么帮你安排旅行 |
+|---|---|
+| 📍 **路线有依据** | 用高德查询坐标、入口和实际交通，围绕住宿位置把顺路的景点排在一起，考虑绕行与换乘。 |
+| 🕒 **每天有细节** | 开放时间、预约场次、饭点和夜景一起安排，给休息、排队和赶车留出余量；提前整理独立预约清单。 |
+| 🗺️ **成果看得见** | 交付按天分色的地图网页，可筛选日期、定位景点、查看行程详情，出发前和旅途中都能用。 |
+
+景点先给足选择，再由你筛选。信息保留来源，预算按人均计算；换酒店或调整景点后，日程、费用与地图一起更新。
+
+<details>
+<summary>展开了解路线依据、预约、预算与修改细节</summary>
 
 ### 📍 更有依据的路线：从你住的地方开始规划
 
@@ -64,6 +67,8 @@
 
 适合准备周末游、和朋友商量去哪里，或者已经订好车票酒店、只想把市内几天安排明白的人。已有大交通可以跳过比较，已有酒店可以直接进入景点选择。
 
+</details>
+
 ## 快速上手
 
 ### 1. 安装马可波罗
@@ -75,13 +80,11 @@ mkdir -p .agents/skills
 git clone https://github.com/megumi-ben/marco-polo.skill.git .agents/skills/marco-polo
 ```
 
-也可以[下载 ZIP](https://github.com/megumi-ben/marco-polo.skill/archive/refs/heads/main.zip)，解压后将文件夹重命名为 `marco-polo`，放入 `.agents/skills/`。安装后应能找到 `.agents/skills/marco-polo/SKILL.md`。
-
 ### 2. 接上旅行研究和地图能力
 
 安装 **小红书、两个高德 Skill**，配置自己的高德 Key 和小红书登录状态；需要查询大交通或具体酒店时，再安装 **FlyAI**。各依赖与 `marco-polo/` 并列放置，下载入口和配置方式见[依赖安装](#依赖安装)。
 
-依赖尚未齐全时，可以先整理需求；相关研究和地图能力会说明缺口，不冒充已经验证。
+使用的 Agent 还需具备联网搜索能力，以核验官方旅行信息。
 
 ### 3. 说说你想怎么旅行
 
@@ -95,7 +98,9 @@ $marco-polo 想去北京玩两天，喜欢人文建筑和公园，节奏松一�
 > 酒店换到这个地址，帮我调整每天的首尾交通和费用。
 
 <details>
-<summary>其他安装位置、更新与成果目录</summary>
+<summary>ZIP 安装、其他位置、更新与成果目录</summary>
+
+也可以[下载 ZIP](https://github.com/megumi-ben/marco-polo.skill/archive/refs/heads/main.zip)，解压后将文件夹重命名为 `marco-polo`，放入 `.agents/skills/`。安装后应能找到 `.agents/skills/marco-polo/SKILL.md`。
 
 - 也可安装到个人目录 `~/.agents/skills/marco-polo/`，参见 [Codex 官方安装位置](https://learn.chatgpt.com/docs/build-skills)。未发现新 Skill 时，可重新开启会话或重启 Codex。
 - 安装新版时更新已有的马可波罗文件夹，先保留自己添加的本地配置。
@@ -105,26 +110,28 @@ $marco-polo 想去北京玩两天，喜欢人文建筑和公园，节奏松一�
 
 ## 从一句话到一趟旅行
 
-下面用一次简化的虚构对话，展示完整过程。省略日期、人数等补充问答；示例不对应真实出行，具体开放、票务、预约与路线仍需针对出行日期核验。
+*以下是简化的示例对话，实际开放、票务与路线按出行日期核验。*
 
-**你：** 想去北京玩两天，喜欢人文建筑和公园，节奏松一点。大交通自己安排，住宿区域还没选。
+**① 说出想法**
 
-**马可波罗：** 先比较 1—3 个住宿区域，解释交通、氛围与取舍；同时给出有比较空间的景点候选，附推荐理由、优先级、建议时长和初步预约信息。
+> 想去北京玩两天，喜欢人文建筑和公园，节奏松一点。大交通自己安排，住宿区域还没选。
 
-**你：** 住宿选王府井一带。想去故宫、景山、北海和天坛，其他先不排。
+马可波罗补齐日期、人数等必要信息，比较 1—3 个住宿区域，并给出有选择空间的景点候选，说明推荐理由、优先级、建议时长与初步预约信息。
 
-**马可波罗：** 核验开放与预约，查询坐标、入口和交通，把相邻项目归在一起，并给用餐、休息与返程留出时间。先与你确认这样的分配：
+**② 选好住宿和景点，确认每天的安排**
+
+> 住宿选王府井一带。想去故宫、景山、北海和天坛，其他先不排。
+
+核验开放与预约后，结合高德坐标、入口和交通，把相邻项目排在一起，给用餐、休息和返程留出时间。日程草案会先交给你确认：
 
 | 日期 | 简化输出示例 |
 |---|---|
 | 第 1 天 | 上午故宫 → 午餐与休息 → 景山 → 北海 |
 | 第 2 天 | 上午天坛 → 午餐 → 自由活动，按车次预留返程时间 |
 
-**你：** 这个分配可以，进入地图阶段。
+**③ 确认路线，拿到完整旅行文件**
 
-**马可波罗：** 按确认的安排生成交互地图，检查底图、日期筛选、点位定位和手机显示，同步行程、预约与费用文件。尚未办理的预约，仍标注未预约。
-
-你会拿到 **每天怎么走、预约怎么办、费用怎么算、地点在哪里** 这几类成果。选择、依据和待落实事项都有记录，方便出发前准备，也方便途中调整。
+交付 **每日行程、预约清单、人均预算和交互地图**，检查地图加载、日期筛选、点位定位与手机显示。待办理的预约仍保留实际状态，之后也可以继续调整行程。
 
 <details>
 <summary>展开查看交付文件与用途</summary>
@@ -170,14 +177,17 @@ flowchart TD
 
 ## 依赖安装
 
-外部依赖共 **4 个 Skill 包**，本包不附带它们的源码或小红书操作指南。入口于 2026-09-27 核对，上游变化时以所下载版本的说明为准。
+基础配置需要 **两个高德 Skill 和小红书 Skill 包**；需要查询大交通、具体酒店或旅行产品时，再安装 **FlyAI**。各依赖与 `marco-polo/` 并列放置。
 
 | Skill | 作用 | 下载来源 |
 |---|---|---|
 | `amap-lbs-skill` | POI、坐标、入口、实际交通 | [高德官方说明](https://lbs.amap.com/api/skill/ready-to-use/summary) · [官方 ZIP](https://a.amap.com/jsapi/static/openClaw/amap-lbs-skill.zip) |
 | `amap-jsapi-skill` | 高德交互地图 | [高德官方说明](https://lbs.amap.com/api/skill/ready-to-use/summary) · [官方 ZIP](https://a.amap.com/jsapi/static/openClaw/amap-jsapi-skill.zip) |
 | `xiaohongshu-skills` | 住宿、景点、美食经验 | [XHS Bridge 版本源码](https://github.com/autoclaw-cc/xiaohongshu-skills)，Code → Download ZIP，保留整个仓库结构 |
-| `flyai` | 大交通、具体酒店和旅行产品 | [官方安装说明](https://open.fly.ai/docs/quickstart) · [源码](https://github.com/alibaba-flyai/flyai-skill)，下载后取 `skills/flyai/` |
+| `flyai`（按需） | 大交通、具体酒店和旅行产品 | [官方安装说明](https://open.fly.ai/docs/quickstart) · [源码](https://github.com/alibaba-flyai/flyai-skill)，下载后取 `skills/flyai/` |
+
+<details>
+<summary>高德配置与地图预览</summary>
 
 **高德：** 将两个 ZIP 解压到 Skill 目录，在 [高德控制台](https://console.amap.com/dev/key/app)申请自己的 Web 服务 Key 和 Web 端 JSAPI Key。LBS 按其说明安装运行依赖（带 `package.json` 的版本可运行 `npm install`），配置 `AMAP_WEBSERVICE_KEY`。JSAPI 需要自己的 Key 及对应安全配置。[Web 服务配置说明](https://lbs.amap.com/api/webservice/create-project-and-key)
 
@@ -185,16 +195,31 @@ flowchart TD
 
 生成后，在行程目录运行 `python3 -m http.server 8000 --bind 127.0.0.1`，打开 `http://127.0.0.1:8000/map.html` 预览地图。底图需要联网；结束后在终端按 Ctrl+C。
 
+</details>
+
+<details>
+<summary>小红书安装与登录</summary>
+
 **小红书：** 需要 Python 3.11+、uv 和 Chrome。在依赖目录运行 `uv sync`；按[上游 README](https://github.com/autoclaw-cc/xiaohongshu-skills#安装)将其 `extension/` 加载为 Chrome 已解压扩展，启用 XHS Bridge，再运行 `uv run python scripts/cli.py check-login`。登录和搜索子技能已在集合内，无需另外下载；登录态由使用者建立。本工作流不需要发布、评论或点赞。
+
+</details>
+
+<details>
+<summary>FlyAI 配置（按需）</summary>
 
 **FlyAI（按需）：** 安装 `skills/flyai/` 后运行 `npm i -g @fly-ai/flyai-cli`，再用 `flyai --help` 确认当前命令。查询命令和可选 API Key 按[上游说明](https://github.com/alibaba-flyai/flyai-skill#quick-start)配置，使用自己的凭据。
 
+</details>
+
+<details>
+<summary>检查依赖是否可用</summary>
+
 安装后先验证一次 POI 与路段查询、小红书搜索与正文读取。只有登录成功或文件存在，还不足以确认对应能力可用。依赖缺失时工作流会说明缺口，不冒充完成研究或验证。
+
+</details>
 
 <details>
 <summary>包内结构与地图模板</summary>
-
-## 包内结构
 
 ```text
 marco-polo/
@@ -212,13 +237,10 @@ marco-polo/
 
 </details>
 
-
 ## 一起让旅行规划更好用
 
-马可波罗来自真实规划过程中的反复调整：候选太少、相邻景点被拆开、别名重复、预约遗漏……这些具体问题，是继续改进它的起点。
+如果你想在下一次旅行试试它，欢迎点一个 **[⭐ Star](https://github.com/megumi-ben/marco-polo.skill)**，方便回来找到项目。
 
-如果这个项目能帮到你的下一次出行，欢迎点一个 **[⭐ Star](https://github.com/megumi-ben/marco-polo.skill)**，让更多旅行者发现它。
+欢迎[分享使用反馈](https://github.com/megumi-ben/marco-polo.skill/issues)：哪个地方安排得好、哪里绕了路、什么预约信息遗漏了。也欢迎贡献安装体验、路线规划和地图展示方面的改进。反馈中请移除凭据、订单及个人信息。
 
-也欢迎[提交反馈](https://github.com/megumi-ben/marco-polo.skill/issues)或贡献改进：分享哪个环节好用、哪里安排不合理，或者你希望怎样调整。反馈时请去掉 API Key、登录信息、订单和个人行程中的敏感内容。
-
-从 [SKILL.md](SKILL.md) 可以了解规划规则，从 [输出规范](references/outputs.md) 可以了解各阶段如何交接。一起把每一次实际使用，变成下一次更好的出发。
+想参与改进，可以从 [规划规则](SKILL.md) 和 [输出规范](references/outputs.md) 开始。

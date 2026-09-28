@@ -4,26 +4,18 @@
 
 **English** | [简体中文](README.zh-CN.md)
 
-### Turn travel ideas into a trip you can follow.
+### Your next trip, mapped out.
 
-**An AI travel planning skill that helps you choose, plan, and explore each day.**
-
-Real locations · Thoughtful daily plans · An interactive map
+An **AI travel planning skill** that plans around your stay, real transport routes, and visiting times—then brings it all together on an interactive map.
 
 ![Agent Skill](https://img.shields.io/badge/Agent-Skill-263F3A?style=flat-square)
 ![Amap](https://img.shields.io/badge/Maps_and_routes-Amap-397D68?style=flat-square)
 ![Xiaohongshu](https://img.shields.io/badge/Travel_insights-Xiaohongshu-C76565?style=flat-square)
 [![GitHub Stars](https://img.shields.io/github/stars/megumi-ben/marco-polo.skill?style=flat-square&color=C18A53)](https://github.com/megumi-ben/marco-polo.skill/stargazers)
 
-[Why Marco Polo](#why-marco-polo) · [Quick start](#quick-start) · [See a trip take shape](#from-one-message-to-a-trip) · [Workflow](#workflow) · [Contribute](#help-make-travel-planning-better)
+[Why Marco Polo](#why-marco-polo) · [Quick start](#quick-start) · [See an example](#from-one-message-to-a-trip) · [Workflow](#workflow) · [Dependencies](#dependencies)
 
 </div>
-
-Saved plenty of travel guides? There are still decisions to connect before you leave: **Where should you stay? Which places are worth your time? How do they fit into a day? What needs booking?**
-
-Marco Polo brings together Xiaohongshu travel experiences, official information, and Amap. It helps you choose an area to stay and places to visit, then plans each day around **your accommodation, the geography of your stops, and suitable visiting times**. Transport, food, reservations, and rest all have a place in the schedule. You get an editable trip plan and a map webpage you can click, filter, and explore.
-
-**Your choices shape the trip. Marco Polo works through the details.**
 
 ![Nanjing travel map: daily routes, a timeline, and place details](assets/demo-map.png)
 
@@ -31,7 +23,18 @@ Marco Polo brings together Xiaohongshu travel experiences, official information,
 
 ## Why Marco Polo
 
-Marco Polo puts **location accuracy, timing, a complete day, and a clear map** into one workflow. Every recommendation has to answer two questions: why does it suit you, and how does it fit into your day?
+**Choose where to stay and what to see, then work out each day—with routes, timing, and reservations connected.**
+
+| What makes it useful | What you get |
+|---|---|
+| 📍 **Routes grounded in real places** | Amap coordinates, entrances, and transport routes help group nearby stops around your accommodation, accounting for detours and transfers. |
+| 🕒 **Days planned down to the details** | Opening hours, booking slots, meals, and evening views fit together, with room for breaks, queues, and departure. A separate reservation checklist helps you prepare ahead. |
+| 🗺️ **A trip you can explore on a map** | A webpage with daily colors, date filters, place selection, and itinerary details—useful before departure and during the trip. |
+
+Explore a varied set of places before choosing. Keep sources and per-person costs at hand. When plans change, update the itinerary, budget, and map together.
+
+<details>
+<summary>Explore the details: routes, reservations, budgets, and revisions</summary>
 
 ### 📍 Routes grounded in real locations, planned around your stay
 
@@ -64,6 +67,8 @@ Your itinerary, reservation checklist, budget, map, and structured data are save
 
 Use it for a weekend away, a trip with friends, or a few days of sightseeing after you've already booked transport and accommodation. Transport you are arranging yourself can be skipped; an existing hotel becomes the starting point for planning.
 
+</details>
+
 ## Quick start
 
 ### 1. Install Marco Polo
@@ -75,13 +80,11 @@ mkdir -p .agents/skills
 git clone https://github.com/megumi-ben/marco-polo.skill.git .agents/skills/marco-polo
 ```
 
-Alternatively, [download the ZIP](https://github.com/megumi-ben/marco-polo.skill/archive/refs/heads/main.zip), rename the extracted folder to `marco-polo`, and place it in `.agents/skills/`. The entry point should be `.agents/skills/marco-polo/SKILL.md`.
-
 ### 2. Connect travel research and maps
 
 Install **the Xiaohongshu skill bundle and both Amap skills**, then configure your own Amap credentials and Xiaohongshu login. Add **FlyAI** when you need transport or specific hotel searches. Place these skills alongside `marco-polo/`; see [Dependencies](#dependencies) for download links and setup.
 
-You can start gathering requirements before every dependency is ready. Missing research or map capabilities are reported explicitly.
+Your agent also needs web research access to check official travel information.
 
 ### 3. Describe the trip you have in mind
 
@@ -98,7 +101,9 @@ Start with what you know. Marco Polo asks for the dates, group size, budget, and
 > My hotel has changed to this address. Update the first and last journeys each day, along with their costs.
 
 <details>
-<summary>Other installation locations, updates, and output folders</summary>
+<summary>ZIP installation, other locations, updates, and output folders</summary>
+
+Alternatively, [download the ZIP](https://github.com/megumi-ben/marco-polo.skill/archive/refs/heads/main.zip), rename the extracted folder to `marco-polo`, and place it in `.agents/skills/`. The entry point should be `.agents/skills/marco-polo/SKILL.md`.
 
 - For personal use across projects, you can install to `~/.agents/skills/marco-polo/`. See the [official Codex skill locations](https://learn.chatgpt.com/docs/build-skills). If the skill does not appear, start a new session or restart Codex.
 - When updating an existing installation, preserve any local configuration you have added.
@@ -108,26 +113,28 @@ Start with what you know. Marco Polo asks for the dates, group size, budget, and
 
 ## From one message to a trip
 
-This fictional, shortened conversation illustrates the process. Follow-up questions about dates and travelers are omitted; opening hours, tickets, reservations, and routes still need verification for the actual travel dates.
+*An illustrative conversation. Opening hours, tickets, and routes are verified for the actual travel dates.*
 
-**You:** I'd like two relaxed days in Beijing, with historic architecture and parks. I'll handle transport to and from the city, but haven't chosen where to stay.
+**1. Describe the trip**
 
-**Marco Polo:** Compares 1–3 areas to stay, explaining transport access, atmosphere, and tradeoffs. It also offers a varied shortlist of attractions, with reasons, priorities, suggested visit lengths, and initial reservation information.
+> I'd like two relaxed days in Beijing, with historic architecture and parks. I'll handle travel to and from the city, but haven't chosen where to stay.
 
-**You:** Let's stay around Wangfujing. I'd like the Palace Museum, Jingshan, Beihai, and the Temple of Heaven. Leave the others out for now.
+Marco Polo asks for missing essentials such as dates and group size, compares 1–3 areas to stay, and offers a varied set of attractions with reasons, priorities, visit lengths, and initial booking information.
 
-**Marco Polo:** Checks opening hours and reservations, queries locations, entrances, and transport, and groups nearby visits while allowing time for meals, rest, and departure. It proposes this daily split for you to review:
+**2. Choose your stay and places, then review the daily plan**
+
+> Let's stay around Wangfujing. I'd like the Palace Museum, Jingshan, Beihai, and the Temple of Heaven. Leave the others out for now.
+
+After checking opening hours and reservations, Amap locations, entrances, and transport help group nearby stops with time for meals, breaks, and departure. You review the proposed itinerary:
 
 | Day | Simplified example |
 |---|---|
 | Day 1 | Palace Museum in the morning → lunch and rest → Jingshan → Beihai |
 | Day 2 | Temple of Heaven in the morning → lunch → free time, with a departure buffer based on your train |
 
-**You:** That works. Go ahead with the map.
+**3. Confirm the route and take your trip files with you**
 
-**Marco Polo:** Builds the map from the agreed plan, checks the base map, date filters, place selection, and mobile layout, and updates the itinerary, reservations, and budget. Bookings that have not been made remain marked as outstanding.
-
-You receive **a daily route, booking preparation, cost estimates, and a map of your stops**. Decisions, sources, and outstanding tasks stay available for preparation and later changes.
+Get **a daily itinerary, reservation checklist, per-person budget, and interactive map**. Map loading, date filters, place selection, and mobile layout are checked. Outstanding bookings retain their actual status, and you can continue revising the trip.
 
 <details>
 <summary>Deliverables and what they are for</summary>
@@ -173,14 +180,17 @@ Accommodation and attraction research can run in parallel. An existing hotel is 
 
 ## Dependencies
 
-Marco Polo uses **four external skill packages**. Install them separately using the sources below. Links were checked on September 27, 2026; follow the documentation for the version you download if upstream instructions change.
+Install **both Amap skills and the Xiaohongshu skill bundle** for research and maps. Add **FlyAI** when you need transport, specific hotels, or travel products. Place dependencies alongside `marco-polo/`.
 
 | Skill | Purpose | Download |
 |---|---|---|
 | `amap-lbs-skill` | POIs, coordinates, entrances, and transport routes | [Official Amap guide](https://lbs.amap.com/api/skill/ready-to-use/summary) · [Official ZIP](https://a.amap.com/jsapi/static/openClaw/amap-lbs-skill.zip) |
 | `amap-jsapi-skill` | Interactive Amap webpages | [Official Amap guide](https://lbs.amap.com/api/skill/ready-to-use/summary) · [Official ZIP](https://a.amap.com/jsapi/static/openClaw/amap-jsapi-skill.zip) |
 | `xiaohongshu-skills` | Experience-based research on accommodation, attractions, and food | [XHS Bridge implementation](https://github.com/autoclaw-cc/xiaohongshu-skills); use Code → Download ZIP and preserve the repository structure |
-| `flyai` | Transport, specific hotels, and travel products | [Official setup](https://open.fly.ai/docs/quickstart) · [Source](https://github.com/alibaba-flyai/flyai-skill); use the `skills/flyai/` directory |
+| `flyai` (optional) | Transport, specific hotels, and travel products | [Official setup](https://open.fly.ai/docs/quickstart) · [Source](https://github.com/alibaba-flyai/flyai-skill); use the `skills/flyai/` directory |
+
+<details>
+<summary>Amap setup and map preview</summary>
 
 **Amap:** Extract both ZIPs into your skill directory. Create your own Web Service Key and Web JSAPI Key in the [Amap console](https://console.amap.com/dev/key/app). Install the LBS runtime dependencies as documented (`npm install` for versions with a `package.json`) and configure `AMAP_WEBSERVICE_KEY`. JSAPI needs its own key and the corresponding security configuration. See the [Web Service setup guide](https://lbs.amap.com/api/webservice/create-project-and-key).
 
@@ -188,11 +198,28 @@ When generating a map, copy `assets/amap-html-template/config.local.example.js` 
 
 To preview a generated map, run `python3 -m http.server 8000 --bind 127.0.0.1` in the trip directory and open `http://127.0.0.1:8000/map.html`. The base map requires internet access. Press Ctrl+C in the server terminal when finished.
 
+</details>
+
+<details>
+<summary>Xiaohongshu installation and login</summary>
+
 **Xiaohongshu:** Requires Python 3.11+, uv, and Chrome. Run `uv sync` in the dependency directory. Follow the [upstream README](https://github.com/autoclaw-cc/xiaohongshu-skills#%E5%AE%89%E8%A3%85) to load its `extension/` directory as an unpacked Chrome extension and enable XHS Bridge, then run `uv run python scripts/cli.py check-login`. Authentication and search subskills are already included. Sign in with your own account; this travel workflow does not need publishing, comments, or likes.
+
+</details>
+
+<details>
+<summary>FlyAI setup (optional)</summary>
 
 **FlyAI (optional):** After installing `skills/flyai/`, run `npm i -g @fly-ai/flyai-cli`, then check `flyai --help` for the available commands. Follow the [upstream instructions](https://github.com/alibaba-flyai/flyai-skill#quick-start) for queries and optional API key setup, using your own credentials.
 
+</details>
+
+<details>
+<summary>Check that the dependencies work</summary>
+
 After installation, verify a POI and route query, plus a Xiaohongshu search and note-detail retrieval. A successful login alone does not verify the research capability. Missing capabilities are reported in the plan.
+
+</details>
 
 <details>
 <summary>Package structure and map template</summary>
@@ -215,10 +242,8 @@ marco-polo/
 
 ## Help make travel planning better
 
-Marco Polo has been shaped by real planning sessions: too few candidates, nearby places split across days, ambiguous names, and reservation details that are easy to miss. Those practical problems guide its continued improvement.
+Want to try it on your next trip? **[⭐ Star Marco Polo](https://github.com/megumi-ben/marco-polo.skill)** to find it again when you're ready to plan.
 
-If it helps with your next trip, leave a **[⭐ Star](https://github.com/megumi-ben/marco-polo.skill)** so more travelers can find it.
+[Share your experience](https://github.com/megumi-ben/marco-polo.skill/issues): what worked, where a route took a detour, or which booking detail was missing. Contributions to setup, route planning, and map presentation are welcome. Remove credentials, orders, and personal information before posting.
 
-[Feedback](https://github.com/megumi-ben/marco-polo.skill/issues) and contributions are welcome: tell us which stage worked well, where a plan fell short, or what you would change. Please remove API keys, login information, orders, and sensitive trip details before posting.
-
-Start with [SKILL.md](SKILL.md) for the planning rules or the [output specification](references/outputs.md) for how the stages connect. Help turn the lessons from one trip into a better starting point for the next.
+Start contributing with the [planning rules](SKILL.md) and [output specification](references/outputs.md).
