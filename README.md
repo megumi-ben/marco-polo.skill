@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧭 Marco Polo · 马可波罗
+# 🧭 Marco Polo
 
 **English** | [简体中文](README.zh-CN.md)
 
@@ -23,7 +23,7 @@ Saved plenty of travel guides? There are still decisions to connect before you l
 
 Marco Polo brings together Xiaohongshu travel experiences, official information, and Amap. It helps you choose an area to stay and places to visit, then plans each day around **your accommodation, the geography of your stops, and suitable visiting times**. Transport, food, reservations, and rest all have a place in the schedule. You get an editable trip plan and a map webpage you can click, filter, and explore.
 
-**Your choices shape the trip. Marco Polo works through the details.** The current workflow focuses on Chinese-language, single-city itineraries, including nearby day trips. The skill instructions and output filenames are in Chinese.
+**Your choices shape the trip. Marco Polo works through the details.**
 
 ![Nanjing travel map: daily routes, a timeline, and place details](assets/demo-map.png)
 
@@ -85,14 +85,13 @@ You can start gathering requirements before every dependency is ready. Missing r
 
 ### 3. Describe the trip you have in mind
 
-For the current Chinese-language workflow, try:
+For example:
 
 ```text
-$marco-polo 想去北京玩两天，喜欢人文建筑和公园，节奏松一点。
-大交通自己安排，住宿区域还没选。帮我一起规划一下。
+$marco-polo I'd like two relaxed days in Beijing, with historic architecture and parks.
+I'll arrange travel to and from the city myself, but haven't chosen where to stay.
+Help me plan.
 ```
-
-This means: “I'd like two relaxed days in Beijing, with historic architecture and parks. I'll arrange transport to and from the city myself, but haven't chosen where to stay. Help me plan.”
 
 Start with what you know. Marco Polo asks for the dates, group size, budget, and other information needed for the current stage. Later, you can continue with requests such as:
 
@@ -131,20 +130,18 @@ This fictional, shortened conversation illustrates the process. Follow-up questi
 You receive **a daily route, booking preparation, cost estimates, and a map of your stops**. Decisions, sources, and outstanding tasks stay available for preparation and later changes.
 
 <details>
-<summary>Output files and what they are for</summary>
-
-The current workflow uses Chinese filenames:
+<summary>Deliverables and what they are for</summary>
 
 | Output | Purpose |
 |---|---|
-| `住宿区域候选.md`, `景点清单.md` | Compare areas and places, with recommendation reasons and final selections |
-| `景点预约.md` | Know when, where, and which time slot to book before departure |
-| `每日行程.md` | Daily visits, transport, food, breaks, and alternatives |
-| `费用跟踪.csv` | Confirmed, estimated, and unknown expenses, calculated per person |
+| Accommodation areas and attraction shortlist | Compare areas and places, with recommendation reasons and final selections |
+| Reservation checklist | Know when, where, and which time slot to book before departure |
+| Daily itinerary | Daily visits, transport, food, breaks, and alternatives |
+| Per-person budget (CSV) | Confirmed, estimated, and unknown expenses, calculated per person |
 | `map.html` | Locations, visit order, directions, and place details |
-| `行程数据.json`, `行程状态.md` | Facts, decisions, and progress for future revisions |
+| Trip data and progress | Facts, decisions, and progress for future revisions |
 
-Files are created as needed. Transport comparisons are added only when requested. See the [output specification](references/outputs.md) for the full conventions in Chinese.
+Files are created as needed. Transport comparisons are added only when requested. See the [output specification](references/outputs.md) for the full file conventions.
 
 </details>
 
@@ -191,7 +188,7 @@ When generating a map, copy `assets/amap-html-template/config.local.example.js` 
 
 To preview a generated map, run `python3 -m http.server 8000 --bind 127.0.0.1` in the trip directory and open `http://127.0.0.1:8000/map.html`. The base map requires internet access. Press Ctrl+C in the server terminal when finished.
 
-**Xiaohongshu:** Requires Python 3.11+, uv, and Chrome. Run `uv sync` in the dependency directory. Follow the [upstream README](https://github.com/autoclaw-cc/xiaohongshu-skills#安装) to load its `extension/` directory as an unpacked Chrome extension and enable XHS Bridge, then run `uv run python scripts/cli.py check-login`. Authentication and search subskills are already included. Sign in with your own account; this travel workflow does not need publishing, comments, or likes.
+**Xiaohongshu:** Requires Python 3.11+, uv, and Chrome. Run `uv sync` in the dependency directory. Follow the [upstream README](https://github.com/autoclaw-cc/xiaohongshu-skills#%E5%AE%89%E8%A3%85) to load its `extension/` directory as an unpacked Chrome extension and enable XHS Bridge, then run `uv run python scripts/cli.py check-login`. Authentication and search subskills are already included. Sign in with your own account; this travel workflow does not need publishing, comments, or likes.
 
 **FlyAI (optional):** After installing `skills/flyai/`, run `npm i -g @fly-ai/flyai-cli`, then check `flyai --help` for the available commands. Follow the [upstream instructions](https://github.com/alibaba-flyai/flyai-skill#quick-start) for queries and optional API key setup, using your own credentials.
 
@@ -202,11 +199,11 @@ After installation, verify a POI and route query, plus a Xiaohongshu search and 
 
 ```text
 marco-polo/
-├── SKILL.md                         Five-stage workflow (Chinese)
+├── SKILL.md                         Five-stage workflow
 ├── README.md                        English overview and setup
 ├── README.zh-CN.md                  Chinese overview and setup
 ├── agents/openai.yaml               Display name and invocation prompt
-├── references/outputs.md            Output conventions (Chinese)
+├── references/outputs.md            Output conventions
 └── assets/
     ├── demo-map.png                 Nanjing map showcase
     └── amap-html-template/
