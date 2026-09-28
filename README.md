@@ -1,152 +1,227 @@
 <div align="center">
 
-# 🧭 马可波罗 · Marco Polo
+# 🧭 Marco Polo · 马可波罗
 
-**从「想去哪儿」到「今天怎么走」，一起把旅行安排明白。**
+**English** | [简体中文](README.zh-CN.md)
+
+### Turn travel ideas into a trip you can follow.
+
+**An AI travel planning skill that helps you choose, plan, and explore each day.**
+
+Real locations · Thoughtful daily plans · An interactive map
 
 ![Agent Skill](https://img.shields.io/badge/Agent-Skill-263F3A?style=flat-square)
-![中文](https://img.shields.io/badge/语言-中文-557B6F?style=flat-square)
-![单城市](https://img.shields.io/badge/规划-单城市-C18A53?style=flat-square)
-![五阶段](https://img.shields.io/badge/工作流-5_阶段-647C98?style=flat-square)
-![高德地图](https://img.shields.io/badge/地图-高德_JSAPI-397D68?style=flat-square)
+![Amap](https://img.shields.io/badge/Maps_and_routes-Amap-397D68?style=flat-square)
+![Xiaohongshu](https://img.shields.io/badge/Travel_insights-Xiaohongshu-C76565?style=flat-square)
+[![GitHub Stars](https://img.shields.io/github/stars/megumi-ben/marco-polo.skill?style=flat-square&color=C18A53)](https://github.com/megumi-ben/marco-polo.skill/stargazers)
 
-[看示例](#一次规划会怎样进行) · [看流程](#工作流) · [快速上手](#快速上手) · [安装依赖](#依赖安装)
+[Why Marco Polo](#why-marco-polo) · [Quick start](#quick-start) · [See a trip take shape](#from-one-message-to-a-trip) · [Workflow](#workflow) · [Contribute](#help-make-travel-planning-better)
 
 </div>
 
-马可波罗是一个中文单城市旅行规划 Skill：先研究住宿区域和景点，让你做选择，再结合**高德坐标与真实交通**安排每天的路线，最后交付行程、预约清单、人均预算和交互地图。
+Saved plenty of travel guides? There are still decisions to connect before you leave: **Where should you stay? Which places are worth your time? How do they fit into a day? What needs booking?**
 
-它关注的是为什么住这里、为什么去这些地方、为什么这样走。你只需用自然语言描述想法，无需填写表格或 JSON；已经订好的安排会被保留，后续修改只更新受影响的部分。
+Marco Polo brings together Xiaohongshu travel experiences, official information, and Amap. It helps you choose an area to stay and places to visit, then plans each day around **your accommodation, the geography of your stops, and suitable visiting times**. Transport, food, reservations, and rest all have a place in the schedule. You get an editable trip plan and a map webpage you can click, filter, and explore.
 
-## 一次规划会怎样进行
+**Your choices shape the trip. Marco Polo works through the details.** The current workflow focuses on Chinese-language, single-city itineraries, including nearby day trips. The skill instructions and output filenames are in Chinese.
 
-下面是简化的虚构演示。截图使用公开景点位置与示意连线，不对应任何人的实际出行、酒店或订单，也不是已核验的旅行方案。
+![Nanjing travel map: daily routes, a timeline, and place details](assets/demo-map.png)
 
-**① 你说需求**
+<p align="center"><sub>Nanjing itinerary showcase: daily colors, a visit timeline, and place details. Lines in this example show visit order; the planning workflow queries actual transport routes separately.</sub></p>
 
-> 想去北京玩两天，喜欢人文建筑和公园，节奏松一点。大交通自己安排，住宿区域还没选。
+## Why Marco Polo
 
-**② 马可波罗给选择**
+Marco Polo puts **location accuracy, timing, a complete day, and a clear map** into one workflow. Every recommendation has to answer two questions: why does it suit you, and how does it fit into your day?
 
-比较 1—3 个住宿区域，说明交通、氛围和取舍；同时提供覆盖不同类型的景点候选、推荐理由、优先级和初步预约信息。初始候选有选择余地，不会因为每天只想去两三个地方，就只给刚好排满的名单。
+### 📍 Routes grounded in real locations, planned around your stay
 
-**③ 你做筛选**
+Amap provides **POIs, coordinates, and entrances** for attractions, accommodation, and relevant transport hubs. The workflow checks ambiguous names and sites within larger attractions, then groups visits by location. Your chosen accommodation shapes where each day begins, which places belong together, and how you get back.
 
-> 住宿选王府井一带。想去故宫、景山、北海和天坛，其他先不排。
+Walking, public transport, or driving routes between consecutive stops supply road distances and estimated travel times. Detours, entrances, and transfers all inform the plan. **The geography and the journey both matter.**
 
-**④ 马可波罗规划，再由你确认**
+### 🕒 Detailed days with time for sights, food, bookings, and breaks
 
-核验具体日期、入口和预约；查询高德坐标与实际交通，把相邻项目归在一起，加入用餐、休息和返程余量。对话先给简明路线及待确认事项，文件保留依据。预约尚未办理时，会明确标注。
+Museums during visiting hours, food streets around mealtimes, and evening views after dark: each stop is scheduled alongside opening hours, visit duration, reservation slots, and travel time. Meals, rest, queues, luggage collection, and getting to your train or flight also need room in the day.
 
-| 日期 | 简化输出示例 |
+A separate **attraction reservation checklist** records booking channels, ticket release rules, target slots, current status, and alternatives if a booking falls through. Prepare ahead, then see the relevant reminders in each day's itinerary.
+
+### 🗺️ A polished, interactive map you can explore
+
+The final **`map.html` webpage** shows each day in a different color, with visit order and direction arrows. Filter by date, locate a place from the itinerary, and open details about visit duration, reservations, and transport. Browser checks include readability on mobile.
+
+Accommodation, attractions, food stops, and transport hubs have distinct markers. See the whole trip before departure, then find your next stop while traveling—with the written plan and its geography together.
+
+**Useful details throughout the process:**
+
+| Advantage | What it means for your trip |
 |---|---|
-| 第 1 天 | 上午故宫 → 午餐与休息 → 景山 → 北海 |
-| 第 2 天 | 上午天坛 → 午餐 → 自由活动，按车次预留返程时间 |
+| 🧭 **You keep the choices** | Candidates cover different interests and neighborhoods, with reasons, priorities, and tradeoffs. Explore options before narrowing them down. Existing tickets, hotels, and must-see places are respected. |
+| 🔎 **Sources and uncertainty stay visible** | Xiaohongshu contributes experience and opinions; official sources verify opening hours, tickets, and reservations. Sources and lookup dates are retained. Unverified facts and outstanding bookings stay clearly marked. |
+| 💰 **Clear costs per person** | Shared hotel and taxi costs are split across travelers; individual costs such as admission are recorded separately. Confirmed, estimated, and unknown amounts stay distinct, with checks against counting bundled tickets twice. |
+| 🔄 **Changes stay consistent** | Changing accommodation, places, or dates updates the affected itinerary, routes, reservation targets, costs, and map. Existing bookings retain their actual status, and changes that affect them are explained. |
 
-> 你：这个分配可以，进入地图阶段。
->
-> 马可波罗：按确认的安排生成地图，同步行程、预约清单与费用；尚未预约的项目仍标注未预约。
+Your itinerary, reservation checklist, budget, map, and structured data are saved as local files. Keep the results and continue refining them.
 
-**⑤ 拿到地图和文件**
+Use it for a weekend away, a trip with friends, or a few days of sightseeing after you've already booked transport and accommodation. Transport you are arranging yourself can be skipped; an existing hotel becomes the starting point for planning.
 
-![交互地图示例：分日筛选、景点定位与路线说明](assets/demo-map.png)
+## Quick start
 
-*地图骨架的虚构演示：左侧查看当天安排，右侧按日期筛选、点击点位；虚线表示顺序示意。实际规划使用查询到的交通路段，并区分真实路线与示意线。*
+### 1. Install Marco Polo
 
-| 交付 | 用来做什么 |
+Run in your project directory:
+
+```bash
+mkdir -p .agents/skills
+git clone https://github.com/megumi-ben/marco-polo.skill.git .agents/skills/marco-polo
+```
+
+Alternatively, [download the ZIP](https://github.com/megumi-ben/marco-polo.skill/archive/refs/heads/main.zip), rename the extracted folder to `marco-polo`, and place it in `.agents/skills/`. The entry point should be `.agents/skills/marco-polo/SKILL.md`.
+
+### 2. Connect travel research and maps
+
+Install **the Xiaohongshu skill bundle and both Amap skills**, then configure your own Amap credentials and Xiaohongshu login. Add **FlyAI** when you need transport or specific hotel searches. Place these skills alongside `marco-polo/`; see [Dependencies](#dependencies) for download links and setup.
+
+You can start gathering requirements before every dependency is ready. Missing research or map capabilities are reported explicitly.
+
+### 3. Describe the trip you have in mind
+
+For the current Chinese-language workflow, try:
+
+```text
+$marco-polo 想去北京玩两天，喜欢人文建筑和公园，节奏松一点。
+大交通自己安排，住宿区域还没选。帮我一起规划一下。
+```
+
+This means: “I'd like two relaxed days in Beijing, with historic architecture and parks. I'll arrange transport to and from the city myself, but haven't chosen where to stay. Help me plan.”
+
+Start with what you know. Marco Polo asks for the dates, group size, budget, and other information needed for the current stage. Later, you can continue with requests such as:
+
+> My hotel has changed to this address. Update the first and last journeys each day, along with their costs.
+
+<details>
+<summary>Other installation locations, updates, and output folders</summary>
+
+- For personal use across projects, you can install to `~/.agents/skills/marco-polo/`. See the [official Codex skill locations](https://learn.chatgpt.com/docs/build-skills). If the skill does not appear, start a new session or restart Codex.
+- When updating an existing installation, preserve any local configuration you have added.
+- Results are created progressively in `travel_plan/<city-trip-id>/` under your working directory. Revisions reuse the same data, so you can continue where you left off.
+
+</details>
+
+## From one message to a trip
+
+This fictional, shortened conversation illustrates the process. Follow-up questions about dates and travelers are omitted; opening hours, tickets, reservations, and routes still need verification for the actual travel dates.
+
+**You:** I'd like two relaxed days in Beijing, with historic architecture and parks. I'll handle transport to and from the city, but haven't chosen where to stay.
+
+**Marco Polo:** Compares 1–3 areas to stay, explaining transport access, atmosphere, and tradeoffs. It also offers a varied shortlist of attractions, with reasons, priorities, suggested visit lengths, and initial reservation information.
+
+**You:** Let's stay around Wangfujing. I'd like the Palace Museum, Jingshan, Beihai, and the Temple of Heaven. Leave the others out for now.
+
+**Marco Polo:** Checks opening hours and reservations, queries locations, entrances, and transport, and groups nearby visits while allowing time for meals, rest, and departure. It proposes this daily split for you to review:
+
+| Day | Simplified example |
 |---|---|
-| `住宿区域候选.md`、`景点清单.md` | 比较选择，保留推荐理由与最终名单 |
-| `景点预约.md` | 出发前知道何时、去哪里、预约哪一场 |
-| `每日行程.md` | 查看每天的景点、交通、餐饮、休息与备选 |
-| `费用跟踪.csv` | 区分已定、预估和未知费用，按人均计算 |
-| `map.html` | 查看位置、顺序、方向和点位详情 |
-| `行程数据.json`、`行程状态.md` | 保存事实、决定和进度，便于继续修改 |
+| Day 1 | Palace Museum in the morning → lunch and rest → Jingshan → Beihai |
+| Day 2 | Temple of Heaven in the morning → lunch → free time, with a departure buffer based on your train |
 
-按需生成，不预先堆空文件；大交通比较只有需要时才增加。详细约定见 [输出规范](references/outputs.md)。
+**You:** That works. Go ahead with the map.
 
-## 工作流
+**Marco Polo:** Builds the map from the agreed plan, checks the base map, date filters, place selection, and mobile layout, and updates the itinerary, reservations, and budget. Bookings that have not been made remain marked as outstanding.
+
+You receive **a daily route, booking preparation, cost estimates, and a map of your stops**. Decisions, sources, and outstanding tasks stay available for preparation and later changes.
+
+<details>
+<summary>Output files and what they are for</summary>
+
+The current workflow uses Chinese filenames:
+
+| Output | Purpose |
+|---|---|
+| `住宿区域候选.md`, `景点清单.md` | Compare areas and places, with recommendation reasons and final selections |
+| `景点预约.md` | Know when, where, and which time slot to book before departure |
+| `每日行程.md` | Daily visits, transport, food, breaks, and alternatives |
+| `费用跟踪.csv` | Confirmed, estimated, and unknown expenses, calculated per person |
+| `map.html` | Locations, visit order, directions, and place details |
+| `行程数据.json`, `行程状态.md` | Facts, decisions, and progress for future revisions |
+
+Files are created as needed. Transport comparisons are added only when requested. See the [output specification](references/outputs.md) for the full conventions in Chinese.
+
+</details>
+
+## Workflow
+
+Five stages progressively turn preferences into a plan: understand the trip, research accommodation and attractions, arrange the selected places, then generate the map after route confirmation.
 
 ```mermaid
 flowchart TD
-    A[① 收集需求与已有安排] --> B{需要辅助规划大交通？}
-    B -->|需要| C[比较方案，记录采用结果]
-    B -->|已有或自理| D[记录到离时间边界]
-    C --> E[② 推荐住宿区域]
+    A["1. Gather requirements and existing plans"] --> B{"Need help with travel to and from the city?"}
+    B -->|Yes| C["Compare options and record the chosen plan"]
+    B -->|Already booked or self-arranged| D["Record arrival and departure constraints"]
+    C --> E["2. Recommend areas to stay"]
     D --> E
-    C --> F[③ 推荐景点候选]
+    C --> F["3. Recommend places to visit"]
     D --> F
-    E --> G[用户选住宿与景点]
+    E --> G["You choose accommodation and attractions"]
     F --> G
-    G --> H[④ 核验开放、门票与预约]
-    H --> I[高德 POI 与入口坐标 → 空间分组]
-    I --> J[查询真实交通 → 加入餐饮、休息与预算]
-    J --> K{用户确认路线}
-    K -->|调整| I
-    K -->|确认| L[⑤ 生成交互地图并在浏览器验收]
-    L --> M[交付行程、预约清单、预算与地图]
+    G --> H["4. Verify opening hours, tickets, and reservations"]
+    H --> I["Amap POIs and entrances → group by location"]
+    I --> J["Query transport routes → add meals, rest, and costs"]
+    J --> K{"You confirm the itinerary"}
+    K -->|Revise| I
+    K -->|Confirm| L["5. Build the interactive map and check it in a browser"]
+    L --> M["Deliver the itinerary, reservation checklist, budget, and map"]
 ```
 
-②③可以并行研究；已有酒店直接采用。紧迫的预约事项提前提醒，不必等候选全部筛完。用户确认的是方案，不代表已经下单或预约成功。
+Accommodation and attraction research can run in parallel. An existing hotel is used directly. Urgent reservation deadlines are surfaced early. Approving an itinerary does not place an order or make a reservation.
 
-## 快速上手
+## Dependencies
 
-**1. 放入 Skill 目录。** 解压发布包，将 `marco-polo/` 整个文件夹放到目标项目的 `.agents/skills/`。入口应为 `.agents/skills/marco-polo/SKILL.md`。也可安装到个人目录 `~/.agents/skills/marco-polo/`。[Codex 官方安装位置](https://learn.chatgpt.com/docs/build-skills)
+Marco Polo uses **four external skill packages**. Install them separately using the sources below. Links were checked on September 27, 2026; follow the documentation for the version you download if upstream instructions change.
 
-**2. 配置依赖。** 按下方说明安装小红书和两个高德 Skill；需要查询大交通或具体酒店时再加 FlyAI。各依赖与 `marco-polo/` 并列，不放进它的内部。
-
-**3. 开始对话。**
-
-```text
-$marco-polo 帮我规划一次单城市旅行。
-先和我确认需求，推荐住宿区域和景点，等我选好后再安排路线。
-```
-
-也可以直接说“使用马可波罗，帮我规划旅行”，补充城市、日期、人数、偏好和已有安排。城市、日期尚不明确时，它会先帮助收集必要信息。
-
-**4. 继续修改。** 例如：“酒店改到这个地址，帮我更新每天首尾交通和费用。”成果放在工作目录的 `travel_plan/<城市-行程标识>/`，后续沿用同一份数据。
-
-新版安装时替换旧的马可波罗文件夹，先保留自己添加的本地配置。开发版叫 `travel-workflow`，此发布版叫 `marco-polo`，通常选择安装其中一个即可。未发现新 Skill 时，可重新开启会话或重启 Codex。
-
-## 依赖安装
-
-外部依赖共 **4 个 Skill 包**，本包不附带它们的源码或小红书操作指南。入口于 2026-09-27 核对，上游变化时以所下载版本的说明为准。
-
-| Skill | 作用 | 下载来源 |
+| Skill | Purpose | Download |
 |---|---|---|
-| `amap-lbs-skill` | POI、坐标、入口、实际交通 | [高德官方说明](https://lbs.amap.com/api/skill/ready-to-use/summary) · [官方 ZIP](https://a.amap.com/jsapi/static/openClaw/amap-lbs-skill.zip) |
-| `amap-jsapi-skill` | 高德交互地图 | [高德官方说明](https://lbs.amap.com/api/skill/ready-to-use/summary) · [官方 ZIP](https://a.amap.com/jsapi/static/openClaw/amap-jsapi-skill.zip) |
-| `xiaohongshu-skills` | 住宿、景点、美食经验 | [XHS Bridge 版本源码](https://github.com/autoclaw-cc/xiaohongshu-skills)，Code → Download ZIP，保留整个仓库结构 |
-| `flyai` | 大交通、具体酒店和旅行产品 | [官方安装说明](https://open.fly.ai/docs/quickstart) · [源码](https://github.com/alibaba-flyai/flyai-skill)，下载后取 `skills/flyai/` |
+| `amap-lbs-skill` | POIs, coordinates, entrances, and transport routes | [Official Amap guide](https://lbs.amap.com/api/skill/ready-to-use/summary) · [Official ZIP](https://a.amap.com/jsapi/static/openClaw/amap-lbs-skill.zip) |
+| `amap-jsapi-skill` | Interactive Amap webpages | [Official Amap guide](https://lbs.amap.com/api/skill/ready-to-use/summary) · [Official ZIP](https://a.amap.com/jsapi/static/openClaw/amap-jsapi-skill.zip) |
+| `xiaohongshu-skills` | Experience-based research on accommodation, attractions, and food | [XHS Bridge implementation](https://github.com/autoclaw-cc/xiaohongshu-skills); use Code → Download ZIP and preserve the repository structure |
+| `flyai` | Transport, specific hotels, and travel products | [Official setup](https://open.fly.ai/docs/quickstart) · [Source](https://github.com/alibaba-flyai/flyai-skill); use the `skills/flyai/` directory |
 
-**高德：** 将两个 ZIP 解压到 Skill 目录，在 [高德控制台](https://console.amap.com/dev/key/app)申请自己的 Web 服务 Key 和 Web 端 JSAPI Key。LBS 按其说明安装运行依赖（带 `package.json` 的版本可运行 `npm install`），配置 `AMAP_WEBSERVICE_KEY`。JSAPI 需要自己的 Key 及对应安全配置。[Web 服务配置说明](https://lbs.amap.com/api/webservice/create-project-and-key)
+**Amap:** Extract both ZIPs into your skill directory. Create your own Web Service Key and Web JSAPI Key in the [Amap console](https://console.amap.com/dev/key/app). Install the LBS runtime dependencies as documented (`npm install` for versions with a `package.json`) and configure `AMAP_WEBSERVICE_KEY`. JSAPI needs its own key and the corresponding security configuration. See the [Web Service setup guide](https://lbs.amap.com/api/webservice/create-project-and-key).
 
-生成地图时，把本包 `assets/amap-html-template/config.local.example.js` 复制到**行程目录**并改名 `config.local.js`，填入自己的 `jsapiKey`，以及 `securityJsCode` 或已部署的 `serviceHost`。不在浏览器配置里放 Web 服务 Key；公开部署按[高德安全配置](https://lbs.amap.com/api/javascript-api-v2/guide/abc/prepare)使用适当的代理和域名限制。
+When generating a map, copy `assets/amap-html-template/config.local.example.js` into the **trip output directory** as `config.local.js`. Set your own `jsapiKey` and either `securityJsCode` or an already deployed `serviceHost`. Keep the Web Service Key out of browser configuration. For public hosting, follow [Amap's security configuration guidance](https://lbs.amap.com/api/javascript-api-v2/guide/abc/prepare) for proxying and domain restrictions.
 
-**小红书：** 需要 Python 3.11+、uv 和 Chrome。在依赖目录运行 `uv sync`；按[上游 README](https://github.com/autoclaw-cc/xiaohongshu-skills#安装)将其 `extension/` 加载为 Chrome 已解压扩展，启用 XHS Bridge，再运行 `uv run python scripts/cli.py check-login`。登录和搜索子技能已在集合内，无需另外下载；登录态由使用者建立。本工作流不需要发布、评论或点赞。
+To preview a generated map, run `python3 -m http.server 8000 --bind 127.0.0.1` in the trip directory and open `http://127.0.0.1:8000/map.html`. The base map requires internet access. Press Ctrl+C in the server terminal when finished.
 
-**FlyAI（按需）：** 安装 `skills/flyai/` 后运行 `npm i -g @fly-ai/flyai-cli`，再用 `flyai --help` 确认当前命令。查询命令和可选 API Key 按[上游说明](https://github.com/alibaba-flyai/flyai-skill#quick-start)配置，使用自己的凭据。
+**Xiaohongshu:** Requires Python 3.11+, uv, and Chrome. Run `uv sync` in the dependency directory. Follow the [upstream README](https://github.com/autoclaw-cc/xiaohongshu-skills#安装) to load its `extension/` directory as an unpacked Chrome extension and enable XHS Bridge, then run `uv run python scripts/cli.py check-login`. Authentication and search subskills are already included. Sign in with your own account; this travel workflow does not need publishing, comments, or likes.
 
-安装后先验证一次 POI 与路段查询、小红书搜索与正文读取。只有登录成功或文件存在，还不足以确认对应能力可用。依赖缺失时工作流会说明缺口，不冒充完成研究或验证。
+**FlyAI (optional):** After installing `skills/flyai/`, run `npm i -g @fly-ai/flyai-cli`, then check `flyai --help` for the available commands. Follow the [upstream instructions](https://github.com/alibaba-flyai/flyai-skill#quick-start) for queries and optional API key setup, using your own credentials.
 
-## 包内结构
+After installation, verify a POI and route query, plus a Xiaohongshu search and note-detail retrieval. A successful login alone does not verify the research capability. Missing capabilities are reported in the plan.
+
+<details>
+<summary>Package structure and map template</summary>
 
 ```text
 marco-polo/
-├── SKILL.md                         五阶段工作流
-├── README.md                        介绍、示例与安装
-├── agents/openai.yaml               名称与调用提示
-├── references/outputs.md            输入输出与文件规范
+├── SKILL.md                         Five-stage workflow (Chinese)
+├── README.md                        English overview and setup
+├── README.zh-CN.md                  Chinese overview and setup
+├── agents/openai.yaml               Display name and invocation prompt
+├── references/outputs.md            Output conventions (Chinese)
 └── assets/
-    ├── demo-map.png                 虚构演示截图
+    ├── demo-map.png                 Nanjing map showcase
     └── amap-html-template/
-        ├── map.html                不含行程数据的地图骨架
-        └── config.local.example.js 凭据占位符
+        ├── map.html                Map template without itinerary data
+        └── config.local.example.js Configuration placeholders
 ```
 
-## 脱敏与分享
+</details>
 
-发布包保留经过交互测试的五阶段流程与输出规范，不包含真实 API Key、账号登录态、本机个人路径、用户行程或测试记录。历史模板中的旅行安排已移除；城市印象、美食等扩展页面按需生成。
+## Help make travel planning better
 
-地图骨架需要填入本次行程数据和使用者自己的配置；空骨架不算旅行地图交付。生成后在行程目录运行 `python3 -m http.server 8000 --bind 127.0.0.1`，打开 `http://127.0.0.1:8000/map.html` 预览，结束后在终端按 Ctrl+C。底图需要联网。
+Marco Polo has been shaped by real planning sessions: too few candidates, nearby places split across days, ambiguous names, and reservation details that are easy to miss. Those practical problems guide its continued improvement.
 
-分享使用配套 `marco-polo.zip`。压缩包不含 `.git` 历史、本地配置和其他 Skill；已有发布目录的 Git 历史未改写，不属于本次脱敏内容。
+If it helps with your next trip, leave a **[⭐ Star](https://github.com/megumi-ben/marco-polo.skill)** so more travelers can find it.
+
+[Feedback](https://github.com/megumi-ben/marco-polo.skill/issues) and contributions are welcome: tell us which stage worked well, where a plan fell short, or what you would change. Please remove API keys, login information, orders, and sensitive trip details before posting.
+
+Start with [SKILL.md](SKILL.md) for the planning rules or the [output specification](references/outputs.md) for how the stages connect. Help turn the lessons from one trip into a better starting point for the next.
