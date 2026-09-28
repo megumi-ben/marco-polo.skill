@@ -104,7 +104,8 @@
       try{
         $('status').textContent='正在加载高德地图…';
         await loadScript('./config.local.js');
-        const c=window.AMAP_LOCAL_CONFIG;
+        const rawConfig=window.AMAP_LOCAL_CONFIG || window.TRIP_MAP_CONFIG;
+        const c=rawConfig?{jsapiKey:rawConfig.jsapiKey || rawConfig.key,securityJsCode:rawConfig.securityJsCode,serviceHost:rawConfig.serviceHost}:null;
         const configured=v=>typeof v==='string' && v.trim() && !v.startsWith('YOUR_');
         if(!c || !configured(c.jsapiKey) || !(configured(c.serviceHost)||configured(c.securityJsCode)))throw new Error('配置缺失');
         window._AMapSecurityConfig=configured(c.serviceHost)?{serviceHost:c.serviceHost}:{securityJsCode:c.securityJsCode};

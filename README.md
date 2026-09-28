@@ -6,7 +6,7 @@
 
 ### Your next trip, mapped out.
 
-An **AI travel planning skill** that plans around your stay, real transport routes, and visiting times—then brings it all together on an interactive map.
+An **AI travel planning skill** that plans around your stay, real transport routes, and visiting times, with an interactive map, a food guide, and a city guide in one travel handbook.
 
 ![Agent Skill](https://img.shields.io/badge/Agent-Skill-263F3A?style=flat-square)
 ![Amap](https://img.shields.io/badge/Maps_and_routes-Amap-397D68?style=flat-square)
@@ -20,6 +20,21 @@ An **AI travel planning skill** that plans around your stay, real transport rout
 ![Nanjing travel map: daily routes, a timeline, and place details](assets/demo-map.png)
 
 <p align="center"><sub>Nanjing itinerary showcase: daily colors, a visit timeline, and place details. Lines in this example show visit order; the planning workflow queries actual transport routes separately.</sub></p>
+
+<table>
+  <tr>
+    <td width="33%" align="center"><a href="assets/demo-handbook.jpg"><img src="assets/demo-handbook.jpg" alt="Nanjing travel handbook with tabs for routes, food, and the city guide" width="100%"></a></td>
+    <td width="33%" align="center"><a href="assets/demo-food.jpg"><img src="assets/demo-food.jpg" alt="Nanjing food guide with local dishes, restaurants, and category filters" width="100%"></a></td>
+    <td width="33%" align="center"><a href="assets/demo-city.jpg"><img src="assets/demo-city.jpg" alt="Nanjing city guide with illustrated attraction cards and theme filters" width="100%"></a></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Travel handbook</b><br><sub>Routes, food, and sights in one place.</sub></td>
+    <td align="center"><b>Food guide</b><br><sub>Find local dishes and places to eat.</sub></td>
+    <td align="center"><b>City guide</b><br><sub>Get a feel for the city and every stop.</sub></td>
+  </tr>
+</table>
+
+<p align="center"><sub>Screenshots from the Nanjing example · Click to enlarge</sub></p>
 
 ## Why Marco Polo
 
@@ -52,7 +67,9 @@ A separate **attraction reservation checklist** records booking channels, ticket
 
 The final **`map.html` webpage** shows each day in a different color, with visit order and direction arrows. Filter by date, locate a place from the itinerary, and open details about visit duration, reservations, and transport. Browser checks include readability on mobile.
 
-Accommodation, attractions, food stops, and transport hubs have distinct markers. See the whole trip before departure, then find your next stop while traveling—with the written plan and its geography together.
+Accommodation, attractions, and transport hubs have distinct markers. Selected food streets and night markets stay on the route; restaurant recommendations live in a separate guide. See the whole trip before departure, then find your next stop while traveling.
+
+The **food guide** combines web research and Xiaohongshu experiences to recommend local dishes and specific restaurants, grouped by area or type. The **city guide** introduces the city and selected attractions with highlights, visiting tips, and matching images. Both pages can be read independently of the map.
 
 **Useful details throughout the process:**
 
@@ -134,7 +151,7 @@ After checking opening hours and reservations, Amap locations, entrances, and tr
 
 **3. Confirm the route and take your trip files with you**
 
-Get **a daily itinerary, reservation checklist, per-person budget, and interactive map**. Map loading, date filters, place selection, and mobile layout are checked. Outstanding bookings retain their actual status, and you can continue revising the trip.
+Get **a daily itinerary, reservation checklist, per-person budget, and travel handbook**. The map, food guide, and city guide have separate pages, with `index.html` as the entry point. Map loading, navigation, images, and mobile layout are checked. Outstanding bookings retain their actual status, and you can continue revising the trip.
 
 <details>
 <summary>Deliverables and what they are for</summary>
@@ -146,6 +163,9 @@ Get **a daily itinerary, reservation checklist, per-person budget, and interacti
 | Daily itinerary | Daily visits, transport, food, breaks, and alternatives |
 | Per-person budget (CSV) | Confirmed, estimated, and unknown expenses, calculated per person |
 | `map.html` | Locations, visit order, directions, and place details |
+| Food recommendations and `food.html` | Local dishes and specific restaurants, grouped by area or type |
+| `city-impression.html` | City character, selected attraction highlights, and images |
+| `index.html` | One entry point for the map, food guide, and city guide |
 | Trip data and progress | Facts, decisions, and progress for future revisions |
 
 Files are created as needed. Transport comparisons are added only when requested. See the [output specification](references/outputs.md) for the full file conventions.
@@ -154,29 +174,27 @@ Files are created as needed. Transport comparisons are added only when requested
 
 ## Workflow
 
-Five stages progressively turn preferences into a plan: understand the trip, research accommodation and attractions, arrange the selected places, then generate the map after route confirmation.
+Five stages turn preferences into a travel handbook. Research accommodation and attractions in parallel, then develop the route, food guide, and city guide independently. Only the map waits for route confirmation; content pages can be built as soon as their research is ready.
 
 ```mermaid
 flowchart TD
-    A["1. Gather requirements and existing plans"] --> B{"Need help with travel to and from the city?"}
-    B -->|Yes| C["Compare options and record the chosen plan"]
-    B -->|Already booked or self-arranged| D["Record arrival and departure constraints"]
-    C --> E["2. Recommend areas to stay"]
-    D --> E
-    C --> F["3. Recommend places to visit"]
-    D --> F
-    E --> G["You choose accommodation and attractions"]
-    F --> G
-    G --> H["4. Verify opening hours, tickets, and reservations"]
-    H --> I["Amap POIs and entrances → group by location"]
-    I --> J["Query transport routes → add meals, rest, and costs"]
-    J --> K{"You confirm the itinerary"}
-    K -->|Revise| I
-    K -->|Confirm| L["5. Build the interactive map and check it in a browser"]
-    L --> M["Deliver the itinerary, reservation checklist, budget, and map"]
+    A["1. Requirements and optional intercity transport"] --> B["2. Areas to stay"]
+    A --> C["3. Attraction candidates"]
+    B --> D["You choose accommodation and attractions"]
+    C --> D
+    D --> E["4. Route: verify opening and booking rules<br/>Amap locations, transport, timing, and costs"]
+    D --> F["4. Food: web and Xiaohongshu research<br/>Dishes, restaurants, and practical details"]
+    D --> G["4. City guide: city character<br/>Selected attraction highlights and images"]
+    E --> H["You confirm the route"]
+    H --> I["5. map.html"]
+    F --> J["5. food.html"]
+    G --> K["5. city-impression.html"]
+    I --> L["index.html<br/>Check and deliver the complete handbook"]
+    J --> L
+    K --> L
 ```
 
-Accommodation and attraction research can run in parallel. An existing hotel is used directly. Urgent reservation deadlines are surfaced early. Approving an itinerary does not place an order or make a reservation.
+Existing transport and hotels are respected. Urgent reservation deadlines are surfaced early. Restaurant recommendations are independent of the daily route; selected food streets, night markets, and fixed reservations remain part of planning. Approving an itinerary does not place an order or make a reservation.
 
 ## Dependencies
 
@@ -196,7 +214,7 @@ Install **both Amap skills and the Xiaohongshu skill bundle** for research and m
 
 When generating a map, copy `assets/amap-html-template/config.local.example.js` into the **trip output directory** as `config.local.js`. Set your own `jsapiKey` and either `securityJsCode` or an already deployed `serviceHost`. Keep the Web Service Key out of browser configuration. For public hosting, follow [Amap's security configuration guidance](https://lbs.amap.com/api/javascript-api-v2/guide/abc/prepare) for proxying and domain restrictions.
 
-To preview a generated map, run `python3 -m http.server 8000 --bind 127.0.0.1` in the trip directory and open `http://127.0.0.1:8000/map.html`. The base map requires internet access. Press Ctrl+C in the server terminal when finished.
+To preview the handbook, run `python3 -m http.server 8000 --bind 127.0.0.1` in the trip directory and open `http://127.0.0.1:8000/index.html`; `map.html` also opens directly. The base map requires internet access and valid configuration. The food and city guides can be read independently. Press Ctrl+C in the server terminal when finished.
 
 </details>
 
