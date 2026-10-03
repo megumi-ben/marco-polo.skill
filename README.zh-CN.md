@@ -10,7 +10,7 @@
 ![FlyAI](https://img.shields.io/badge/出行查询-FlyAI-D28A3A?style=flat-square)
 [![GitHub Stars](https://img.shields.io/github/stars/megumi-ben/marco-polo.skill?style=flat-square&color=C18A53)](https://github.com/megumi-ben/marco-polo.skill/stargazers)
 
-[核心优势](#核心优势) · [功能介绍](#功能介绍) · [沈阳案例](#使用示例) · [快速上手](#快速上手) · [工作流](#工作流介绍)
+[视频演示](https://www.bilibili.com/video/BV1qvaH66Em5/) · [核心优势](#核心优势) · [功能介绍](#功能介绍) · [沈阳案例](#使用示例) · [快速上手](#快速上手) · [工作流](#工作流介绍)
 
 </div>
 
@@ -25,6 +25,13 @@
 住哪儿方便，哪些值得去，一天怎么走？把你的想法交给 **马可波罗**，一起挑住宿、选景点、安排吃逛，带走一份属于自己的旅行攻略。
 
 这个 **AI 旅行规划 Skill** 将高德地图、小红书攻略、飞猪查询与官方信息结合起来，从最初的想法，一路规划到每日行程、预约清单和交互旅行手册。路线地图、美食攻略、城市名片，一个入口随手查看。**你决定怎么玩，马可波罗把细节安排好。**
+
+https://github.com/user-attachments/assets/ff0209ed-4060-4cf2-8acd-9d37f2ab72ae
+
+<p align="center">
+  <a href="https://www.bilibili.com/video/BV1qvaH66Em5/"><strong>▶ 在 B 站观看完整演示</strong></a><br>
+  <sub>4 分钟，从旅行需求到完整旅行手册</sub>
+</p>
 
 <table>
   <tr>
