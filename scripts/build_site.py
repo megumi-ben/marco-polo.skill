@@ -5,6 +5,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 import re
 import shutil
+from package_skill import package_skill
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "_site"
@@ -31,6 +32,7 @@ def build():
     assets.mkdir(exist_ok=True)
     for name in ["demo-map.png", "demo-handbook.jpg", "demo-food.jpg", "demo-city.jpg"]:
         shutil.copy2(ROOT / "assets" / name, assets / name)
+    package_skill(OUTPUT / "downloads/marco-polo.zip")
 
     errors = []
     for file in OUTPUT.rglob("*"):

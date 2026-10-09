@@ -100,12 +100,10 @@ Use it for a weekend away, a trip with friends, or a few days of sightseeing aft
 
 ### 1. Install Marco Polo
 
-Run in your project directory:
+1. **[Download the Skill ZIP](https://megumi-ben.github.io/marco-polo.skill/downloads/marco-polo.zip)**.
+2. Extract it and place the `marco-polo` folder in your project's `.agents/skills/` directory.
 
-```bash
-mkdir -p .agents/skills
-git clone https://github.com/megumi-ben/marco-polo.skill.git .agents/skills/marco-polo
-```
+The entry point should be `.agents/skills/marco-polo/SKILL.md`. The package contains only the skill instructions, agent metadata, output specification, and map template—no demo website, screenshots, deployment files, or Git history.
 
 ### 2. Connect travel research and maps
 
@@ -128,12 +126,12 @@ Start with what you know. Marco Polo asks for the dates, group size, budget, and
 > My hotel has changed to this address. Update the first and last journeys each day, along with their costs.
 
 <details>
-<summary>ZIP installation, other locations, updates, and output folders</summary>
+<summary>Other locations, updates, and output folders</summary>
 
-Alternatively, [download the ZIP](https://github.com/megumi-ben/marco-polo.skill/archive/refs/heads/main.zip), rename the extracted folder to `marco-polo`, and place it in `.agents/skills/`. The entry point should be `.agents/skills/marco-polo/SKILL.md`.
+Use the **Skill ZIP** above for installation. GitHub’s **Code → Download ZIP** and `git clone` provide the full development repository, including the demo website; see [Contributing](CONTRIBUTING.md) if you want to work on the project.
 
 - For personal use across projects, you can install to `~/.agents/skills/marco-polo/`. See the [official Codex skill locations](https://learn.chatgpt.com/docs/build-skills). If the skill does not appear, start a new session or restart Codex.
-- When updating an existing installation, preserve any local configuration you have added.
+- To update, download a fresh Skill ZIP. Move your existing skill folder outside the skill directories as a backup, then extract the new package. Unzipping over the old folder would leave old demo files behind. Preserve any local configuration you have added.
 - Results are created progressively in `travel_plan/<city-trip-id>/` under your working directory. Revisions reuse the same data, so you can continue where you left off.
 
 </details>

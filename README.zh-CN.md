@@ -142,12 +142,10 @@ https://github.com/user-attachments/assets/ff0209ed-4060-4cf2-8acd-9d37f2ab72ae
 
 ### 1. 安装
 
-在项目目录运行：
+1. **[下载 Skill 安装包](https://megumi-ben.github.io/marco-polo.skill/downloads/marco-polo.zip)**。
+2. 解压，将 `marco-polo` 文件夹放入项目的 `.agents/skills/` 目录。
 
-```bash
-mkdir -p .agents/skills
-git clone https://github.com/megumi-ben/marco-polo.skill.git .agents/skills/marco-polo
-```
+安装后应能找到 `.agents/skills/marco-polo/SKILL.md`。包内仅含技能说明、Agent 配置、输出规范和地图模板，不带演示网站、宣传截图、部署文件或 Git 历史。
 
 ### 2. 配置
 
@@ -163,12 +161,12 @@ $marco-polo 四个人去沈阳玩四天，喜欢人文建筑、风情街和美�
 从已知的信息开始即可，马可波罗会补问当前阶段需要的内容。之后也可以直接说：“酒店换到这个地址，帮我调整路线。”
 
 <details>
-<summary>ZIP 安装、其他位置、更新与成果目录</summary>
+<summary>其他位置、更新与成果目录</summary>
 
-也可以[下载 ZIP](https://github.com/megumi-ben/marco-polo.skill/archive/refs/heads/main.zip)，解压后将文件夹重命名为 `marco-polo`，放入 `.agents/skills/`。安装后应能找到 `.agents/skills/marco-polo/SKILL.md`。
+安装请使用上面的 **Skill 安装包**。GitHub 的 **Code → Download ZIP** 和 `git clone` 下载的是包含网站的完整开发仓库；参与开发请看[贡献指南](CONTRIBUTING.md#中文贡献说明)。
 
 - 也可安装到个人目录 `~/.agents/skills/marco-polo/`，参见 [Codex 官方安装位置](https://learn.chatgpt.com/docs/build-skills)。未发现新 Skill 时，可重新开启会话或重启 Codex。
-- 安装新版时更新已有的马可波罗文件夹，先保留自己添加的本地配置。
+- 更新时重新下载 Skill 安装包。先将原安装文件夹移到 Skill 目录之外作为备份，再解压新版；直接覆盖解压会留下旧的演示文件。保留自己添加的本地配置。
 - 成果按阶段保存在工作目录的 `travel_plan/<城市-行程标识>/`；继续修改时沿用同一份数据，无需重新开始。
 
 </details>
