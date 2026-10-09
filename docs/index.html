@@ -60,7 +60,7 @@
         <div><span class="feature-number">04 / FREEDOM</span><h3 data-en="Your choices lead the way" data-zh="自由定制">Your choices lead the way</h3><p data-en="Compare options, keep existing bookings, and change the plan as your ideas evolve." data-zh="多平台资料帮你做选择，已有预订直接沿用；换景点、改住宿、留白，都能继续调整。">Compare options, keep existing bookings, and change the plan as your ideas evolve.</p></div>
       </section>
       <section class="start">
-        <div><h2 data-en="Start with a place in mind." data-zh="从一句“我想去”开始。">Start with a place in mind.</h2><p data-en="Install the skill and its research tools, then describe your trip in your own words. Marco Polo helps you work through the choices." data-zh="安装 Skill 和配套查询工具，用自己的话说出想法，马可波罗会陪你把选择一步步变成行程。">Install the skill and its research tools, then describe your trip in your own words. Marco Polo helps you work through the choices.</p><div class="actions"><a class="button primary" href="https://github.com/megumi-ben/marco-polo.skill" data-en="Get Marco Polo on GitHub ↗" data-zh="去 GitHub 获取 Marco Polo ↗">Get Marco Polo on GitHub ↗</a></div></div>
+        <div><h2 data-en="Start with a place in mind." data-zh="从一句“我想去”开始。">Start with a place in mind.</h2><p data-en="Install the skill and its research tools, then describe your trip in your own words. Marco Polo helps you work through the choices." data-zh="安装 Skill 和配套查询工具，用自己的话说出想法，马可波罗会陪你把选择一步步变成行程。">Install the skill and its research tools, then describe your trip in your own words. Marco Polo helps you work through the choices.</p><div class="actions"><a class="button primary" href="downloads/marco-polo.zip" download data-en="Download Skill ZIP ↓" data-zh="下载 Skill 安装包 ↓">Download Skill ZIP ↓</a><a class="button" id="setup" href="https://github.com/megumi-ben/marco-polo.skill#quick-start" data-en="Setup guide ↗" data-zh="查看安装说明 ↗">Setup guide ↗</a></div></div>
         <div class="prompt"><small>YOUR NEXT ADVENTURE</small><span data-en="“Four friends, three days in Nanjing. We love historic streets and local food. Help us choose where to stay and plan each day.”" data-zh="“我们四个人，想去南京玩三天。喜欢人文街区和当地美食，帮我们选个住宿区域，再安排每天怎么玩。”">“Four friends, three days in Nanjing. We love historic streets and local food. Help us choose where to stay and plan each day.”</span></div>
       </section>
     </main>
@@ -72,7 +72,7 @@
       document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
       document.querySelectorAll('[data-en]').forEach(node => { node.textContent = node.dataset[lang]; });
       languageButton.textContent = lang === 'zh' ? 'English' : '中文';
-      document.getElementById('install').href = lang === 'zh' ? 'https://github.com/megumi-ben/marco-polo.skill/blob/main/README.zh-CN.md#快速上手' : 'https://github.com/megumi-ben/marco-polo.skill#quick-start';
+      document.querySelectorAll('#install, #setup').forEach(link => { link.href = lang === 'zh' ? 'https://github.com/megumi-ben/marco-polo.skill/blob/main/README.zh-CN.md#快速上手' : 'https://github.com/megumi-ben/marco-polo.skill#quick-start'; });
       const url = new URL(location.href);
       url.searchParams.set('lang', lang);
       history.replaceState(null, '', url);

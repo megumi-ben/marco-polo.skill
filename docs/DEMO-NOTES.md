@@ -18,6 +18,6 @@ The README screenshots show the original Amap version. The public demo preserves
 
 ## Deployment
 
-Run `python3 scripts/build_site.py` to assemble only the public site in `_site/`. It copies `docs/` plus the four existing showcase images from `assets/`, avoiding a second tracked copy of the screenshots. The Pages workflow validates PRs and deploys only from `main`.
+Run `python3 scripts/build_site.py` to assemble only the public site in `_site/`. It copies `docs/` plus the four existing showcase images from `assets/`, avoiding a second tracked copy of the screenshots. It also builds `downloads/marco-polo.zip` from the explicit runtime file list in `scripts/package_skill.py`. The Pages workflow validates PRs and deploys only from `main`; changes to the skill and its bundled resources refresh the install package.
 
 Keep private configuration, orders, raw trip folders, and local credentials out of this directory.
