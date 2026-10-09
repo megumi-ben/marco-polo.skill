@@ -1,3 +1,5 @@
+https://github.com/user-attachments/assets/ff0209ed-4060-4cf2-8acd-9d37f2ab72ae
+
 <div align="center">
 
 # 🧭 Marco Polo
@@ -37,15 +39,6 @@ Choose your stay and sights. Marco Polo connects real locations, transport, visi
 </table>
 
 <p align="center"><sub>Click a preview to open the interactive example</sub></p>
-
-<details>
-<summary>▶ Watch the full walkthrough (about 4 minutes, Chinese audio)</summary>
-
-https://github.com/user-attachments/assets/ff0209ed-4060-4cf2-8acd-9d37f2ab72ae
-
-[Watch on Bilibili](https://www.bilibili.com/video/BV1qvaH66Em5/)
-
-</details>
 
 ## Why Marco Polo
 
