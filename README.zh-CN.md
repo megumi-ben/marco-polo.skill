@@ -1,3 +1,5 @@
+https://github.com/user-attachments/assets/ff0209ed-4060-4cf2-8acd-9d37f2ab72ae
+
 <div align="center">
 
 # 🧭 Marco Polo · 马可波罗
@@ -25,15 +27,6 @@
 住哪儿方便，哪些值得去，一天怎么走？把你的想法交给 **马可波罗**，一起挑住宿、选景点、安排吃逛，带走一份属于自己的旅行攻略。
 
 这个 **AI 旅行规划 Skill** 将高德地图、小红书攻略、飞猪查询与官方信息结合起来，从最初的想法，一路规划到每日行程、预约清单和交互旅行手册。路线地图、美食攻略、城市名片，一个入口随手查看。**你决定怎么玩，马可波罗把细节安排好。**
-
-<details>
-<summary>▶ 4 分钟视频：从旅行需求到完整旅行手册</summary>
-
-https://github.com/user-attachments/assets/ff0209ed-4060-4cf2-8acd-9d37f2ab72ae
-
-[在 B 站观看完整演示](https://www.bilibili.com/video/BV1qvaH66Em5/)
-
-</details>
 
 <table>
   <tr>
