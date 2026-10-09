@@ -1,0 +1,16 @@
+name: Suggest an improvement / 改进建议
+description: Help make travel planning better / 一起改善旅行规划
+body:
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Travel scenario or problem / 场景或问题
+      description: What is difficult today, and who would benefit?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested improvement / 建议
+    validations:
+      required: true

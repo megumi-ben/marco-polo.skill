@@ -1,7 +1,3 @@
-
-
-https://github.com/user-attachments/assets/ff0209ed-4060-4cf2-8acd-9d37f2ab72ae
-
 <div align="center">
 
 # 🧭 Marco Polo
@@ -10,26 +6,28 @@ https://github.com/user-attachments/assets/ff0209ed-4060-4cf2-8acd-9d37f2ab72ae
 
 ### Your next trip, mapped out.
 
-An **AI travel planning skill** that plans around your stay, real transport routes, and visiting times, with an interactive map, a food guide, and a city guide in one travel handbook.
+**An open-source AI travel assistant that turns your preferences into a trip you can actually follow.**
+
+Choose your stay and sights. Marco Polo connects real locations, transport, visiting hours, and reservations—then delivers an interactive map, food guide, and city guide in one travel handbook.
 
 ![Agent Skill](https://img.shields.io/badge/Agent-Skill-263F3A?style=flat-square)
 ![Amap](https://img.shields.io/badge/Maps_and_routes-Amap-397D68?style=flat-square)
 ![Xiaohongshu](https://img.shields.io/badge/Travel_insights-Xiaohongshu-C76565?style=flat-square)
 [![GitHub Stars](https://img.shields.io/github/stars/megumi-ben/marco-polo.skill?style=flat-square&color=C18A53)](https://github.com/megumi-ben/marco-polo.skill/stargazers)
 
-[Why Marco Polo](#why-marco-polo) · [Quick start](#quick-start) · [See an example](#from-one-message-to-a-trip) · [Workflow](#workflow) · [Dependencies](#dependencies)
+**[Explore the live demo](https://megumi-ben.github.io/marco-polo.skill/)** · **[Get started](#quick-start)** · [Watch the video](https://www.bilibili.com/video/BV1qvaH66Em5/) · [Contribute](CONTRIBUTING.md)
 
 </div>
 
-![Nanjing travel map: daily routes, a timeline, and place details](assets/demo-map.png)
+[![Nanjing travel map: daily routes, a timeline, and place details](assets/demo-map.png)](https://megumi-ben.github.io/marco-polo.skill/nanjing/)
 
-<p align="center"><sub>Nanjing itinerary showcase: daily colors, a visit timeline, and place details. Lines in this example show visit order; the planning workflow queries actual transport routes separately.</sub></p>
+<p align="center"><sub>Click to explore the Nanjing handbook · No setup needed · Demo content is in Chinese.<br>Screenshot: original Amap version. Public demo: OpenFreeMap. Lines show visit order; transport is queried separately during planning.</sub></p>
 
 <table>
   <tr>
-    <td width="33%" align="center"><a href="assets/demo-handbook.jpg"><img src="assets/demo-handbook.jpg" alt="Nanjing travel handbook with tabs for routes, food, and the city guide" width="100%"></a></td>
-    <td width="33%" align="center"><a href="assets/demo-food.jpg"><img src="assets/demo-food.jpg" alt="Nanjing food guide with local dishes, restaurants, and category filters" width="100%"></a></td>
-    <td width="33%" align="center"><a href="assets/demo-city.jpg"><img src="assets/demo-city.jpg" alt="Nanjing city guide with illustrated attraction cards and theme filters" width="100%"></a></td>
+    <td width="33%" align="center"><a href="https://megumi-ben.github.io/marco-polo.skill/nanjing/"><img src="assets/demo-handbook.jpg" alt="Nanjing travel handbook with tabs for routes, food, and the city guide" width="100%"></a></td>
+    <td width="33%" align="center"><a href="https://megumi-ben.github.io/marco-polo.skill/nanjing/food.html"><img src="assets/demo-food.jpg" alt="Nanjing food guide with local dishes, restaurants, and category filters" width="100%"></a></td>
+    <td width="33%" align="center"><a href="https://megumi-ben.github.io/marco-polo.skill/nanjing/city-impression.html"><img src="assets/demo-city.jpg" alt="Nanjing city guide with illustrated attraction cards and theme filters" width="100%"></a></td>
   </tr>
   <tr>
     <td align="center"><b>Travel handbook</b><br><sub>Routes, food, and sights in one place.</sub></td>
@@ -38,19 +36,34 @@ An **AI travel planning skill** that plans around your stay, real transport rout
   </tr>
 </table>
 
-<p align="center"><sub>Screenshots from the Nanjing example · Click to enlarge</sub></p>
+<p align="center"><sub>Click a preview to open the interactive example</sub></p>
+
+<details>
+<summary>▶ Watch the full walkthrough (about 4 minutes, Chinese audio)</summary>
+
+https://github.com/user-attachments/assets/ff0209ed-4060-4cf2-8acd-9d37f2ab72ae
+
+[Watch on Bilibili](https://www.bilibili.com/video/BV1qvaH66Em5/)
+
+</details>
 
 ## Why Marco Polo
 
-**Choose where to stay and what to see, then work out each day—with routes, timing, and reservations connected.**
+### 📍 Plans grounded in real places
 
-| What makes it useful | What you get |
-|---|---|
-| 📍 **Routes grounded in real places** | Amap coordinates, entrances, and transport routes help group nearby stops around your accommodation, accounting for detours and transfers. |
-| 🕒 **Days planned down to the details** | Opening hours, booking slots, meals, and evening views fit together, with room for breaks, queues, and departure. A separate reservation checklist helps you prepare ahead. |
-| 🗺️ **A trip you can explore on a map** | A webpage with daily colors, date filters, place selection, and itinerary details—useful before departure and during the trip. |
+**Routes start with coordinates.** Amap locations, entrances, and transport queries help group stops around your accommodation and reduce backtracking. Xiaohongshu adds travel experiences and local recommendations; FlyAI searches flights, trains, and hotels when needed.
 
-Explore a varied set of places before choosing. Keep sources and per-person costs at hand. When plans change, update the itinerary, budget, and map together.
+### 🕒 Details that fit into a real day
+
+**Opening hours, bookings, meals, and travel time are planned together.** Food streets belong around meals, night views after dark. A reservation checklist tells you what to book and when, with time left for breaks and departure.
+
+### 🗺️ A handbook you can use on the trip
+
+**See each day on an interactive map.** Explore place details, switch dates, and open the food and city guides from one entry point. Keep the itinerary, reservation checklist, and budget alongside it.
+
+### 🎛️ Your trip, your choices
+
+**Compare first, choose next, refine together.** Get a varied shortlist with reasons and tradeoffs. Keep existing bookings, change your hotel, swap a place, or leave an afternoon free; the affected plan and costs are updated together.
 
 <details>
 <summary>Explore the details: routes, reservations, budgets, and revisions</summary>
@@ -253,6 +266,8 @@ marco-polo/
 ├── README.zh-CN.md                  Chinese overview and setup
 ├── agents/openai.yaml               Display name and invocation prompt
 ├── references/outputs.md            Output conventions
+├── docs/                            Public website and interactive Nanjing demo
+├── CONTRIBUTING.md                  Contribution and local preview guide
 └── assets/
     ├── demo-map.png                 Nanjing map showcase
     └── amap-html-template/
@@ -263,6 +278,8 @@ marco-polo/
 </details>
 
 ## Help make travel planning better
+
+See the [contributing guide](CONTRIBUTING.md) for trip reports, focused pull requests, and local demo checks.
 
 Want to try it on your next trip? **[⭐ Star Marco Polo](https://github.com/megumi-ben/marco-polo.skill)** to find it again when you're ready to plan.
 
