@@ -166,7 +166,7 @@ $marco-polo 四个人去沈阳玩四天，喜欢人文建筑、风情街和美�
 安装请使用上面的 **Skill 安装包**。GitHub 的 **Code → Download ZIP** 和 `git clone` 下载的是包含网站的完整开发仓库；参与开发请看[贡献指南](CONTRIBUTING.md#中文贡献说明)。
 
 - 也可安装到个人目录 `~/.agents/skills/marco-polo/`，参见 [Codex 官方安装位置](https://learn.chatgpt.com/docs/build-skills)。未发现新 Skill 时，可重新开启会话或重启 Codex。
-- 更新时重新下载 Skill 安装包。先把原安装目录备份到 Skill 目录之外，再解压新版；保留自己添加的本地配置。之前克隆整个仓库安装的用户，也可这样换成精简包。
+- 更新时重新下载 Skill 安装包。先将原安装文件夹移到 Skill 目录之外作为备份，再解压新版；直接覆盖解压会留下旧的演示文件。保留自己添加的本地配置。
 - 成果按阶段保存在工作目录的 `travel_plan/<城市-行程标识>/`；继续修改时沿用同一份数据，无需重新开始。
 
 </details>

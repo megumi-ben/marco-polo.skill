@@ -131,7 +131,7 @@ Start with what you know. Marco Polo asks for the dates, group size, budget, and
 Use the **Skill ZIP** above for installation. GitHub’s **Code → Download ZIP** and `git clone` provide the full development repository, including the demo website; see [Contributing](CONTRIBUTING.md) if you want to work on the project.
 
 - For personal use across projects, you can install to `~/.agents/skills/marco-polo/`. See the [official Codex skill locations](https://learn.chatgpt.com/docs/build-skills). If the skill does not appear, start a new session or restart Codex.
-- To update, download a fresh Skill ZIP. Back up your existing installation outside the skill directories, then extract the new package. Preserve any local configuration you have added; old whole-repository installs can be replaced this way too.
+- To update, download a fresh Skill ZIP. Move your existing skill folder outside the skill directories as a backup, then extract the new package. Unzipping over the old folder would leave old demo files behind. Preserve any local configuration you have added.
 - Results are created progressively in `travel_plan/<city-trip-id>/` under your working directory. Revisions reuse the same data, so you can continue where you left off.
 
 </details>
