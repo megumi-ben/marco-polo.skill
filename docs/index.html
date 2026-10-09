@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Marco Polo is an open-source AI travel planning skill. Explore an interactive Nanjing itinerary, food guide, and city guide.">
+  <meta name="theme-color" content="#f7f8f5">
+  <meta property="og:title" content="Marco Polo — Your next trip, mapped out.">
+  <meta property="og:description" content="Real locations. Thoughtful itineraries. A travel handbook you can explore.">
+  <meta property="og:image" content="https://megumi-ben.github.io/marco-polo.skill/assets/demo-map.png">
+  <meta property="og:type" content="website">
+  <title>Marco Polo — Your next trip, mapped out.</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%231f6049'/%3E%3Cpath d='M33 13 27 29 15 35 21 19Z' fill='white'/%3E%3C/svg%3E">
+  <style>
+    :root{--ink:#18251e;--muted:#69736c;--green:#1f6049;--paper:#f7f8f5;--line:#dfe4dc}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;line-height:1.65}a{color:inherit}button{font:inherit}a,button{-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible{outline:3px solid #4b9277;outline-offset:5px}
+    .wrap{max-width:1240px;margin:auto;padding:0 38px}.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 0;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:20px;font-weight:750;letter-spacing:-.6px}.brand svg{width:30px;height:30px}.nav-links{display:flex;align-items:center;gap:24px;font-size:13px}.nav-links a{text-decoration:none}.language{border:1px solid var(--line);border-radius:99px;background:transparent;padding:5px 13px;cursor:pointer}.nav a:hover{color:var(--green)}
+    .hero{display:grid;grid-template-columns:.85fr 1.15fr;align-items:center;gap:46px;padding:88px 0 68px}.eyebrow{text-transform:uppercase;font-size:11px;letter-spacing:2.2px;font-weight:750;color:var(--green);display:flex;align-items:center;gap:9px}.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green)}h1{font-size:clamp(44px,5.2vw,68px);line-height:1.06;letter-spacing:-3.4px;margin:24px 0}h1 span{display:block;color:var(--green)}.lead{font-size:17px;color:var(--muted);max-width:440px;line-height:1.85}.actions{display:flex;flex-wrap:wrap;gap:10px;margin:27px 0 12px}.button{display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;border:1px solid var(--ink);border-radius:9px;padding:12px 19px;font-size:14px;font-weight:650;transition:transform .18s,background .18s}.button:hover{transform:translateY(-2px);background:#edf0e8}.button.primary{background:var(--green);border-color:var(--green);color:white}.button.primary:hover{background:#194e3c}.hint{font-size:12px;color:var(--muted)}
+    .preview{display:block;text-decoration:none;transform:rotate(-1.4deg);transition:transform .25s}.preview:hover{transform:rotate(0)}.browser{border:1px solid #d7ddd4;border-radius:12px;overflow:hidden;background:white;box-shadow:0 28px 64px -24px #142e263b}.browser-bar{display:flex;align-items:center;gap:5px;height:34px;border-bottom:1px solid var(--line);padding:0 13px;background:#f1f3ef}.dot{width:7px;height:7px;background:#cbd1c7;border-radius:50%}.address{margin:auto;color:#7b847e;font-size:10px;letter-spacing:.3px}.browser img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:top left}.preview-caption{display:flex;justify-content:space-between;margin:14px 4px 0;font-size:12px;color:var(--muted)}.preview-caption b{color:var(--green);font-weight:600}
+    .proof{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}.proof b{color:var(--ink);font-weight:650}.section{padding:74px 0 0}.section-top{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:26px}.section-top h2{font-size:32px;line-height:1.2;letter-spacing:-1.2px;margin:0}.section-top p{color:var(--muted);font-size:14px;margin:0;max-width:420px}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{display:block;background:white;border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;transition:transform .2s,box-shadow .2s}.card:hover{transform:translateY(-5px);box-shadow:0 16px 35px #18251e10}.card img{width:100%;height:auto;aspect-ratio:1.6;display:block;object-fit:cover;object-position:top}.card-body{padding:21px 22px}.card h3{font-size:18px;margin:0 0 5px;letter-spacing:-.4px}.card p{color:var(--muted);font-size:13px;margin:0}.card .arrow{float:right;color:var(--green)}
+    .features{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;padding:48px 0 66px;border-bottom:1px solid var(--line)}.feature-number{font-size:11px;color:var(--green);font-weight:700;letter-spacing:1px}.features h3{font-size:16px;margin:12px 0 8px}.features p{color:var(--muted);font-size:13px;margin:0}.start{display:grid;grid-template-columns:1fr 1fr;gap:52px;padding:65px 0}.start h2{font-size:32px;letter-spacing:-1px;margin:0 0 12px;line-height:1.2}.start p{color:var(--muted);font-size:14px;margin:0}.prompt{border-left:3px solid var(--green);background:#eef2eb;border-radius:0 10px 10px 0;padding:23px 26px;font-size:16px;line-height:1.9}.prompt small{display:block;color:var(--green);font-size:10px;font-weight:700;letter-spacing:1.6px;margin-bottom:10px}.footer{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding:25px 0 35px;font-size:12px;color:var(--muted)}.footer a{text-decoration:none}
+    @media(max-width:960px){.hero{gap:28px;padding-top:60px}h1{letter-spacing:-2px}.features{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:700px){.wrap{padding:0 22px}.nav{padding:20px 0}.nav-links{gap:14px}.nav-demo{display:none}.hero{grid-template-columns:1fr;gap:35px;padding:44px 0}.lead{max-width:none}h1{font-size:49px}.preview{transform:none}.proof{gap:12px;font-size:11px}.section{padding-top:48px}.section-top{display:block}.section-top p{margin-top:12px}.gallery{grid-template-columns:1fr}.features{gap:26px 20px;padding:36px 0 42px}.start{grid-template-columns:1fr;gap:28px;padding:46px 0}.footer{flex-wrap:wrap}.card img{aspect-ratio:1.9}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="nav">
+      <a class="brand" href="./" aria-label="Marco Polo home"><svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#1f6049"/><path d="M33 13 27 29 15 35 21 19Z" fill="white"/></svg>Marco Polo</a>
+      <nav class="nav-links" aria-label="Main navigation"><a class="nav-demo" href="#explore" data-en="Explore the demo" data-zh="体验示例">Explore the demo</a><a href="https://github.com/megumi-ben/marco-polo.skill">GitHub ↗</a><button class="language" id="language" type="button">中文</button></nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <div class="eyebrow" data-en="Open-source AI travel assistant" data-zh="开源 AI 旅行攻略助手">Open-source AI travel assistant</div>
+          <h1><span data-en="Your next trip," data-zh="世界那么大，">Your next trip,</span><span style="color:var(--ink)" data-en="mapped out." data-zh="我想去看看。">mapped out.</span></h1>
+          <p class="lead" data-en="Choose what you love. Marco Polo connects your stay, sights, routes, and reservations into a travel handbook made for you." data-zh="你决定向往哪里，马可波罗帮你安排怎么走。住哪儿、去哪玩、每天怎么走，一起规划成属于你的旅行手册。">Choose what you love. Marco Polo connects your stay, sights, routes, and reservations into a travel handbook made for you.</p>
+          <div class="actions"><a class="button primary" href="nanjing/" data-en="Explore Nanjing →" data-zh="打开南京旅行手册 →">Explore Nanjing →</a><a class="button" id="install" href="https://github.com/megumi-ben/marco-polo.skill#quick-start" data-en="Plan your own trip" data-zh="规划我的旅行">Plan your own trip</a></div>
+          <div class="hint" data-en="No setup to explore · Demo content is in Chinese" data-zh="无需安装即可体验 · 页面展示历史行程示例">No setup to explore · Demo content is in Chinese</div>
+        </div>
+        <a class="preview" href="nanjing/map.html" aria-label="Explore the Nanjing route map">
+          <div class="browser"><div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="address">Nanjing · 3.5 days · Your itinerary</span></div><img src="assets/demo-map.png" alt="Nanjing itinerary with a daily timeline and colored routes" width="1600" height="1000" fetchpriority="high"></div>
+          <div class="preview-caption"><span data-en="A real Marco Polo travel example" data-zh="马可波罗生成的南京旅行示例">A real Marco Polo travel example</span><b data-en="Open the map ↗" data-zh="打开交互地图 ↗">Open the map ↗</b></div>
+        </a>
+      </section>
+      <div class="proof"><span><b>Amap</b> <span data-en="· coordinates & routes" data-zh="· 坐标与路线">· coordinates & routes</span></span><span><b>Xiaohongshu</b> <span data-en="· travel experiences" data-zh="· 旅行攻略与体验">· travel experiences</span></span><span><b>Fliggy / FlyAI</b> <span data-en="· transport & hotels" data-zh="· 交通与酒店查询">· transport & hotels</span></span></div>
+      <section class="section" id="explore">
+        <div class="section-top"><h2 data-en="A whole trip. In your hands." data-zh="一份手册，带走整个行程。">A whole trip. In your hands.</h2><p data-en="Open a page. Pick a day, explore a place, or find your next meal." data-zh="点开页面，切换日期、查看景点，或挑选下一顿想吃的。">Open a page. Pick a day, explore a place, or find your next meal.</p></div>
+        <div class="gallery">
+          <a class="card" href="nanjing/"><img src="assets/demo-handbook.jpg" alt="Nanjing handbook with route, food, and city tabs" loading="lazy" width="960" height="600"><div class="card-body"><span class="arrow">↗</span><h3 data-en="Travel handbook" data-zh="旅行手册">Travel handbook</h3><p data-en="Daily routes, timing, and place details." data-zh="每日路线、时间安排，景点详情随手查。">Daily routes, timing, and place details.</p></div></a>
+          <a class="card" href="nanjing/food.html"><img src="assets/demo-food.jpg" alt="Nanjing food guide" loading="lazy" width="960" height="600"><div class="card-body"><span class="arrow">↗</span><h3 data-en="Food guide" data-zh="美食攻略">Food guide</h3><p data-en="Local dishes and places worth a stop." data-zh="吃什么、去哪吃，按口味自由挑选。">Local dishes and places worth a stop.</p></div></a>
+          <a class="card" href="nanjing/city-impression.html"><img src="assets/demo-city.jpg" alt="Nanjing city and attraction cards" loading="lazy" width="960" height="600"><div class="card-body"><span class="arrow">↗</span><h3 data-en="City guide" data-zh="城市名片">City guide</h3><p data-en="Get a feel for the city before you arrive." data-zh="出发之前，先看见城市的不同面貌。">Get a feel for the city before you arrive.</p></div></a>
+        </div>
+      </section>
+      <section class="features" aria-label="Why Marco Polo">
+        <div><span class="feature-number">01 / LOCATION</span><h3 data-en="Routes grounded in geography" data-zh="真实依据">Routes grounded in geography</h3><p data-en="Amap coordinates and real transport queries shape each day around your stay." data-zh="基于高德坐标理解空间，围绕住宿与景点分布规划，查询实际交通校正路线。">Amap coordinates and real transport queries shape each day around your stay.</p></div>
+        <div><span class="feature-number">02 / TIMING</span><h3 data-en="Details that fit together" data-zh="细致安排">Details that fit together</h3><p data-en="Opening hours, reservations, meals, and evening views all get their place." data-zh="开放时间、预约、吃饭和夜景统筹安排，提前准备预约清单，留出休息和转场时间。">Opening hours, reservations, meals, and evening views all get their place.</p></div>
+        <div><span class="feature-number">03 / EXPERIENCE</span><h3 data-en="A handbook you can explore" data-zh="直观交付">A handbook you can explore</h3><p data-en="Move between your daily map, food guide, and city cards in one place." data-zh="每日地图、美食攻略和城市名片统一呈现，出发前看清安排，旅途中随手查看。">Move between your daily map, food guide, and city cards in one place.</p></div>
+        <div><span class="feature-number">04 / FREEDOM</span><h3 data-en="Your choices lead the way" data-zh="自由定制">Your choices lead the way</h3><p data-en="Compare options, keep existing bookings, and change the plan as your ideas evolve." data-zh="多平台资料帮你做选择，已有预订直接沿用；换景点、改住宿、留白，都能继续调整。">Compare options, keep existing bookings, and change the plan as your ideas evolve.</p></div>
+      </section>
+      <section class="start">
+        <div><h2 data-en="Start with a place in mind." data-zh="从一句“我想去”开始。">Start with a place in mind.</h2><p data-en="Install the skill and its research tools, then describe your trip in your own words. Marco Polo helps you work through the choices." data-zh="安装 Skill 和配套查询工具，用自己的话说出想法，马可波罗会陪你把选择一步步变成行程。">Install the skill and its research tools, then describe your trip in your own words. Marco Polo helps you work through the choices.</p><div class="actions"><a class="button primary" href="https://github.com/megumi-ben/marco-polo.skill" data-en="Get Marco Polo on GitHub ↗" data-zh="去 GitHub 获取 Marco Polo ↗">Get Marco Polo on GitHub ↗</a></div></div>
+        <div class="prompt"><small>YOUR NEXT ADVENTURE</small><span data-en="“Four friends, three days in Nanjing. We love historic streets and local food. Help us choose where to stay and plan each day.”" data-zh="“我们四个人，想去南京玩三天。喜欢人文街区和当地美食，帮我们选个住宿区域，再安排每天怎么玩。”">“Four friends, three days in Nanjing. We love historic streets and local food. Help us choose where to stay and plan each day.”</span></div>
+      </section>
+    </main>
+    <footer class="footer"><span>Marco Polo · <span data-en="Built for the way you want to travel." data-zh="为你想要的旅行而做。">Built for the way you want to travel.</span></span><span><a href="https://github.com/megumi-ben/marco-polo.skill" data-en="Star on GitHub ↗" data-zh="在 GitHub 点亮 Star ↗">Star on GitHub ↗</a> · <a href="https://www.bilibili.com/video/BV1qvaH66Em5/" data-en="Watch the video" data-zh="观看视频">Watch the video</a></span></footer>
+  </div>
+  <script>
+    const languageButton = document.getElementById('language');
+    function setLanguage(lang) {
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      document.querySelectorAll('[data-en]').forEach(node => { node.textContent = node.dataset[lang]; });
+      languageButton.textContent = lang === 'zh' ? 'English' : '中文';
+      document.getElementById('install').href = lang === 'zh' ? 'https://github.com/megumi-ben/marco-polo.skill/blob/main/README.zh-CN.md#快速上手' : 'https://github.com/megumi-ben/marco-polo.skill#quick-start';
+      const url = new URL(location.href);
+      url.searchParams.set('lang', lang);
+      history.replaceState(null, '', url);
+    }
+    setLanguage(new URLSearchParams(location.search).get('lang') === 'zh' ? 'zh' : 'en');
+    languageButton.addEventListener('click', () => setLanguage(document.documentElement.lang === 'en' ? 'zh' : 'en'));
+  </script>
+</body>
+</html>

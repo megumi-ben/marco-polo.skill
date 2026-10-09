@@ -1,0 +1,23 @@
+name: Report a problem / 问题反馈
+description: A planning, setup, or demo issue / 规划、安装或演示问题
+body:
+  - type: textarea
+    id: request
+    attributes:
+      label: Request and environment / 输入与环境
+      description: Include the agent/model and relevant stage. Remove private trip data and credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result / 预期结果
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened / 实际结果
+      description: Steps, errors, or screenshots that help reproduce the problem.
+    validations:
+      required: true

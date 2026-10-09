@@ -10,13 +10,13 @@
 ![FlyAI](https://img.shields.io/badge/出行查询-FlyAI-D28A3A?style=flat-square)
 [![GitHub Stars](https://img.shields.io/github/stars/megumi-ben/marco-polo.skill?style=flat-square&color=C18A53)](https://github.com/megumi-ben/marco-polo.skill/stargazers)
 
-[视频演示](https://www.bilibili.com/video/BV1qvaH66Em5/) · [核心优势](#核心优势) · [功能介绍](#功能介绍) · [沈阳案例](#使用示例) · [快速上手](#快速上手) · [工作流](#工作流介绍)
+**[在线体验](https://megumi-ben.github.io/marco-polo.skill/?lang=zh)** · **[快速上手](#快速上手)** · [视频演示](https://www.bilibili.com/video/BV1qvaH66Em5/) · [参与贡献](CONTRIBUTING.md#中文贡献说明)
 
 </div>
 
-![南京旅行地图：分日路线、行程时间轴与景点详情](assets/demo-map.png)
+[![南京旅行地图：分日路线、行程时间轴与景点详情](assets/demo-map.png)](https://megumi-ben.github.io/marco-polo.skill/nanjing/)
 
-<p align="center"><sub>南京地图展示 · 分日路线 · 行程时间轴 · 景点详情<br>图中连线为游览顺序示意。</sub></p>
+<p align="center"><sub>点击图片，直接体验南京旅行手册 · 无需安装<br>截图为原高德版本，在线示例使用 OpenFreeMap 底图；连线表示游览顺序。</sub></p>
 
 <h2 align="center">世界那么大，我想去看看。</h2>
 
@@ -26,18 +26,20 @@
 
 这个 **AI 旅行规划 Skill** 将高德地图、小红书攻略、飞猪查询与官方信息结合起来，从最初的想法，一路规划到每日行程、预约清单和交互旅行手册。路线地图、美食攻略、城市名片，一个入口随手查看。**你决定怎么玩，马可波罗把细节安排好。**
 
+<details>
+<summary>▶ 4 分钟视频：从旅行需求到完整旅行手册</summary>
+
 https://github.com/user-attachments/assets/ff0209ed-4060-4cf2-8acd-9d37f2ab72ae
 
-<p align="center">
-  <a href="https://www.bilibili.com/video/BV1qvaH66Em5/"><strong>▶ 在 B 站观看完整演示</strong></a><br>
-  <sub>4 分钟，从旅行需求到完整旅行手册</sub>
-</p>
+[在 B 站观看完整演示](https://www.bilibili.com/video/BV1qvaH66Em5/)
+
+</details>
 
 <table>
   <tr>
-    <td width="33%" align="center"><a href="assets/demo-handbook.jpg"><img src="assets/demo-handbook.jpg" alt="南京旅行手册：统一入口切换路线、美食与城市印象" width="100%"></a></td>
-    <td width="33%" align="center"><a href="assets/demo-food.jpg"><img src="assets/demo-food.jpg" alt="南京美食攻略：特色美食、具体店家与分类筛选" width="100%"></a></td>
-    <td width="33%" align="center"><a href="assets/demo-city.jpg"><img src="assets/demo-city.jpg" alt="南京城市名片：景点图文卡片与主题筛选" width="100%"></a></td>
+    <td width="33%" align="center"><a href="https://megumi-ben.github.io/marco-polo.skill/nanjing/"><img src="assets/demo-handbook.jpg" alt="南京旅行手册：统一入口切换路线、美食与城市印象" width="100%"></a></td>
+    <td width="33%" align="center"><a href="https://megumi-ben.github.io/marco-polo.skill/nanjing/food.html"><img src="assets/demo-food.jpg" alt="南京美食攻略：特色美食、具体店家与分类筛选" width="100%"></a></td>
+    <td width="33%" align="center"><a href="https://megumi-ben.github.io/marco-polo.skill/nanjing/city-impression.html"><img src="assets/demo-city.jpg" alt="南京城市名片：景点图文卡片与主题筛选" width="100%"></a></td>
   </tr>
   <tr>
     <td align="center"><b>旅行手册</b><br><sub>路线、美食、城市，一个入口。</sub></td>
@@ -46,7 +48,7 @@ https://github.com/user-attachments/assets/ff0209ed-4060-4cf2-8acd-9d37f2ab72ae
   </tr>
 </table>
 
-<p align="center"><sub>南京案例实拍 · 点击图片查看大图</sub></p>
+<p align="center"><sub>南京案例展示 · 点击图片体验对应页面</sub></p>
 
 ## 核心优势
 
@@ -231,6 +233,8 @@ marco-polo/
 ├── README.zh-CN.md                  中文介绍、示例与安装
 ├── agents/openai.yaml               名称与调用提示
 ├── references/outputs.md            输入输出与文件规范
+├── docs/                            项目主页与南京交互示例
+├── CONTRIBUTING.md                  贡献与本地预览指南
 └── assets/
     ├── demo-map.png                 南京地图展示
     └── amap-html-template/
@@ -269,3 +273,7 @@ flowchart TD
 ---
 
 喜欢这个项目，欢迎 **[⭐ Star](https://github.com/megumi-ben/marco-polo.skill)**。用过之后，也欢迎[分享反馈或贡献改进](https://github.com/megumi-ben/marco-polo.skill/issues)。
+
+## 参与贡献
+
+欢迎分享实际使用问题、完善安装说明，或优化规划与页面。查看[贡献指南](CONTRIBUTING.md#中文贡献说明)，从一个具体场景开始。
